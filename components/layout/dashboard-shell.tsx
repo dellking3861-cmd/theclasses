@@ -1,0 +1,37 @@
+"use client";
+
+import { cn } from "@/utils/cn";
+import { useSidebarStore } from "@/store";
+import { DashboardSidebar, DashboardHeader, type NavItem } from "@/components/layout/dashboard-sidebar";
+import { signOutAction } from "@/app/actions/auth";
+import type { User } from "@/types";
+
+interface DashboardShellProps {
+  user: User;
+  navItems: NavItem[];
+  children: React.ReactNode;
+  title?: string;
+}
+
+export function DashboardShell({ user, navItems, children, title }: DashboardShellProps) {
+  const { isCollapsed } = useSidebarStore();
+
+  return (
+    <div className="min-h-screen bg-slate-50">
+      <DashboardSidebar
+        navItems={navItems}
+        user={user}
+        onSignOut={() => signOutAction()}
+      />
+      <div
+        className={cn(
+          "transition-all duration-300",
+          isCollapsed ? "lg:ml-[72px]" : "lg:ml-64"
+        )}
+      >
+        <DashboardHeader title={title} />
+        <main className="p-4 lg:p-8">{children}</main>
+      </div>
+    </div>
+  );
+}

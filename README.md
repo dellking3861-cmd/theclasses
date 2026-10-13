@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Classes
+
+Pakistan's premier hybrid education platform combining physical coaching centers with online learning, AI-powered tools, and comprehensive student management.
+
+## Tech Stack
+
+- **Frontend:** Next.js 15 (App Router), React 19, TypeScript
+- **Backend:** Supabase (PostgreSQL, Auth, Storage)
+- **Styling:** Tailwind CSS
+- **State:** Zustand
+- **Forms:** React Hook Form + Zod
+- **Charts:** Recharts
+- **Deployment:** Vercel
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Set up Supabase
+
+1. Create a project at [supabase.com](https://supabase.com)
+2. Copy `.env.local.example` to `.env.local` and fill in your credentials
+3. Run the database schema in the Supabase SQL Editor:
+
+```bash
+# Copy contents of database/schema.sql into Supabase SQL Editor and execute
+```
+
+### 3. Run development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+/app                    # Next.js App Router pages
+  /(public)             # Public website pages
+  /(auth)               # Authentication pages
+  /dashboard            # Role-based dashboards
+    /admin              # Admin dashboard
+    /student            # Student dashboard
+    /teacher            # Teacher dashboard
+    /parent             # Parent dashboard
+  /api                  # API routes
+/components             # Reusable UI components
+  /ui                   # Base UI components
+  /layout               # Layout components
+  /landing              # Landing page sections
+/database               # PostgreSQL schema
+/hooks                  # Custom React hooks
+/lib                    # Utilities, auth, validations
+/services               # API abstraction layer
+  /ai                   # AI service architecture
+/store                  # Zustand stores
+/types                  # TypeScript type definitions
+/utils                  # Helper functions
+/middleware.ts          # Auth & route protection
+```
 
-## Learn More
+## User Roles
 
-To learn more about Next.js, take a look at the following resources:
+| Role    | Dashboard Route        |
+|---------|------------------------|
+| Admin   | `/dashboard/admin`     |
+| Teacher | `/dashboard/teacher`   |
+| Student | `/dashboard/student`   |
+| Parent  | `/dashboard/parent`    |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Role-based authentication with middleware protection
+- Public marketing website with landing page
+- Admin dashboard (students, teachers, courses, fees, analytics)
+- Student dashboard (courses, lectures, assignments, AI tutor)
+- Teacher dashboard (notes, assignments, attendance, grading)
+- Parent dashboard (attendance, fees, exam results)
+- AI service architecture (tutor, quiz generator, homework checker)
+- PostgreSQL schema with Row Level Security
 
-## Deploy on Vercel
+## Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+See `.env.local.example` for required variables.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+Deploy to Vercel:
+
+```bash
+npm run build
+```
+
+Set environment variables in Vercel dashboard before deploying.

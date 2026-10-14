@@ -21,17 +21,23 @@ export default function AboutPage() {
       <section className="py-24 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-1.5 text-sm font-medium text-amber-700 mb-6">
+              Est. 2017 · Karachi, Pakistan
+            </div>
             <h1 className="text-4xl font-bold text-slate-900">About The Classes</h1>
             <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-              Founded in Karachi, The Classes is Pakistan&apos;s leading hybrid education platform
-              that bridges the gap between traditional coaching centers and modern online learning.
-              We serve students across AKU-EB, Sindh Board, Cambridge O/A Level, and specialized
-              programs including AI Web Development and Entry Test Preparation.
+              The Classes Education System was founded by <strong>Sir Wasi</strong>,
+              a Mechanical Engineer from NED University of Engineering & Technology
+              who has been teaching since 2017. Our approach combines strong conceptual
+              foundations with exam-oriented preparation — we teach students to understand,
+              not just memorize.
             </p>
             <p className="mt-4 text-lg text-slate-600 leading-relaxed">
-              With three campus locations and a comprehensive digital platform, we&apos;ve helped
-              over 5,000 students achieve their academic goals. Our mission is to make quality
-              education accessible, engaging, and effective for every student in Pakistan.
+              With our campus located at R-156 Salman Garden, Malir 15, Karachi, we serve
+              students across grades 1–12, Cambridge O/A Levels, and all major Pakistani
+              examination boards including BSEK, FBISE, and AKU-EB. We are building a strong
+              interest in AI-powered education and modern EdTech to make quality learning
+              accessible to every student.
             </p>
           </div>
         </div>
@@ -55,14 +61,47 @@ export default function AboutPage() {
       </section>
 
       <section className="py-24 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-slate-900 mb-6">What We Offer</h2>
+              <div className="space-y-4">
+                {[
+                  "School classes for Grades 1–12 with structured curriculum",
+                  "Cambridge O Level and A Level preparation",
+                  "Karachi Board (BSEK/BIEK), FBISE, and AKU-EB exam prep",
+                  "AI-powered learning tools and resources",
+                  "Web Basics and Programming fundamentals",
+                  "Small-group and classroom-focused learning",
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3">
+                    <div className="rounded-full bg-amber-100 p-1 mt-0.5">
+                      <svg className="h-3 w-3 text-amber-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                    </div>
+                    <span className="text-slate-700">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 p-10 text-white shadow-xl">
+              <p className="text-2xl font-bold leading-snug">
+                &ldquo;We prepare students for the way exams actually work — through understanding, not memorization.&rdquo;
+              </p>
+              <p className="mt-4 text-amber-100 font-medium">— Sir Wasi, Founder</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 bg-[#fff8e7]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">Join Our Community</h2>
+          <h2 className="text-3xl font-bold text-slate-900 mb-4">Join Us Today</h2>
           <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
             Whether you&apos;re a student, parent, or educator, there&apos;s a place for you at The Classes.
           </p>
           <Link href="/admissions">
             <Button size="lg" className="btn-3d bg-amber-600 hover:bg-amber-700">
-              Get Started <ArrowRight className="h-4 w-4" />
+              Apply Now <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
         </div>

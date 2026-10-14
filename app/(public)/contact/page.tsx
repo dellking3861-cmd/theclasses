@@ -37,9 +37,9 @@ export default function ContactPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="space-y-6">
             {[
-              { icon: MapPin, title: "Visit Us", content: "Plot 45, Block 7, Gulshan-e-Iqbal, Karachi" },
-              { icon: Phone, title: "Call Us", content: "+92-21-34876543" },
-              { icon: Mail, title: "Email Us", content: "info@theclasses.pk" },
+              { icon: MapPin, title: "Visit Us", content: "R-156 Salman Garden, Near Jamia Millia Road, Malir 15, Karachi" },
+              { icon: Phone, title: "Call Us", content: "+92 336 3861205" },
+              { icon: Mail, title: "Email Us", content: "admissions@theclasses.edu.pk" },
               { icon: Clock, title: "Hours", content: "Mon–Sat: 9:00 AM – 6:00 PM" },
             ].map((item) => (
               <div key={item.title} className="flex items-start gap-4">

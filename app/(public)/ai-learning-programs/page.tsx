@@ -19,18 +19,32 @@ import {
 
 const aiPrograms = [
   {
+    key: "school_classes",
+    description: "Structured academic foundation for Grades 1–8 covering all core subjects with interactive AI-powered tools.",
+    duration: "12 months",
+    fee: 12000,
+    features: ["All Core Subjects", "Concept Building", "Homework Support", "Progress Tracking"],
+  },
+  {
+    key: "web_basics",
+    description: "Learn HTML, CSS, JavaScript and computational thinking from scratch with hands-on projects.",
+    duration: "6 months",
+    fee: 20000,
+    features: ["HTML & CSS", "JavaScript Basics", "Creative Projects", "Portfolio Building"],
+  },
+  {
+    key: "programming_fundamentals",
+    description: "Build strong programming foundations with Python and JavaScript using AI-guided learning paths.",
+    duration: "4 months",
+    fee: 18000,
+    features: ["Python & JavaScript", "Data Structures", "AI Debugging Tools", "Problem Solving"],
+  },
+  {
     key: "ai_web_development",
     description: "Master modern web development with AI-powered coding assistants, automated testing, and deployment tools.",
     duration: "6 months",
     fee: 25000,
     features: ["React & Next.js", "AI Code Generation", "Full-Stack Projects", "Portfolio Building"],
-  },
-  {
-    key: "programming_fundamentals",
-    description: "Build strong programming foundations with AI-guided learning paths and interactive coding exercises.",
-    duration: "4 months",
-    fee: 18000,
-    features: ["Python & JavaScript", "Data Structures", "AI Debugging Tools", "Problem Solving"],
   },
   {
     key: "spoken_english",
@@ -50,7 +64,7 @@ const aiPrograms = [
     key: "entry_test_preparation",
     description: "AI-adaptive test preparation for medical and engineering entry tests with personalized study plans.",
     duration: "4 months",
-    fee: 20000,
+    fee: 25000,
     features: ["Adaptive Testing", "AI Study Planner", "Mock Exams", "Performance Analytics"],
   },
 ];

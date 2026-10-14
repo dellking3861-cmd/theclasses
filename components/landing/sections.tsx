@@ -93,10 +93,10 @@ const faculty = [
 ];
 
 const stats = [
-  { value: "5,000+", label: "Students Enrolled" },
-  { value: "50+", label: "Expert Teachers" },
-  { value: "95%", label: "Success Rate" },
-  { value: "3", label: "Campus Locations" },
+  { value: "7+", label: "Years of Excellence" },
+  { value: "500+", label: "Students Enrolled" },
+  { value: "90%+", label: "Grade Improvement" },
+  { value: "7", label: "Subject Areas" },
 ];
 
 const scienceIcons = [FlaskConical, Atom, Dna, GraduationCap];

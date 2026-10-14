@@ -49,6 +49,8 @@ export const PROGRAMS = {
   PROGRAMMING_FUNDAMENTALS: "programming_fundamentals",
   FREELANCING: "freelancing",
   ENTRY_TEST_PREPARATION: "entry_test_preparation",
+  SCHOOL_CLASSES: "school_classes",
+  WEB_BASICS: "web_basics",
 } as const;
 
 export const PROGRAM_LABELS: Record<string, string> = {
@@ -57,6 +59,8 @@ export const PROGRAM_LABELS: Record<string, string> = {
   programming_fundamentals: "Programming Fundamentals",
   freelancing: "Freelancing Course",
   entry_test_preparation: "Entry Test Preparation",
+  school_classes: "School Foundation (Grades 1–8)",
+  web_basics: "Web Basics & Programming",
 };
 
 export const ROLE_DASHBOARD_PATHS: Record<UserRole, string> = {

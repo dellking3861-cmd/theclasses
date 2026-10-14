@@ -50,15 +50,15 @@ export function PublicFooter() {
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5 text-sm text-slate-600">
                 <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0 text-amber-600" />
-                Gulshan-e-Iqbal, Karachi, Pakistan
+                R-156 Salman Garden, Near Jamia Millia Road, Malir 15, Karachi
               </li>
               <li className="flex items-center gap-2.5 text-sm text-slate-600">
                 <Phone className="h-4 w-4 flex-shrink-0 text-amber-600" />
-                +92-21-34876543
+                +92 336 3861205
               </li>
               <li className="flex items-center gap-2.5 text-sm text-slate-600">
                 <Mail className="h-4 w-4 flex-shrink-0 text-amber-600" />
-                info@theclasses.pk
+                admissions@theclasses.edu.pk
               </li>
             </ul>
           </div>

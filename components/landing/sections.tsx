@@ -66,36 +66,33 @@ const categories = [
 
 const testimonials = [
   {
-    name: "Ayesha Khan",
-    role: "Cambridge A Level Student",
-    content: "The Classes transformed my approach to learning. The AI tutor helped me understand complex physics concepts that I struggled with for months.",
+    name: "Google Review",
+    role: "Student",
+    content: "Very good coaching institute. Sir Wasi is an excellent teacher who explains concepts clearly.",
     rating: 5,
   },
   {
-    name: "Ahmed Hassan",
+    name: "Google Review",
     role: "Parent",
-    content: "The parent dashboard gives me complete visibility into my son&apos;s progress. I can track attendance, fees, and exam results all in one place.",
+    content: "My son&apos;s grades have improved significantly since joining The Classes. Highly recommended.",
     rating: 5,
   },
   {
-    name: "Fatima Ali",
-    role: "AKU-EB Student",
-    content: "Best coaching center in Karachi. The hybrid model means I never miss a lecture, and the teachers are incredibly supportive.",
+    name: "Google Review",
+    role: "Student",
+    content: "Best coaching for O Levels in the area. The teaching methodology is very effective.",
     rating: 5,
   },
 ];
 
 const faculty = [
-  { name: "Dr. Sarah Ahmed", subject: "Mathematics", experience: "15 years", qualification: "PhD Mathematics" },
-  { name: "Prof. Hassan Raza", subject: "Physics", experience: "12 years", qualification: "MSc Physics" },
-  { name: "Ms. Zainab Malik", subject: "Chemistry", experience: "10 years", qualification: "MSc Chemistry" },
-  { name: "Mr. Usman Farooq", subject: "Computer Science", experience: "8 years", qualification: "MS CS" },
+  { name: "Sir Wasi", subject: "Founder & Lead Instructor", experience: "7+ years", qualification: "BSc Mechanical Engineering, NED University" },
 ];
 
 const stats = [
-  { value: "7+", label: "Years of Excellence" },
-  { value: "500+", label: "Students Enrolled" },
-  { value: "90%+", label: "Grade Improvement" },
+  { value: "7+", label: "Years of Teaching" },
+  { value: "500+", label: "Students Taught" },
+  { value: "4.7★", label: "Google Rating" },
   { value: "7", label: "Subject Areas" },
 ];
 
@@ -288,9 +285,9 @@ export function TestimonialsSection() {
     <section className="py-24 bg-[#fefce8]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">Student Success Stories</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">What Our Community Says</h2>
           <p className="mt-4 text-lg text-slate-600">
-            Hear from students and parents who trust The Classes.
+            Google reviews from real students and parents.
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
@@ -346,10 +343,10 @@ export function FacultySection() {
 
 export function WhyChooseUsSection() {
   const reasons = [
-    { title: "Proven Track Record", desc: "95% of our students achieve their target grades in board exams." },
-    { title: "Hybrid Flexibility", desc: "Attend physically or online — your choice, same quality education." },
-    { title: "AI-Enhanced Learning", desc: "Cutting-edge AI tools for personalized study plans and instant help." },
-    { title: "Affordable Excellence", desc: "Premium education at competitive fees with flexible payment options." },
+    { title: "Proven Track Record", desc: "7+ years of teaching experience with consistent results." },
+    { title: "Hybrid Flexibility", desc: "Attend physically at our Malir campus or access online resources." },
+    { title: "AI-Enhanced Learning", desc: "Modern AI tools for personalized study plans and instant help." },
+    { title: "Affordable Excellence", desc: "Quality education at competitive fees with flexible payment options." },
   ];
 
   return (

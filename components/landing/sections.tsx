@@ -348,55 +348,6 @@ export function TestimonialsSection() {
     </section>
   );
 }
-              </div>
-              <div className="text-left">
-                <p className="font-semibold text-slate-900">Rate Us on Google</p>
-                <p className="text-sm text-slate-500">Read &amp; leave a review</p>
-              </div>
-              <ArrowRight className="h-5 w-5 text-yellow-500 ml-2" />
-            </a>
-          </div>
-        ) : (
-          <>
-            <div className="text-center mb-10">
-              <div className="flex items-center justify-center gap-2">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Award
-                    key={i}
-                    className={`h-6 w-6 ${i < Math.round(rating) ? "text-yellow-400 fill-yellow-400" : "text-yellow-100"}`}
-                  />
-                ))}
-                <span className="ml-2 text-xl font-bold text-slate-900">{rating.toFixed(1)}</span>
-                <span className="text-slate-500">({totalReviews} reviews)</span>
-              </div>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6">
-              {reviews.slice(0, 3).map((review, i) => (
-                <div key={i} className="rounded-2xl bg-white p-6 shadow-sm border border-yellow-50 card-3d">
-                  <div className="flex gap-1 mb-3">
-                    {Array.from({ length: review.rating }).map((_, j) => (
-                      <Award key={j} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-slate-600 leading-relaxed text-sm mb-4">&ldquo;{review.text}&rdquo;</p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-700 font-bold text-xs">
-                      {review.author.slice(0, 2).toUpperCase()}
-                    </div>
-                    <div>
-                      <p className="font-semibold text-slate-900 text-sm">{review.author}</p>
-                      <p className="text-xs text-slate-400">{new Date(review.time * 1000).toLocaleDateString("en-PK", { month: "short", year: "numeric" })}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-    </section>
-  );
-}
 
 export function FacultySection() {
   return (

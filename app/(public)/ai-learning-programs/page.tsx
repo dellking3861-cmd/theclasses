@@ -137,7 +137,6 @@ export default function AILearningProgramsPage() {
                   </ul>
                   <div className="flex items-center justify-between pt-4 border-t border-yellow-50">
                     <div>
-                      <p className="text-lg font-bold text-yellow-600">{formatCurrency(program.fee)}</p>
                       <p className="text-xs text-slate-500">{program.duration}</p>
                     </div>
                     <Link href="/admissions">

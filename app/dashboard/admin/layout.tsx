@@ -31,6 +31,7 @@ const adminNav = [
   { href: "/dashboard/admin/batches", label: "Batches", icon: Layers },
   { href: "/dashboard/admin/branches", label: "Branches", icon: Building2 },
   { href: "/dashboard/admin/parents", label: "Parents", icon: UserCheck },
+  { href: "/dashboard/admin/blog", label: "Blog Portal", icon: FileText },
 ];
 
 export default async function AdminLayout({

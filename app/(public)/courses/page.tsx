@@ -78,9 +78,6 @@ export default function CoursesPage() {
                   <Badge variant={course.course_type === "board" ? "info" : "success"}>
                     {course.course_type === "board" ? "Board" : "Program"}
                   </Badge>
-                  <span className="text-lg font-bold text-yellow-600">
-                    {formatCurrency(course.fee_amount)}
-                  </span>
                 </div>
                 <CardTitle className="mt-3">{getCourseLabel(course)}</CardTitle>
                 <CardDescription>{course.description}</CardDescription>

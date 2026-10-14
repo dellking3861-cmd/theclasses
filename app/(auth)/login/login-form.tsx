@@ -69,13 +69,11 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#fff8e7] px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/home" className="inline-flex items-center gap-2 mb-6">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-              <GraduationCap className="h-5 w-5 text-white" />
-            </div>
+            <img src="/logo.png" alt={APP_NAME} className="h-10 w-auto logo-hover" />
             <span className="text-xl font-bold text-slate-900">{APP_NAME}</span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900">Welcome back</h1>
@@ -92,16 +90,16 @@ export default function LoginForm() {
               <Input label="Email" type="email" placeholder="you@example.com" error={errors.email?.message} {...register("email")} />
               <Input label="Password" type="password" placeholder="Enter your password" error={errors.password?.message} {...register("password")} />
               <div className="flex justify-end">
-                <Link href="/forgot-password" className="text-sm text-indigo-600 hover:text-indigo-700">Forgot password?</Link>
+                <Link href="/forgot-password" className="text-sm text-amber-600 hover:text-amber-700">Forgot password?</Link>
               </div>
-              <Button type="submit" className="w-full" isLoading={isLoading}>Sign In</Button>
+              <Button type="submit" className="w-full bg-amber-600 hover:bg-amber-700" isLoading={isLoading}>Sign In</Button>
             </form>
           </CardContent>
         </Card>
 
         <p className="text-center text-sm text-slate-500 mt-6">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-indigo-600 hover:text-indigo-700 font-medium">Register</Link>
+          <Link href="/register" className="text-amber-600 hover:text-amber-700 font-medium">Register</Link>
         </p>
       </div>
     </div>

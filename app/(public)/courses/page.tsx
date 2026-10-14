@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { BOARD_LABELS, SUBJECT_LABELS, PROGRAM_LABELS } from "@/lib/constants";
 import { formatCurrency } from "@/utils/format";
-import { BookOpen, Clock, Users, ArrowRight } from "lucide-react";
+import { Clock, Users, ArrowRight } from "lucide-react";
 
 const sampleCourses = [
   { id: "1", title: "Mathematics — AKU-EB", slug: "mathematics-aku-eb", course_type: "board" as const, board: "aku_eb", subject: "mathematics", program: null, fee_amount: 15000, duration_months: 12, description: "Comprehensive Mathematics course aligned with AKU-EB curriculum.", is_published: true },
@@ -41,7 +41,7 @@ export default function CoursesPage() {
   }
 
   return (
-    <section className="py-16 bg-slate-50 min-h-screen">
+    <section className="py-16 bg-[#fff8e7] min-h-screen">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-slate-900">Our Courses</h1>
@@ -57,8 +57,8 @@ export default function CoursesPage() {
               onClick={() => setFilter(f.value)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filter === f.value
-                  ? "bg-indigo-600 text-white"
-                  : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                  ? "bg-amber-600 text-white"
+                  : "bg-white text-slate-600 hover:bg-amber-50 border border-amber-200"
               }`}
             >
               {f.label}
@@ -68,13 +68,13 @@ export default function CoursesPage() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((course) => (
-            <Card key={course.id} hover>
+            <Card key={course.id} hover className="card-3d border-amber-100">
               <CardHeader>
                 <div className="flex items-start justify-between gap-2">
                   <Badge variant={course.course_type === "board" ? "info" : "success"}>
                     {course.course_type === "board" ? "Board" : "Program"}
                   </Badge>
-                  <span className="text-lg font-bold text-indigo-600">
+                  <span className="text-lg font-bold text-amber-700">
                     {formatCurrency(course.fee_amount)}
                   </span>
                 </div>
@@ -91,7 +91,7 @@ export default function CoursesPage() {
                   </span>
                 </div>
                 <Link href="/admissions">
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full border-amber-300 text-amber-800 hover:bg-amber-50">
                     Enroll Now <ArrowRight className="h-4 w-4" />
                   </Button>
                 </Link>

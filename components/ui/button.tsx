@@ -8,10 +8,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variants = {
-  primary: "bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm",
-  secondary: "bg-slate-100 text-slate-900 hover:bg-slate-200",
-  outline: "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50",
-  ghost: "text-slate-600 hover:bg-slate-100 hover:text-slate-900",
+  primary: "bg-amber-600 text-white hover:bg-amber-700 shadow-sm",
+  secondary: "bg-amber-50 text-amber-900 hover:bg-amber-100",
+  outline: "border border-amber-300 bg-white text-amber-800 hover:bg-amber-50",
+  ghost: "text-amber-700 hover:bg-amber-50 hover:text-amber-900",
   danger: "bg-red-600 text-white hover:bg-red-700",
 };
 
@@ -28,7 +28,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       disabled={disabled || isLoading}
       className={cn(
         "inline-flex items-center justify-center gap-2 font-medium transition-all duration-200",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2",
         "disabled:opacity-50 disabled:cursor-not-allowed",
         variants[variant],
         sizes[size],

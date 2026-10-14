@@ -83,13 +83,11 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-[#fff8e7] px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/home" className="inline-flex items-center gap-2 mb-6">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-              <GraduationCap className="h-5 w-5 text-white" />
-            </div>
+            <img src="/logo.png" alt={APP_NAME} className="h-10 w-auto logo-hover" />
             <span className="text-xl font-bold text-slate-900">{APP_NAME}</span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900">Create an account</h1>
@@ -109,7 +107,7 @@ export default function RegisterPage() {
               <Select label="I am a" options={roleOptions} error={errors.role?.message} {...register("role")} />
               <Input label="Password" type="password" error={errors.password?.message} {...register("password")} />
               <Input label="Confirm Password" type="password" error={errors.confirm_password?.message} {...register("confirm_password")} />
-              <Button type="submit" className="w-full" isLoading={isLoading}>
+              <Button type="submit" className="w-full bg-amber-600 hover:bg-amber-700" isLoading={isLoading}>
                 Create Account
               </Button>
             </form>
@@ -118,7 +116,7 @@ export default function RegisterPage() {
 
         <p className="text-center text-sm text-slate-500 mt-6">
           Already have an account?{" "}
-          <Link href="/login" className="text-indigo-600 hover:text-indigo-700 font-medium">
+          <Link href="/login" className="text-amber-600 hover:text-amber-700 font-medium">
             Sign In
           </Link>
         </p>

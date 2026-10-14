@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
-  --muted: #f8fafc;
-  --muted-foreground: #64748b;
-  --border: #e2e8f0;
-  --primary: #4f46e5;
+  --background: #fffbf0;
+  --foreground: #1a1a0e;
+  --muted: #fff8e7;
+  --muted-foreground: #7a7060;
+  --border: #e8d5a8;
+  --primary: #d4920b;
   --primary-foreground: #ffffff;
-  --accent: #f1f5f9;
-  --accent-foreground: #0f172a;
-  --destructive: #ef4444;
-  --ring: #4f46e5;
+  --accent: #fff3d6;
+  --accent-foreground: #1a1a0e;
+  --destructive: #b91c1c;
+  --ring: #d4920b;
   --radius: 0.75rem;
 }
 
@@ -49,7 +49,7 @@ html {
 }
 
 ::selection {
-  background-color: #4f46e5;
+  background-color: #d4920b;
   color: white;
 }
 
@@ -68,6 +68,27 @@ html {
   50% { transform: translateY(-10px); }
 }
 
+@keyframes rotate-3d {
+  0% { transform: perspective(800px) rotateY(0deg); }
+  100% { transform: perspective(800px) rotateY(360deg); }
+}
+
+@keyframes tilt-3d {
+  0%, 100% { transform: perspective(800px) rotateX(0deg) rotateY(0deg); }
+  25% { transform: perspective(800px) rotateX(3deg) rotateY(5deg); }
+  75% { transform: perspective(800px) rotateX(-3deg) rotateY(-5deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(212, 146, 11, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(212, 146, 11, 0.6); }
+}
+
 .animate-fade-in {
   animation: fade-in 0.6s ease-out forwards;
 }
@@ -80,26 +101,75 @@ html {
   animation: float 3s ease-in-out infinite;
 }
 
+.animate-rotate-3d {
+  animation: rotate-3d 6s linear infinite;
+}
+
+.animate-tilt-3d {
+  animation: tilt-3d 4s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #d4920b 0%, #f5d76e 50%, #d4920b 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
 .gradient-text {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #2563eb 100%);
+  background: linear-gradient(135deg, #d4920b 0%, #f5d76e 50%, #b8760a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #d4920b 0%, #f5d76e 100%);
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 251, 240, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 .grid-pattern {
   background-image:
-    linear-gradient(rgba(79, 70, 229, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79, 70, 229, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(212, 146, 11, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 146, 11, 0.05) 1px, transparent 1px);
   background-size: 64px 64px;
+}
+
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-3d:hover {
+  transform: perspective(800px) rotateX(2deg) rotateY(-2deg) translateZ(8px);
+  box-shadow: 8px 8px 32px rgba(212, 146, 11, 0.15), 0 0 0 1px rgba(212, 146, 11, 0.1);
+}
+
+.btn-3d {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-3d:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(212, 146, 11, 0.3);
+}
+
+.btn-3d:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.logo-hover {
+  transition: transform 0.4s ease;
+  transform-style: preserve-3d;
+}
+
+.logo-hover:hover {
+  transform: perspective(600px) rotateY(15deg) rotateX(5deg) scale(1.05);
 }

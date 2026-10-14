@@ -24,6 +24,9 @@ export const metadata: Metadata = {
     "education", "Pakistan", "coaching center", "online learning",
     "AKU-EB", "Cambridge", "Sindh Board", "AI learning",
   ],
+  other: {
+    "twitter:card": "summary_large_image",
+  },
 };
 
 export default function RootLayout({
@@ -33,6 +36,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
+      <head>
+        <link rel="icon" href="/logo.png" sizes="any" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+      </head>
       <body className="min-h-full flex flex-col antialiased">
         {children}
         <Toaster position="top-right" richColors closeButton />

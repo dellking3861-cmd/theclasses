@@ -263,6 +263,27 @@ export function CourseCategoriesSection() {
 
 export function TestimonialsSection() {
   const googleMapsUrl = "https://share.google/5yBewcTJ3L661jeO5";
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [rating, setRating] = useState<number>(0);
+  const [totalReviews, setTotalReviews] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useState(() => {
+    fetch("/api/reviews")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.reviews && data.reviews.length > 0) {
+          setReviews(data.reviews);
+          setRating(data.rating);
+          setTotalReviews(data.totalReviews);
+        } else {
+          setError(true);
+        }
+      })
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
+  });
 
   return (
     <section className="py-24 bg-[#fefce8]">
@@ -270,28 +291,71 @@ export function TestimonialsSection() {
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">What Our Community Says</h2>
           <p className="mt-4 text-lg text-slate-600">
-            See what students and parents say about The Classes on Google.
+            Google reviews from real students and parents.
           </p>
         </div>
-        <div className="max-w-md mx-auto">
-          <a
-            href={googleMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 rounded-2xl bg-white border border-yellow-200 px-8 py-6 hover:border-yellow-400 hover:shadow-lg transition-all card-3d"
-          >
-            <div className="flex gap-1">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Award key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+
+        {loading ? (
+          <div className="flex justify-center py-12">
+            <div className="h-8 w-8 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : error || reviews.length === 0 ? (
+          <div className="max-w-md mx-auto">
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 rounded-2xl bg-white border border-yellow-200 px-8 py-6 hover:border-yellow-400 hover:shadow-lg transition-all card-3d"
+            >
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Award key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                ))}
+              </div>
+              <div className="text-left">
+                <p className="font-semibold text-slate-900">Rate Us on Google</p>
+                <p className="text-sm text-slate-500">Read &amp; leave a review</p>
+              </div>
+              <ArrowRight className="h-5 w-5 text-yellow-500 ml-2" />
+            </a>
+          </div>
+        ) : (
+          <>
+            <div className="text-center mb-10">
+              <div className="flex items-center justify-center gap-2">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Award
+                    key={i}
+                    className={`h-6 w-6 ${i < Math.round(rating) ? "text-yellow-400 fill-yellow-400" : "text-yellow-100"}`}
+                  />
+                ))}
+                <span className="ml-2 text-xl font-bold text-slate-900">{rating.toFixed(1)}</span>
+                <span className="text-slate-500">({totalReviews} reviews)</span>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {reviews.slice(0, 3).map((review, i) => (
+                <div key={i} className="rounded-2xl bg-white p-6 shadow-sm border border-yellow-50 card-3d">
+                  <div className="flex gap-1 mb-3">
+                    {Array.from({ length: review.rating }).map((_, j) => (
+                      <Award key={j} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-slate-600 leading-relaxed text-sm mb-4">&ldquo;{review.text}&rdquo;</p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-700 font-bold text-xs">
+                      {review.author.slice(0, 2).toUpperCase()}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-slate-900 text-sm">{review.author}</p>
+                      <p className="text-xs text-slate-400">{new Date(review.time * 1000).toLocaleDateString("en-PK", { month: "short", year: "numeric" })}</p>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
-            <div className="text-left">
-              <p className="font-semibold text-slate-900">Rate Us on Google</p>
-              <p className="text-sm text-slate-500">Read &amp; leave a review</p>
-            </div>
-            <ArrowRight className="h-5 w-5 text-yellow-500 ml-2" />
-          </a>
-        </div>
+          </>
+        )}
       </div>
     </section>
   );

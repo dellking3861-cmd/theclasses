@@ -25,7 +25,7 @@ export default function TeacherQuizGeneratorPage() {
           <CardTitle className="flex items-center gap-2">
             <Brain className="h-5 w-5 text-indigo-600" />
             Generate Quiz
-            <Sparkles className="h-4 w-4 text-amber-500" />
+            <Sparkles className="h-4 w-4 text-yellow-400" />
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">

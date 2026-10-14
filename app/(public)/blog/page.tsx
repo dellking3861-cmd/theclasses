@@ -41,7 +41,7 @@ const posts = [
 
 export default function BlogPage() {
   return (
-    <section className="py-16 bg-[#fff8e7] min-h-screen">
+    <section className="py-16 bg-[#fefce8] min-h-screen">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-slate-900">Blog</h1>
@@ -52,7 +52,7 @@ export default function BlogPage() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8">
           {posts.map((post) => (
-            <Card key={post.slug} hover className="card-3d border-amber-100">
+            <Card key={post.slug} hover className="card-3d border-yellow-50">
               <CardHeader>
                 <div className="flex items-center gap-3 mb-2">
                   <Badge variant="info">{post.category}</Badge>
@@ -64,7 +64,7 @@ export default function BlogPage() {
               <CardContent>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-slate-500">{formatDate(post.date)}</span>
-                  <Link href={`/blog/${post.slug}`} className="text-sm font-medium text-amber-700 hover:text-amber-900 flex items-center gap-1">
+                  <Link href={`/blog/${post.slug}`} className="text-sm font-medium text-yellow-600 hover:text-yellow-800 flex items-center gap-1">
                     Read More <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>

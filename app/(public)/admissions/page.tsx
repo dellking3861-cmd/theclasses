@@ -32,7 +32,7 @@ export default function AdmissionsPage() {
   }
 
   return (
-    <section className="py-16 bg-[#fff8e7] min-h-screen">
+    <section className="py-16 bg-[#fefce8] min-h-screen">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold text-slate-900">Apply for Admission</h1>
@@ -41,7 +41,7 @@ export default function AdmissionsPage() {
           </p>
         </div>
 
-        <Card className="border-amber-100">
+        <Card className="border-yellow-50">
           <CardHeader>
             <CardTitle>Admission Application</CardTitle>
             <CardDescription>All fields marked with * are required.</CardDescription>
@@ -58,7 +58,7 @@ export default function AdmissionsPage() {
               <Input label="Current Grade/Class" placeholder="e.g., Class 10, A1" {...register("grade" as keyof ContactInput)} />
               <Input label="Subject of Inquiry *" placeholder="Admission inquiry" error={errors.subject?.message} {...register("subject")} />
               <Textarea label="Additional Message" placeholder="Tell us about your goals..." error={errors.message?.message} {...register("message")} />
-              <Button type="submit" className="w-full bg-amber-600 hover:bg-amber-700" size="lg" isLoading={isSubmitting}>
+              <Button type="submit" className="w-full bg-yellow-500 hover:bg-yellow-600" size="lg" isLoading={isSubmitting}>
                 Submit Application
               </Button>
             </form>
@@ -72,7 +72,7 @@ export default function AdmissionsPage() {
             "Scholarship opportunities",
           ].map((benefit) => (
             <div key={benefit} className="flex items-center gap-2 text-sm text-slate-600">
-              <CheckCircle className="h-5 w-5 text-amber-600 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
               {benefit}
             </div>
           ))}

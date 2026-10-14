@@ -45,7 +45,7 @@ export default function CoursesPage() {
   }
 
   return (
-    <section className="py-16 bg-[#fff8e7] min-h-screen">
+    <section className="py-16 bg-[#fefce8] min-h-screen">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-slate-900">Our Courses</h1>
@@ -61,8 +61,8 @@ export default function CoursesPage() {
               onClick={() => setFilter(f.value)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filter === f.value
-                  ? "bg-amber-600 text-white"
-                  : "bg-white text-slate-600 hover:bg-amber-50 border border-amber-200"
+                  ? "bg-yellow-500 text-white"
+                  : "bg-white text-slate-600 hover:bg-yellow-25 border border-yellow-100"
               }`}
             >
               {f.label}
@@ -72,13 +72,13 @@ export default function CoursesPage() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((course) => (
-            <Card key={course.id} hover className="card-3d border-amber-100">
+            <Card key={course.id} hover className="card-3d border-yellow-50">
               <CardHeader>
                 <div className="flex items-start justify-between gap-2">
                   <Badge variant={course.course_type === "board" ? "info" : "success"}>
                     {course.course_type === "board" ? "Board" : "Program"}
                   </Badge>
-                  <span className="text-lg font-bold text-amber-700">
+                  <span className="text-lg font-bold text-yellow-600">
                     {formatCurrency(course.fee_amount)}
                   </span>
                 </div>
@@ -95,7 +95,7 @@ export default function CoursesPage() {
                   </span>
                 </div>
                 <Link href="/admissions">
-                  <Button variant="outline" className="w-full border-amber-300 text-amber-800 hover:bg-amber-50">
+                  <Button variant="outline" className="w-full border-yellow-200 text-yellow-700 hover:bg-yellow-25">
                     Enroll Now <ArrowRight className="h-4 w-4" />
                   </Button>
                 </Link>

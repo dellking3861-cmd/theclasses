@@ -27,7 +27,7 @@ export default function ContactPage() {
   }
 
   return (
-    <section className="py-16 bg-[#fff8e7] min-h-screen">
+    <section className="py-16 bg-[#fefce8] min-h-screen">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-slate-900">Contact Us</h1>
@@ -43,8 +43,8 @@ export default function ContactPage() {
               { icon: Clock, title: "Hours", content: "Mon–Sat: 9:00 AM – 6:00 PM" },
             ].map((item) => (
               <div key={item.title} className="flex items-start gap-4">
-                <div className="rounded-lg bg-amber-50 p-3">
-                  <item.icon className="h-5 w-5 text-amber-600" />
+                <div className="rounded-lg bg-yellow-25 p-3">
+                  <item.icon className="h-5 w-5 text-yellow-500" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-slate-900">{item.title}</h3>
@@ -55,7 +55,7 @@ export default function ContactPage() {
           </div>
 
           <div className="lg:col-span-2">
-            <Card className="border-amber-100">
+            <Card className="border-yellow-50">
               <CardHeader>
                 <CardTitle>Send a Message</CardTitle>
               </CardHeader>
@@ -68,7 +68,7 @@ export default function ContactPage() {
                   <Input label="Phone" {...register("phone")} />
                   <Input label="Subject *" error={errors.subject?.message} {...register("subject")} />
                   <Textarea label="Message *" error={errors.message?.message} {...register("message")} />
-                  <Button type="submit" className="bg-amber-600 hover:bg-amber-700" isLoading={isSubmitting}>Send Message</Button>
+                  <Button type="submit" className="bg-yellow-500 hover:bg-yellow-600" isLoading={isSubmitting}>Send Message</Button>
                 </form>
               </CardContent>
             </Card>

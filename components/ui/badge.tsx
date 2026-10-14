@@ -10,9 +10,9 @@ interface BadgeProps {
 }
 
 const variants = {
-  default: "bg-amber-100 text-amber-800",
+  default: "bg-yellow-50 text-yellow-700",
   success: "bg-emerald-50 text-emerald-700",
-  warning: "bg-amber-50 text-amber-700",
+  warning: "bg-yellow-25 text-yellow-600",
   danger: "bg-red-50 text-red-700",
   info: "bg-blue-50 text-blue-700",
 };
@@ -57,8 +57,8 @@ export function StatCard({ title, value, change, changeType = "neutral", icon: I
             <p className={cn("text-xs font-medium", changeColors[changeType])}>{change}</p>
           )}
         </div>
-        <div className="rounded-lg bg-amber-50 p-3">
-          <Icon className="h-5 w-5 text-amber-600" />
+        <div className="rounded-lg bg-yellow-25 p-3">
+          <Icon className="h-5 w-5 text-yellow-500" />
         </div>
       </div>
     </Card>
@@ -75,8 +75,8 @@ interface EmptyStateProps {
 export function EmptyState({ icon: Icon, title, description, action }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center">
-      <div className="rounded-full bg-amber-50 p-4 mb-4">
-        <Icon className="h-8 w-8 text-amber-400" />
+      <div className="rounded-full bg-yellow-25 p-4 mb-4">
+        <Icon className="h-8 w-8 text-yellow-300" />
       </div>
       <h3 className="text-lg font-semibold text-slate-900 mb-1">{title}</h3>
       <p className="text-sm text-slate-500 max-w-sm mb-4">{description}</p>
@@ -119,7 +119,7 @@ export function Avatar({ name, src, size = "md", className }: AvatarProps) {
   return (
     <div
       className={cn(
-        "rounded-full bg-amber-100 text-amber-700 font-semibold flex items-center justify-center",
+        "rounded-full bg-yellow-50 text-yellow-600 font-semibold flex items-center justify-center",
         avatarSizes[size],
         className
       )}
@@ -161,7 +161,7 @@ const spinnerSizes = {
 export function LoadingSpinner({ size = "md", className }: LoadingSpinnerProps) {
   return (
     <svg
-      className={cn("animate-spin text-amber-600", spinnerSizes[size], className)}
+      className={cn("animate-spin text-yellow-500", spinnerSizes[size], className)}
       viewBox="0 0 24 24"
       fill="none"
     >

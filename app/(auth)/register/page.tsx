@@ -83,7 +83,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#fff8e7] px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-[#fefce8] px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/home" className="inline-flex items-center gap-2 mb-6">
@@ -107,7 +107,7 @@ export default function RegisterPage() {
               <Select label="I am a" options={roleOptions} error={errors.role?.message} {...register("role")} />
               <Input label="Password" type="password" error={errors.password?.message} {...register("password")} />
               <Input label="Confirm Password" type="password" error={errors.confirm_password?.message} {...register("confirm_password")} />
-              <Button type="submit" className="w-full bg-amber-600 hover:bg-amber-700" isLoading={isLoading}>
+              <Button type="submit" className="w-full bg-yellow-500 hover:bg-yellow-600" isLoading={isLoading}>
                 Create Account
               </Button>
             </form>
@@ -116,7 +116,7 @@ export default function RegisterPage() {
 
         <p className="text-center text-sm text-slate-500 mt-6">
           Already have an account?{" "}
-          <Link href="/login" className="text-amber-600 hover:text-amber-700 font-medium">
+          <Link href="/login" className="text-yellow-500 hover:text-yellow-600 font-medium">
             Sign In
           </Link>
         </p>

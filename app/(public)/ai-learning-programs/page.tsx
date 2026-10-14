@@ -81,14 +81,14 @@ const aiModules = [
 export default function AILearningProgramsPage() {
   return (
     <>
-      <section className="py-24 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 text-white">
+      <section className="py-24 bg-gradient-to-br from-yellow-500 via-yellow-600 to-yellow-800 text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium mb-6">
             <Sparkles className="h-4 w-4" />
             AI-Powered Education
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold">AI Learning Programs</h1>
-          <p className="mt-4 text-lg text-amber-100 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-yellow-50 max-w-2xl mx-auto">
             Future-ready programs combining expert instruction with cutting-edge AI tools
             to accelerate your learning journey.
           </p>
@@ -103,9 +103,9 @@ export default function AILearningProgramsPage() {
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {aiModules.map((mod) => (
-              <div key={mod.title} className="rounded-xl border border-amber-100 p-6 hover:border-amber-300 hover:shadow-md transition-all card-3d">
-                <div className="rounded-lg bg-amber-50 p-3 inline-flex mb-4">
-                  <mod.icon className="h-6 w-6 text-amber-600" />
+              <div key={mod.title} className="rounded-xl border border-yellow-50 p-6 hover:border-yellow-200 hover:shadow-md transition-all card-3d">
+                <div className="rounded-lg bg-yellow-25 p-3 inline-flex mb-4">
+                  <mod.icon className="h-6 w-6 text-yellow-500" />
                 </div>
                 <h3 className="font-semibold text-slate-900 mb-1">{mod.title}</h3>
                 <p className="text-sm text-slate-600">{mod.description}</p>
@@ -115,12 +115,12 @@ export default function AILearningProgramsPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-[#fff8e7]">
+      <section className="py-24 bg-[#fefce8]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-slate-900 mb-12">Available Programs</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {aiPrograms.map((program) => (
-              <Card key={program.key} hover className="card-3d border-amber-100">
+              <Card key={program.key} hover className="card-3d border-yellow-50">
                 <CardHeader>
                   <Badge variant="success" className="w-fit mb-2">AI Program</Badge>
                   <CardTitle>{PROGRAM_LABELS[program.key]}</CardTitle>
@@ -130,18 +130,18 @@ export default function AILearningProgramsPage() {
                   <ul className="space-y-2 mb-4">
                     {program.features.map((f) => (
                       <li key={f} className="text-sm text-slate-600 flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
                         {f}
                       </li>
                     ))}
                   </ul>
-                  <div className="flex items-center justify-between pt-4 border-t border-amber-100">
+                  <div className="flex items-center justify-between pt-4 border-t border-yellow-50">
                     <div>
-                      <p className="text-lg font-bold text-amber-700">{formatCurrency(program.fee)}</p>
+                      <p className="text-lg font-bold text-yellow-600">{formatCurrency(program.fee)}</p>
                       <p className="text-xs text-slate-500">{program.duration}</p>
                     </div>
                     <Link href="/admissions">
-                      <Button size="sm" className="bg-amber-600 hover:bg-amber-700">
+                      <Button size="sm" className="bg-yellow-500 hover:bg-yellow-600">
                         Enroll <ArrowRight className="h-4 w-4" />
                       </Button>
                     </Link>

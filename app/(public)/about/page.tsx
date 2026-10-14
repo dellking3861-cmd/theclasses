@@ -21,7 +21,7 @@ export default function AboutPage() {
       <section className="py-24 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-1.5 text-sm font-medium text-amber-700 mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full bg-yellow-25 px-4 py-1.5 text-sm font-medium text-yellow-600 mb-6">
               Est. 2017 · Karachi, Pakistan
             </div>
             <h1 className="text-4xl font-bold text-slate-900">About The Classes</h1>
@@ -43,14 +43,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-[#fff8e7]">
+      <section className="py-24 bg-[#fefce8]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-slate-900 mb-12">Our Values</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value) => (
-              <div key={value.title} className="text-center card-3d rounded-2xl bg-white p-8 border border-amber-100">
-                <div className="mx-auto inline-flex items-center justify-center rounded-xl bg-amber-50 p-4 mb-4">
-                  <value.icon className="h-6 w-6 text-amber-600" />
+              <div key={value.title} className="text-center card-3d rounded-2xl bg-white p-8 border border-yellow-50">
+                <div className="mx-auto inline-flex items-center justify-center rounded-xl bg-yellow-25 p-4 mb-4">
+                  <value.icon className="h-6 w-6 text-yellow-500" />
                 </div>
                 <h3 className="font-semibold text-slate-900 mb-2">{value.title}</h3>
                 <p className="text-sm text-slate-600">{value.description}</p>
@@ -75,32 +75,32 @@ export default function AboutPage() {
                   "Small-group and classroom-focused learning",
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-3">
-                    <div className="rounded-full bg-amber-100 p-1 mt-0.5">
-                      <svg className="h-3 w-3 text-amber-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                    <div className="rounded-full bg-yellow-50 p-1 mt-0.5">
+                      <svg className="h-3 w-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                     </div>
                     <span className="text-slate-700">{item}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 p-10 text-white shadow-xl">
+            <div className="rounded-2xl bg-gradient-to-br from-yellow-400 to-yellow-600 p-10 text-white shadow-xl">
               <p className="text-2xl font-bold leading-snug">
                 &ldquo;We prepare students for the way exams actually work — through understanding, not memorization.&rdquo;
               </p>
-              <p className="mt-4 text-amber-100 font-medium">— Sir Wasi, Founder</p>
+              <p className="mt-4 text-yellow-50 font-medium">— Sir Wasi, Founder</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-24 bg-[#fff8e7]">
+      <section className="py-24 bg-[#fefce8]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-slate-900 mb-4">Join Us Today</h2>
           <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
             Whether you&apos;re a student, parent, or educator, there&apos;s a place for you at The Classes.
           </p>
           <Link href="/admissions">
-            <Button size="lg" className="btn-3d bg-amber-600 hover:bg-amber-700">
+            <Button size="lg" className="btn-3d bg-yellow-500 hover:bg-yellow-600">
               Apply Now <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>

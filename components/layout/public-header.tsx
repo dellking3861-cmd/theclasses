@@ -13,7 +13,7 @@ export function PublicHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-amber-200/60 bg-[#fffbf0]/85 backdrop-blur-xl shadow-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-yellow-100/60 bg-[#fffbeb]/85 backdrop-blur-xl shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/home" className="flex items-center gap-3 group">
@@ -22,7 +22,7 @@ export function PublicHeader() {
               alt={APP_NAME}
               className="h-9 w-auto logo-hover"
             />
-            <span className="text-lg font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
+            <span className="text-lg font-bold text-slate-900 group-hover:text-yellow-600 transition-colors">
               {APP_NAME}
             </span>
           </Link>
@@ -35,8 +35,8 @@ export function PublicHeader() {
                 className={cn(
                   "px-3 py-2 text-sm font-medium rounded-lg transition-colors",
                   pathname === link.href
-                    ? "text-amber-700 bg-amber-50"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-amber-50/50"
+                    ? "text-yellow-600 bg-yellow-25"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-yellow-25/50"
                 )}
               >
                 {link.label}
@@ -49,12 +49,12 @@ export function PublicHeader() {
               <Button variant="ghost" size="sm" className="btn-3d">Sign In</Button>
             </Link>
             <Link href="/admissions">
-              <Button size="sm" className="btn-3d bg-amber-600 hover:bg-amber-700 text-white">Apply Now</Button>
+              <Button size="sm" className="btn-3d bg-yellow-500 hover:bg-yellow-600 text-white">Apply Now</Button>
             </Link>
           </div>
 
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-amber-100 text-slate-700"
+            className="md:hidden p-2 rounded-lg hover:bg-yellow-50 text-slate-700"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -63,7 +63,7 @@ export function PublicHeader() {
         </div>
 
         {mobileOpen && (
-          <div className="md:hidden border-t border-amber-100 py-4 space-y-1">
+          <div className="md:hidden border-t border-yellow-50 py-4 space-y-1">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -72,8 +72,8 @@ export function PublicHeader() {
                 className={cn(
                   "block px-3 py-2.5 text-sm font-medium rounded-lg",
                   pathname === link.href
-                    ? "text-amber-700 bg-amber-50"
-                    : "text-slate-600 hover:bg-amber-50"
+                    ? "text-yellow-600 bg-yellow-25"
+                    : "text-slate-600 hover:bg-yellow-25"
                 )}
               >
                 {link.label}
@@ -84,7 +84,7 @@ export function PublicHeader() {
                 <Button variant="outline" className="w-full" size="sm">Sign In</Button>
               </Link>
               <Link href="/admissions" onClick={() => setMobileOpen(false)}>
-                <Button className="w-full bg-amber-600 hover:bg-amber-700 text-white" size="sm">Apply Now</Button>
+                <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white" size="sm">Apply Now</Button>
               </Link>
             </div>
           </div>

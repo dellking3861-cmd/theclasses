@@ -56,11 +56,11 @@ const features = [
 ];
 
 const categories = [
-  { name: "AKU-EB", count: "12 Courses", color: "bg-amber-500" },
+  { name: "AKU-EB", count: "12 Courses", color: "bg-yellow-400" },
   { name: "Sindh Board", count: "10 Courses", color: "bg-emerald-500" },
   { name: "Cambridge O Level", count: "8 Courses", color: "bg-purple-500" },
   { name: "Cambridge A Level", count: "6 Courses", color: "bg-indigo-500" },
-  { name: "AI Programs", count: "5 Programs", color: "bg-amber-600" },
+  { name: "AI Programs", count: "5 Programs", color: "bg-yellow-500" },
   { name: "Entry Test Prep", count: "4 Programs", color: "bg-orange-500" },
 ];
 
@@ -112,16 +112,16 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-[#fffbf0]">
+    <section className="relative overflow-hidden bg-[#fffbeb]">
       <div className="absolute inset-0 grid-pattern" />
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-amber-50/60 to-transparent" />
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-yellow-25/60 to-transparent" />
 
       {/* Floating science icons */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {scienceIcons.map((Icon, i) => (
           <div
             key={i}
-            className="absolute opacity-5 text-amber-600"
+            className="absolute opacity-5 text-yellow-500"
             style={{
               top: `${15 + i * 20}%`,
               right: `${5 + i * 8}%`,
@@ -138,7 +138,7 @@ export function HeroSection() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="animate-fade-in">
-            <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-1.5 text-sm font-medium text-amber-700 mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full bg-yellow-25 px-4 py-1.5 text-sm font-medium text-yellow-600 mb-6">
               <Sparkles className="h-4 w-4" />
               Pakistan&apos;s #1 Hybrid Education Platform
             </div>
@@ -153,13 +153,13 @@ export function HeroSection() {
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Link href="/admissions">
-                <Button size="lg" className="w-full sm:w-auto btn-3d bg-amber-600 hover:bg-amber-700 text-white">
+                <Button size="lg" className="w-full sm:w-auto btn-3d bg-yellow-500 hover:bg-yellow-600 text-white">
                   Start Your Journey
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
               <Link href="/courses">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto border-amber-300 text-amber-800 hover:bg-amber-50">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto border-yellow-200 text-yellow-700 hover:bg-yellow-25">
                   Explore Courses
                 </Button>
               </Link>
@@ -180,7 +180,7 @@ export function HeroSection() {
             onMouseLeave={() => setTilt({ x: 0, y: 0 })}
           >
             <div
-              className="relative rounded-2xl bg-gradient-to-br from-amber-600 to-amber-800 p-8 shadow-2xl shadow-amber-500/25"
+              className="relative rounded-2xl bg-gradient-to-br from-yellow-500 to-yellow-700 p-8 shadow-2xl shadow-yellow-400/25"
               style={{
                 transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
                 transition: "transform 0.1s ease-out",
@@ -188,30 +188,30 @@ export function HeroSection() {
             >
               <div className="space-y-4">
                 <div className="flex items-center gap-3 bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20">
-                  <GraduationCap className="h-8 w-8 text-amber-200" />
+                  <GraduationCap className="h-8 w-8 text-yellow-100" />
                   <div>
                     <p className="text-white font-semibold">Live Classes</p>
-                    <p className="text-amber-100 text-sm">Interactive sessions daily</p>
+                    <p className="text-yellow-50 text-sm">Interactive sessions daily</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20">
-                  <Brain className="h-8 w-8 text-amber-200" />
+                  <Brain className="h-8 w-8 text-yellow-100" />
                   <div>
                     <p className="text-white font-semibold">AI Tutor</p>
-                    <p className="text-amber-100 text-sm">24/7 personalized help</p>
+                    <p className="text-yellow-50 text-sm">24/7 personalized help</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20">
-                  <Globe className="h-8 w-8 text-amber-200" />
+                  <Globe className="h-8 w-8 text-yellow-100" />
                   <div>
                     <p className="text-white font-semibold">Global Standards</p>
-                    <p className="text-amber-100 text-sm">Cambridge & Board aligned</p>
+                    <p className="text-yellow-50 text-sm">Cambridge & Board aligned</p>
                   </div>
                 </div>
               </div>
             </div>
             {/* Glow effect */}
-            <div className="absolute -inset-4 bg-amber-400/20 rounded-3xl blur-2xl -z-10" />
+            <div className="absolute -inset-4 bg-yellow-300/20 rounded-3xl blur-2xl -z-10" />
           </div>
         </div>
       </div>
@@ -221,7 +221,7 @@ export function HeroSection() {
 
 export function FeaturesSection() {
   return (
-    <section className="py-24 bg-[#fff8e7]">
+    <section className="py-24 bg-[#fefce8]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">
@@ -235,11 +235,11 @@ export function FeaturesSection() {
           {features.map((feature, i) => (
             <div
               key={feature.title}
-              className="group card-3d rounded-2xl bg-white p-8 shadow-sm border border-amber-100"
+              className="group card-3d rounded-2xl bg-white p-8 shadow-sm border border-yellow-50"
               style={{ animationDelay: `${i * 0.1}s` }}
             >
-              <div className="inline-flex items-center justify-center rounded-xl bg-amber-50 p-3 mb-5 group-hover:bg-amber-100 transition-colors">
-                <feature.icon className="h-6 w-6 text-amber-600" />
+              <div className="inline-flex items-center justify-center rounded-xl bg-yellow-25 p-3 mb-5 group-hover:bg-yellow-50 transition-colors">
+                <feature.icon className="h-6 w-6 text-yellow-500" />
               </div>
               <h3 className="text-lg font-semibold text-slate-900 mb-2">{feature.title}</h3>
               <p className="text-slate-600 leading-relaxed">{feature.description}</p>
@@ -266,15 +266,15 @@ export function CourseCategoriesSection() {
             <Link
               key={cat.name}
               href="/courses"
-              className="group relative overflow-hidden rounded-2xl border border-amber-100 p-6 hover:shadow-lg hover:border-amber-200 transition-all duration-300 card-3d"
+              className="group relative overflow-hidden rounded-2xl border border-yellow-50 p-6 hover:shadow-lg hover:border-yellow-100 transition-all duration-300 card-3d"
               style={{ animationDelay: `${i * 0.05}s` }}
             >
               <div className={`absolute top-0 left-0 w-1 h-full ${cat.color} rounded-l-2xl`} />
-              <h3 className="text-lg font-semibold text-slate-900 group-hover:text-amber-700 transition-colors pl-3">
+              <h3 className="text-lg font-semibold text-slate-900 group-hover:text-yellow-600 transition-colors pl-3">
                 {cat.name}
               </h3>
               <p className="text-sm text-slate-500 mt-1 pl-3">{cat.count}</p>
-              <ArrowRight className="absolute bottom-6 right-6 h-5 w-5 text-amber-300 group-hover:text-amber-600 group-hover:translate-x-1 transition-all" />
+              <ArrowRight className="absolute bottom-6 right-6 h-5 w-5 text-yellow-200 group-hover:text-yellow-500 group-hover:translate-x-1 transition-all" />
             </Link>
           ))}
         </div>
@@ -285,7 +285,7 @@ export function CourseCategoriesSection() {
 
 export function TestimonialsSection() {
   return (
-    <section className="py-24 bg-[#fff8e7]">
+    <section className="py-24 bg-[#fefce8]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">Student Success Stories</h2>
@@ -295,16 +295,16 @@ export function TestimonialsSection() {
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {testimonials.map((t, i) => (
-            <div key={t.name} className="rounded-2xl bg-white p-8 shadow-sm border border-amber-100 card-3d">
+            <div key={t.name} className="rounded-2xl bg-white p-8 shadow-sm border border-yellow-50 card-3d">
               <div className="flex gap-1 mb-4">
                 {Array.from({ length: t.rating }).map((_, i) => (
-                  <Award key={i} className="h-4 w-4 text-amber-400 fill-amber-400" />
+                  <Award key={i} className="h-4 w-4 text-yellow-300 fill-yellow-300" />
                 ))}
               </div>
               <p className="text-slate-600 leading-relaxed mb-6">&ldquo;{t.content}&rdquo;</p>
               <div>
                 <p className="font-semibold text-slate-900">{t.name}</p>
-                <p className="text-sm text-amber-600">{t.role}</p>
+                <p className="text-sm text-yellow-500">{t.role}</p>
               </div>
             </div>
           ))}
@@ -327,13 +327,13 @@ export function FacultySection() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {faculty.map((member, i) => (
             <div key={member.name} className="text-center group card-3d">
-              <div className="mx-auto h-24 w-24 rounded-2xl bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                <span className="text-2xl font-bold text-amber-700">
+              <div className="mx-auto h-24 w-24 rounded-2xl bg-gradient-to-br from-yellow-50 to-yellow-100 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                <span className="text-2xl font-bold text-yellow-600">
                   {member.name.split(" ").map((n) => n[0]).join("")}
                 </span>
               </div>
               <h3 className="font-semibold text-slate-900">{member.name}</h3>
-              <p className="text-sm text-amber-600 font-medium mt-1">{member.subject}</p>
+              <p className="text-sm text-yellow-500 font-medium mt-1">{member.subject}</p>
               <p className="text-xs text-slate-500 mt-1">{member.qualification}</p>
               <p className="text-xs text-slate-400 mt-0.5">{member.experience} experience</p>
             </div>
@@ -363,7 +363,7 @@ export function WhyChooseUsSection() {
               to deliver an unmatched educational experience.
             </p>
             <Link href="/about" className="inline-block mt-8">
-              <Button variant="outline" className="border-amber-500/50 text-white hover:bg-amber-900/30 hover:border-amber-500">
+              <Button variant="outline" className="border-yellow-400/50 text-white hover:bg-yellow-800/30 hover:border-yellow-400">
                 Learn More About Us
                 <ArrowRight className="h-4 w-4" />
               </Button>
@@ -372,7 +372,7 @@ export function WhyChooseUsSection() {
           <div className="grid sm:grid-cols-2 gap-6">
             {reasons.map((reason, i) => (
               <div key={reason.title} className="rounded-xl bg-slate-800/50 p-6 border border-slate-700/50 card-3d">
-                <h3 className="font-semibold text-amber-400 mb-2">{reason.title}</h3>
+                <h3 className="font-semibold text-yellow-300 mb-2">{reason.title}</h3>
                 <p className="text-sm text-slate-400 leading-relaxed">{reason.desc}</p>
               </div>
             ))}
@@ -385,20 +385,20 @@ export function WhyChooseUsSection() {
 
 export function CTASection() {
   return (
-    <section className="py-24 bg-[#fffbf0]">
+    <section className="py-24 bg-[#fffbeb]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 px-8 py-16 sm:px-16 sm:py-20 text-center shadow-2xl shadow-amber-500/20">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-yellow-500 via-yellow-600 to-yellow-800 px-8 py-16 sm:px-16 sm:py-20 text-center shadow-2xl shadow-yellow-400/20">
           <div className="absolute inset-0 grid-pattern opacity-10" />
           <div className="relative">
             <h2 className="text-3xl sm:text-4xl font-bold text-white">
               Ready to Transform Your Learning?
             </h2>
-            <p className="mt-4 text-lg text-amber-100 max-w-2xl mx-auto">
+            <p className="mt-4 text-lg text-yellow-50 max-w-2xl mx-auto">
               Join thousands of successful students. Admissions are now open for the new session.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/admissions">
-                <Button size="lg" className="btn-3d bg-white text-amber-700 hover:bg-amber-50 w-full sm:w-auto">
+                <Button size="lg" className="btn-3d bg-white text-yellow-600 hover:bg-yellow-25 w-full sm:w-auto">
                   Apply for Admission
                 </Button>
               </Link>

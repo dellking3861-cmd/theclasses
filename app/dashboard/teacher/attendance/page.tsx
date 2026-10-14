@@ -6,7 +6,7 @@ import { ClipboardCheck } from "lucide-react";
 export default function TeacherAttendancePage() {
   return (
     <div>
-      <PageHeader title="Mark Attendance" description="Record student attendance for your classes" action={<Button>Mark Today's Attendance</Button>} />
+      <PageHeader title="Mark Attendance" description="Record student attendance for your classes" action={<Button>Mark Today&apos;s Attendance</Button>} />
       <Card><CardContent><EmptyState icon={ClipboardCheck} title="No attendance marked" description="Select a course and date to mark attendance." /></CardContent></Card>
     </div>
   );

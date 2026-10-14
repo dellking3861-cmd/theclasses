@@ -64,26 +64,7 @@ const categories = [
   { name: "Entry Test Prep", count: "4 Programs", color: "bg-orange-500" },
 ];
 
-const testimonials = [
-  {
-    name: "Google Review",
-    role: "Student",
-    content: "Very good coaching institute. Sir Wasi is an excellent teacher who explains concepts clearly.",
-    rating: 5,
-  },
-  {
-    name: "Google Review",
-    role: "Parent",
-    content: "My son&apos;s grades have improved significantly since joining The Classes. Highly recommended.",
-    rating: 5,
-  },
-  {
-    name: "Google Review",
-    role: "Student",
-    content: "Best coaching for O Levels in the area. The teaching methodology is very effective.",
-    rating: 5,
-  },
-];
+const testimonials = [];
 
 const faculty = [
   { name: "Sir Wasi", subject: "Founder & Lead Instructor", experience: "7+ years", qualification: "BSc Mechanical Engineering, NED University" },
@@ -281,30 +262,35 @@ export function CourseCategoriesSection() {
 }
 
 export function TestimonialsSection() {
+  const googleMapsUrl = "https://share.google/5yBewcTJ3L661jeO5";
+
   return (
     <section className="py-24 bg-[#fefce8]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">What Our Community Says</h2>
           <p className="mt-4 text-lg text-slate-600">
-            Google reviews from real students and parents.
+            See what students and parents say about The Classes on Google.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((t, i) => (
-            <div key={t.name} className="rounded-2xl bg-white p-8 shadow-sm border border-yellow-50 card-3d">
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <Award key={i} className="h-4 w-4 text-yellow-300 fill-yellow-300" />
-                ))}
-              </div>
-              <p className="text-slate-600 leading-relaxed mb-6">&ldquo;{t.content}&rdquo;</p>
-              <div>
-                <p className="font-semibold text-slate-900">{t.name}</p>
-                <p className="text-sm text-yellow-500">{t.role}</p>
-              </div>
+        <div className="max-w-md mx-auto">
+          <a
+            href={googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 rounded-2xl bg-white border border-yellow-200 px-8 py-6 hover:border-yellow-400 hover:shadow-lg transition-all card-3d"
+          >
+            <div className="flex gap-1">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Award key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+              ))}
             </div>
-          ))}
+            <div className="text-left">
+              <p className="font-semibold text-slate-900">Rate Us on Google</p>
+              <p className="text-sm text-slate-500">Read &amp; leave a review</p>
+            </div>
+            <ArrowRight className="h-5 w-5 text-yellow-500 ml-2" />
+          </a>
         </div>
       </div>
     </section>

@@ -32,18 +32,18 @@ export default function AdmissionsPage() {
   }
 
   return (
-    <section className="py-16 bg-[#fefce8] min-h-screen">
+    <section className="py-16 bg-stone-50 min-h-screen">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-slate-900">Apply for Admission</h1>
-          <p className="mt-3 text-lg text-slate-600">
+          <h1 className="text-4xl font-bold text-stone-900 font-display">Apply for Admission</h1>
+          <p className="mt-3 text-lg text-stone-500">
             Start your journey with The Classes. Fill out the form below and our team will get in touch.
           </p>
         </div>
 
-        <Card className="border-yellow-50">
+        <Card className="border-stone-100 shadow-sm">
           <CardHeader>
-            <CardTitle>Admission Application</CardTitle>
+            <CardTitle className="font-display text-stone-900">Admission Application</CardTitle>
             <CardDescription>All fields marked with * are required.</CardDescription>
           </CardHeader>
           <CardContent>
@@ -58,7 +58,7 @@ export default function AdmissionsPage() {
               <Input label="Current Grade/Class" placeholder="e.g., Class 10, A1" {...register("grade" as keyof ContactInput)} />
               <Input label="Subject of Inquiry *" placeholder="Admission inquiry" error={errors.subject?.message} {...register("subject")} />
               <Textarea label="Additional Message" placeholder="Tell us about your goals..." error={errors.message?.message} {...register("message")} />
-              <Button type="submit" className="w-full bg-yellow-500 hover:bg-yellow-600" size="lg" isLoading={isSubmitting}>
+              <Button type="submit" className="w-full bg-amber-600 hover:bg-amber-700 btn-hover" size="lg" isLoading={isSubmitting}>
                 Submit Application
               </Button>
             </form>
@@ -71,8 +71,8 @@ export default function AdmissionsPage() {
             "Flexible payment plans",
             "Scholarship opportunities",
           ].map((benefit) => (
-            <div key={benefit} className="flex items-center gap-2 text-sm text-slate-600">
-              <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
+            <div key={benefit} className="flex items-center gap-2 text-sm text-stone-600">
+              <CheckCircle className="h-5 w-5 text-amber-600 flex-shrink-0" />
               {benefit}
             </div>
           ))}

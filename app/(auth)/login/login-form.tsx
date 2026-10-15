@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { loginSchema, type LoginInput } from "@/lib/validations";
 import { ROLE_DASHBOARD_PATHS, APP_NAME } from "@/lib/constants";
+import type { UserRole } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -44,7 +45,8 @@ export default function LoginForm() {
       }
 
       toast.success("Welcome back!");
-      const dashboardPath = redirect || ROLE_DASHBOARD_PATHS[result.user.role] || "/dashboard/student";
+      const userRole = result.user.role as UserRole;
+      const dashboardPath = redirect || ROLE_DASHBOARD_PATHS[userRole] || "/dashboard/student";
       router.push(dashboardPath);
       router.refresh();
     } catch {

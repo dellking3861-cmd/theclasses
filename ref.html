@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Classes Education System | Modern Academic Coaching in Karachi</title>
+    <meta name="description" content="The Classes Education System — structured academic coaching for Grades 1–12, O/A Levels and major Pakistani and international examination boards. Experienced teaching powered by technology.">
+    <meta name="keywords" content="tuition classes Karachi, coaching classes Karachi, mathematics tuition Karachi, physics tuition Karachi, O Level tuition Karachi, Cambridge O Level preparation, Karachi Board coaching, Grade 9 tuition Karachi, Grade 10 tuition Karachi, Intermediate tuition Karachi">
+    <meta name="author" content="The Classes Education System">
+    <meta property="og:title" content="The Classes Education System | Modern Academic Coaching in Karachi">
+    <meta property="og:description" content="Build strong concepts. Prepare smarter. Achieve more. Structured academic coaching for Grades 1–12, O/A Levels and major examination boards.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_PK">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "The Classes Education System",
+        "description": "Modern academic coaching institute in Karachi providing structured preparation for Grades 1-12, O/A Levels and major Pakistani and international examination boards.",
+        "founder": {
+            "@type": "Person",
+            "name": "Sir Wasi",
+            "jobTitle": "Head of Mathematics & Physics",
+            "alumniOf": "NED University of Engineering & Technology"
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "R-156 Salman Garden, Near Jamia Millia Road, Malir 15",
+            "addressLocality": "Karachi",
+            "addressCountry": "PK"
+        },
+        "telephone": "+92-336-3861205"
+    }
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fdfbf0',
+                            100: '#fcf4d6',
+                            200: '#f8e59e',
+                            300: '#f3d260',
+                            400: '#eac035',
+                            500: '#d4af37', // Gold
+                            600: '#b8860b', // Darker Gold / Metallic Gold
+                            700: '#996515',
+                            800: '#7a4e12',
+                            900: '#141414', // Deep Black
+                            accent: '#ffd700', // Bright Gold
+                            amber: '#f59e0b'
+                        },
+                        dark: {
+                            950: '#09090b',
+                            900: '#121212',
+                            800: '#1e1e24',
+                            700: '#2a2a32',
+                            600: '#3f3f46'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase Configuration -->
+    <script src="supabase.config.js"></script>
+    <!-- Main Application Script -->
+    <script src="script.js" defer></script>
+</head>
+<body class="font-sans text-slate-200 bg-dark-950 antialiased selection:bg-brand-500 selection:text-black flex flex-col min-h-screen">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-gradient-to-r from-black via-dark-900 to-black text-brand-500 text-xs md:text-sm py-2 px-4 border-b border-brand-500/20">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="bg-brand-500 text-black text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">Admissions Open</span>
+                <span class="hidden sm:inline text-slate-300">Enrol for structured academic preparation across Grades 1–12 and O/A Levels.</span>
+                <span class="sm:hidden text-slate-300">Admissions open for all grades.</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="tel:+923363861205" class="hover:text-brand-500 transition flex items-center gap-1 text-slate-300 hover:text-brand-500">
+                    <i class="fa-solid fa-phone text-xs"></i> <span class="hidden md:inline">0336-3861205</span>
+                </a>
+                <a href="https://wa.me/923363861205" target="_blank" rel="noopener noreferrer" class="bg-brand-500 hover:bg-brand-600 text-black px-2.5 py-0.5 rounded text-xs font-bold flex items-center gap-1 transition">
+                    <i class="fa-brands fa-whatsapp"></i> Chat
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-md border-b border-brand-500/20 shadow-lg shadow-black/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- LOGO -->
+                <a href="#home" data-page="home" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-400 flex items-center justify-center text-black font-bold shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-heading font-extrabold text-xl sm:text-2xl tracking-tight text-white block leading-tight">The Classes<span class="text-brand-500"> Education</span></span>
+                        <span class="text-[10px] uppercase font-bold tracking-widest text-brand-500/80 block -mt-1">System · Karachi</span>
+                    </div>
+                </a>
+
+                <!-- DESKTOP NAV LINKS -->
+                <div class="hidden lg:flex items-center space-x-8 font-medium text-slate-300 text-sm">
+                    <a href="#home" data-page="home" class="hover:text-brand-500 transition text-brand-500 font-bold">Home</a>
+                    <a href="#subjects" data-page="subjects" class="hover:text-brand-500 transition">Subjects</a>
+                    <a href="#programs" data-page="programs" class="hover:text-brand-500 transition">Programs</a>
+                    <a href="#about" data-page="about" class="hover:text-brand-500 transition">About</a>
+                    <a href="#contact" data-page="contact" class="hover:text-brand-500 transition">Contact</a>
+                </div>
+
+                <!-- NAV CTA BUTTONS -->
+                <div class="hidden sm:flex items-center space-x-3">
+                    <button onclick="openModal()" class="border-2 border-brand-500 text-brand-500 hover:bg-brand-500 hover:text-black px-4 py-2.5 rounded-xl font-semibold text-sm transition">
+                        Enquire for Admission
+                    </button>
+                    <a href="#subjects" data-page="subjects" class="bg-brand-500 hover:bg-brand-600 text-black px-5 py-2.5 rounded-xl font-bold text-sm shadow-md shadow-brand-500/20 transition">
+                        Explore Classes
+                    </a>
+                    <a href="login.html" class="inline-flex items-center gap-2 border border-brand-500/40 text-brand-400 hover:bg-brand-500 hover:text-black px-4 py-2.5 rounded-xl font-semibold text-sm transition">
+                        <i class="fa-solid fa-user-lock text-xs"></i> Login
+                    </a>
+                </div>
+
+                <!-- MOBILE MENU BUTTON -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" aria-label="Toggle Navigation Menu" class="text-slate-300 hover:text-white p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILE MENU DROPDOWN -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-brand-500/20 bg-dark-900 px-4 pt-3 pb-6 space-y-3 shadow-lg">
+            <a href="#home" data-page="home" class="block py-2 text-brand-500 font-semibold">Home</a>
+            <a href="#subjects" data-page="subjects" class="block py-2 text-slate-300 hover:text-brand-500 font-medium">Subjects</a>
+            <a href="#programs" data-page="programs" class="block py-2 text-slate-300 hover:text-brand-500 font-medium">Programs</a>
+            <a href="#about" data-page="about" class="block py-2 text-slate-300 hover:text-brand-500 font-medium">About</a>
+            <a href="#contact" data-page="contact" class="block py-2 text-slate-300 hover:text-brand-500 font-medium">Contact</a>
+            <div class="pt-3 flex flex-col space-y-2">
+                <button onclick="openModal()" class="w-full text-center border-2 border-brand-500 text-brand-500 py-2.5 rounded-xl font-semibold text-sm">
+                    Enquire for Admission
+                </button>
+                <a href="#subjects" data-page="subjects" class="w-full text-center bg-brand-500 text-black py-2.5 rounded-xl font-bold text-sm">
+                    Explore Classes
+                </a>
+                <a href="login.html" class="w-full text-center border border-brand-500/40 text-brand-400 py-2.5 rounded-xl font-semibold text-sm">
+                    <i class="fa-solid fa-user-lock mr-1"></i> Student / Parent / Admin Login
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT VIEW CONTAINERS (MULTI-PAGE) -->
+    <main class="flex-grow">
+
+        <!-- ===================================================================
+             PAGE 1: HOME PAGE
+             =================================================================== -->
+        <div id="page-home" class="page-view">
+            <!-- HERO SECTION -->
+            <section class="relative overflow-hidden hero-gradient py-12 lg:py-20 border-b border-brand-500/20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-12 gap-12 items-center">
+                        <div class="lg:col-span-7 space-y-6">
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-900 border border-brand-500/30 text-brand-400 text-xs font-semibold">
+                                <span class="w-2 h-2 rounded-full bg-brand-500 badge-pulse"></span>
+                                Modern Academic Coaching · Karachi
+                            </div>
+
+                            <h1 class="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.15]">
+                                Build Strong Concepts. <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-500 to-amber-300">Prepare Smarter.</span> Achieve More.
+                            </h1>
+
+                            <p class="text-slate-300 text-lg leading-relaxed max-w-2xl">
+                                Structured academic coaching for <strong class="text-brand-400">Grades 1–12, O/A Levels</strong> and major Pakistani and international examination boards. Experienced teaching combined with modern educational technology.
+                            </p>
+
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="bg-dark-900 px-3 py-1 rounded-lg text-xs font-semibold border border-brand-500/30 shadow-sm text-slate-300"><i class="fa-solid fa-check text-brand-500 mr-1"></i> Karachi Board (BSEK)</span>
+                                <span class="bg-dark-900 px-3 py-1 rounded-lg text-xs font-semibold border border-brand-500/30 shadow-sm text-slate-300"><i class="fa-solid fa-check text-brand-500 mr-1"></i> Intermediate (BIEK)</span>
+                                <span class="bg-dark-900 px-3 py-1 rounded-lg text-xs font-semibold border border-brand-500/30 shadow-sm text-slate-300"><i class="fa-solid fa-check text-brand-500 mr-1"></i> Cambridge O Levels</span>
+                                <span class="bg-dark-900 px-3 py-1 rounded-lg text-xs font-semibold border border-brand-500/30 shadow-sm text-slate-300"><i class="fa-solid fa-check text-brand-500 mr-1"></i> Cambridge IGCSE</span>
+                                <span class="bg-dark-900 px-3 py-1 rounded-lg text-xs font-semibold border border-brand-500/30 shadow-sm text-slate-300"><i class="fa-solid fa-check text-brand-500 mr-1"></i> FBISE & AKU-EB</span>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+                                <button onclick="openModal()" class="bg-brand-500 hover:bg-brand-600 text-black font-extrabold px-8 py-4 rounded-xl shadow-xl shadow-brand-500/20 transition text-center flex items-center justify-center gap-2">
+                                    <span>Enquire for Admission</span>
+                                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                                </button>
+                                <a href="#programs" data-page="programs" class="bg-dark-900 hover:bg-dark-800 border border-brand-500/40 text-brand-400 font-bold px-6 py-4 rounded-xl shadow-lg transition text-center flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-layer-group text-xl text-brand-500"></i>
+                                    <span>Explore Classes</span>
+                                </a>
+                            </div>
+
+                            <div class="pt-6 grid grid-cols-3 gap-4 border-t border-brand-500/20">
+                                <div>
+                                    <div class="font-heading font-extrabold text-2xl text-brand-400">2017</div>
+                                    <p class="text-xs text-slate-400 font-medium">Teaching Since</p>
+                                </div>
+                                <div>
+                                    <div class="font-heading font-extrabold text-2xl text-brand-400">1–12</div>
+                                    <p class="text-xs text-slate-400 font-medium">Grades Supported</p>
+                                </div>
+                                <div>
+                                    <div class="font-heading font-extrabold text-2xl text-brand-400">5+</div>
+                                    <p class="text-xs text-slate-400 font-medium">Core Subjects</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column Interactive Hero Card -->
+                        <div class="lg:col-span-5 relative">
+                            <div class="relative z-10 bg-dark-900 rounded-3xl p-6 shadow-2xl border border-brand-500/30">
+                                <div class="flex items-center justify-between pb-4 border-b border-dark-700 mb-6">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 rounded-full bg-brand-500/10 text-brand-500 flex items-center justify-center font-bold border border-brand-500/20">
+                                            <i class="fa-solid fa-chalkboard-user"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-bold text-white text-sm">Structured Learning</h3>
+                                            <p class="text-xs text-slate-400">Concept-first · Exam-focused</p>
+                                        </div>
+                                    </div>
+                                    <span class="bg-emerald-950/80 text-emerald-400 border border-emerald-800/50 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Active
+                                    </span>
+                                </div>
+
+                                <div class="bg-black rounded-2xl overflow-hidden relative p-4 text-white mb-6 border border-brand-500/20">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="bg-brand-500 text-black text-[11px] px-2.5 py-0.5 rounded font-extrabold">Mathematics & Physics</span>
+                                        <span class="text-xs text-slate-400"><i class="fa-solid fa-users mr-1"></i> Small Groups</span>
+                                    </div>
+                                    <div class="bg-dark-900/90 rounded-xl p-4 border border-dark-700 mb-3">
+                                        <p class="text-xs text-brand-400 font-mono mb-1">// Teaching Approach</p>
+                                        <p class="text-sm font-semibold text-slate-200">"We make difficult concepts easier to understand through structured teaching and regular practice."</p>
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs text-slate-400">
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-6 h-6 rounded-full bg-brand-500 flex items-center justify-center font-bold text-black text-[10px]">SW</div>
+                                            <span class="text-slate-300">Sir Wasi · Head of Math & Physics</span>
+                                        </div>
+                                        <span class="text-brand-400 font-medium"><i class="fa-solid fa-robot mr-1"></i> Tech-Assisted</span>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <h4 class="text-xs font-bold text-brand-400 uppercase tracking-wider">Quick Admission Enquiry</h4>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <select id="heroLevelSelect" aria-label="Select Grade Level" class="bg-dark-800 border border-dark-700 rounded-lg text-xs p-2.5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                            <option value="">Select Level</option>
+                                            <option value="School Classes (1-8)">School Classes (1–8)</option>
+                                            <option value="Secondary (9-10)">Secondary (9–10)</option>
+                                            <option value="Intermediate (11-12)">Intermediate (11–12)</option>
+                                            <option value="O/A Levels">O/A Levels</option>
+                                            <option value="Board Exam Prep">Board Exam Prep</option>
+                                        </select>
+                                        <select id="heroSubjectSelect" aria-label="Select Subject" class="bg-dark-800 border border-dark-700 rounded-lg text-xs p-2.5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                            <option value="">Select Subject</option>
+                                            <option value="Mathematics">Mathematics</option>
+                                            <option value="Physics">Physics</option>
+                                            <option value="Chemistry">Chemistry</option>
+                                            <option value="Biology">Biology</option>
+                                            <option value="Computer Science">Computer Science</option>
+                                        </select>
+                                    </div>
+                                    <button onclick="quickRegister()" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-extrabold text-xs py-3 rounded-lg transition flex items-center justify-center gap-2 shadow-lg shadow-brand-500/20">
+                                        <i class="fa-solid fa-bolt text-black"></i> Start Admission Enquiry
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TRUST / CREDIBILITY SECTION -->
+            <section class="py-16 bg-dark-900 border-b border-brand-500/20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <span class="text-brand-400 font-bold text-xs uppercase tracking-widest bg-black border border-brand-500/20 px-3 py-1 rounded-full">About Our Teaching</span>
+                            <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3 leading-tight">Teaching Experience That Goes Beyond the Textbook</h2>
+                            <p class="text-slate-300 text-sm sm:text-base mt-4 leading-relaxed">
+                                The Classes Education System was founded by <strong class="text-brand-400">Sir Wasi</strong>, a Mechanical Engineer from NED University who has been teaching since 2017. His approach combines strong conceptual foundations with exam-oriented preparation.
+                            </p>
+                            <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+                                With experience across both Pakistani and international curricula, our teaching is built on understanding — not memorization alone. We prepare students for the way exams actually work.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 mt-6">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-graduation-cap text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">Mechanical Engineer</p>
+                                        <p class="text-slate-400 text-xs">NED University</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-calendar-check text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">Teaching Since 2017</p>
+                                        <p class="text-slate-400 text-xs">Pakistani & International</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-square-root-variable text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">Math & Physics</p>
+                                        <p class="text-slate-400 text-xs">Head of Department</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-robot text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">AI-Powered Learning</p>
+                                        <p class="text-slate-400 text-xs">Modern EdTech Focus</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="bg-gradient-to-br from-brand-900 to-dark-900 rounded-3xl p-8 border border-brand-500/30 shadow-2xl">
+                                <div class="flex items-center space-x-4 mb-6">
+                                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-400 flex items-center justify-center text-black font-heading font-extrabold text-2xl shadow-lg shadow-brand-500/20">
+                                        SW
+                                    </div>
+                                    <div>
+                                        <h3 class="font-heading font-bold text-white text-xl">Sir Wasi</h3>
+                                        <p class="text-brand-400 text-xs font-semibold">Founder · Head of Mathematics & Physics</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-3 text-sm text-slate-300">
+                                    <p class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-500 mt-1"></i> Mechanical Engineer — NED University</p>
+                                    <p class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-500 mt-1"></i> Teaching since 2017</p>
+                                    <p class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-500 mt-1"></i> Experienced in Pakistani & international curricula</p>
+                                    <p class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-500 mt-1"></i> Concept-based teaching & exam-oriented preparation</p>
+                                    <p class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-500 mt-1"></i> Strong interest in AI-powered education & modern EdTech</p>
+                                </div>
+                                <div class="mt-6 pt-6 border-t border-brand-500/20">
+                                    <p class="text-xs text-slate-400 italic">"Technology supports the teacher. It doesn't replace the teacher."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SUBJECTS SECTION -->
+            <section class="py-16 bg-dark-950 border-b border-brand-500/20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <span class="text-brand-400 font-bold text-xs uppercase tracking-widest bg-black border border-brand-500/20 px-3 py-1 rounded-full">Academic Subjects</span>
+                        <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3">Subjects We Teach</h2>
+                        <p class="text-slate-400 text-sm mt-3">Structured preparation across core academic subjects for all grades and boards.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Mathematics -->
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 hover:shadow-lg hover:shadow-brand-500/10 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-square-root-variable"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-2">Mathematics</h3>
+                            <p class="text-slate-400 text-sm mb-4">Build strong mathematical reasoning from fundamentals to advanced problem solving.</p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Algebra</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Geometry</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Calculus</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Statistics</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">Grades 1–12 · O/A Levels · Board Prep</p>
+                            <button onclick="openModalWithSubject('Mathematics')" class="text-brand-500 text-xs font-bold hover:text-brand-400 transition flex items-center gap-1">
+                                Enquire <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+
+                        <!-- Physics -->
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 hover:shadow-lg hover:shadow-brand-500/10 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-atom"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-2">Physics</h3>
+                            <p class="text-slate-400 text-sm mb-4">Understand concepts, equations and numerical problem-solving through structured teaching.</p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Mechanics</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Waves</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Electricity</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Modern Physics</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">Grades 9–12 · O/A Levels · Board Prep</p>
+                            <button onclick="openModalWithSubject('Physics')" class="text-brand-500 text-xs font-bold hover:text-brand-400 transition flex items-center gap-1">
+                                Enquire <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+
+                        <!-- Chemistry -->
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 hover:shadow-lg hover:shadow-brand-500/10 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-flask"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-2">Chemistry</h3>
+                            <p class="text-slate-400 text-sm mb-4">Learn chemistry through concepts, reactions, mechanisms and exam-oriented practice.</p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Physical</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Organic</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Inorganic</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Analytical</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">Grades 9–12 · O/A Levels · Board Prep</p>
+                            <button onclick="openModalWithSubject('Chemistry')" class="text-brand-500 text-xs font-bold hover:text-brand-400 transition flex items-center gap-1">
+                                Enquire <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+
+                        <!-- Biology -->
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 hover:shadow-lg hover:shadow-brand-500/10 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-dna"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-2">Biology</h3>
+                            <p class="text-slate-400 text-sm mb-4">Understand biological systems through diagrams, concepts and structured revision.</p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Genetics</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Ecology</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Cell Biology</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Human Biology</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">Grades 9–12 · O/A Levels · Board Prep</p>
+                            <button onclick="openModalWithSubject('Biology')" class="text-brand-500 text-xs font-bold hover:text-brand-400 transition flex items-center gap-1">
+                                Enquire <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+
+                        <!-- Computer Science -->
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 hover:shadow-lg hover:shadow-brand-500/10 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-laptop-code"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-2">Computer Science</h3>
+                            <p class="text-slate-400 text-sm mb-4">Develop programming and computational thinking skills alongside academic preparation.</p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Programming</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">C / C++</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Web Basics</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Computational Thinking</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">Grades 9–12 · O/A Levels · Board Prep</p>
+                            <button onclick="openModalWithSubject('Computer Science')" class="text-brand-500 text-xs font-bold hover:text-brand-400 transition flex items-center gap-1">
+                                Enquire <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+
+                        <!-- Exam Preparation -->
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 hover:shadow-lg hover:shadow-brand-500/10 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-file-pen"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-2">Exam Preparation</h3>
+                            <p class="text-slate-400 text-sm mb-4">Focused preparation for major Pakistani and international examination boards.</p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Past Papers</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Mock Tests</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Revision</span>
+                                <span class="bg-black/60 text-slate-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-brand-500/20">Exam Strategy</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">All Grades · All Boards</p>
+                            <button onclick="openModalWithSubject('Exam Preparation')" class="text-brand-500 text-xs font-bold hover:text-brand-400 transition flex items-center gap-1">
+                                Enquire <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROGRAMS / LEVELS SECTION -->
+            <section class="py-16 bg-dark-900 border-b border-brand-500/20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <span class="text-brand-400 font-bold text-xs uppercase tracking-widest bg-black border border-brand-500/20 px-3 py-1 rounded-full">Programs & Levels</span>
+                        <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3">Structured Programs for Every Stage</h2>
+                        <p class="text-slate-400 text-sm mt-3">From early school years to advanced examination preparation.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- School Classes -->
+                        <div class="p-6 rounded-2xl bg-black/60 border border-brand-500/20 hover:border-brand-500 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-child-reaching"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-1">School Classes</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-3">Grades 1–8</p>
+                            <p class="text-slate-400 text-sm">Build strong foundations in core subjects with engaging, age-appropriate teaching.</p>
+                        </div>
+
+                        <!-- Secondary -->
+                        <div class="p-6 rounded-2xl bg-black/60 border border-brand-500/20 hover:border-brand-500 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-1">Secondary</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-3">Grades 9–10</p>
+                            <p class="text-slate-400 text-sm">Focused preparation for board examinations with strong conceptual understanding.</p>
+                        </div>
+
+                        <!-- Intermediate -->
+                        <div class="p-6 rounded-2xl bg-black/60 border border-brand-500/20 hover:border-brand-500 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-1">Intermediate</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-3">Grades 11–12</p>
+                            <p class="text-slate-400 text-sm">Advanced preparation for Pre-Engineering, Pre-Medical and Computer Science streams.</p>
+                        </div>
+
+                        <!-- O/A Levels -->
+                        <div class="p-6 rounded-2xl bg-black/60 border border-brand-500/20 hover:border-brand-500 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-1">O/A Levels</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-3">Cambridge Preparation</p>
+                            <p class="text-slate-400 text-sm">Structured preparation for Cambridge O Level and IGCSE examinations.</p>
+                        </div>
+
+                        <!-- Board Exam Prep -->
+                        <div class="p-6 rounded-2xl bg-black/60 border border-brand-500/20 hover:border-brand-500 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-file-pen"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-1">Board Examination Prep</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-3">Major Pakistani Boards</p>
+                            <p class="text-slate-400 text-sm">Focused preparation for Karachi Board, FBISE, AKU-EB and other major boards.</p>
+                        </div>
+
+                        <!-- International Curricula -->
+                        <div class="p-6 rounded-2xl bg-black/60 border border-brand-500/20 hover:border-brand-500 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-500 group-hover:text-black transition border border-brand-500/20">
+                                <i class="fa-solid fa-earth-asia"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-lg mb-1">International Curricula</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-3">Cambridge · IGCSE</p>
+                            <p class="text-slate-400 text-sm">Preparation for major Pakistani and international examination boards.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- WHY CHOOSE US SECTION -->
+            <section class="py-16 bg-dark-950 border-b border-brand-500/20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <span class="text-brand-400 font-bold text-xs uppercase tracking-widest bg-black border border-brand-500/20 px-3 py-1 rounded-full">Why Choose Us</span>
+                        <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3">A Modern Approach to Academic Coaching</h2>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20">
+                            <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-lg mb-3 border border-brand-500/20">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-base mb-2">Experienced Teaching</h3>
+                            <p class="text-slate-400 text-sm">Teaching experience since 2017 with a strong background in Mathematics and Physics.</p>
+                        </div>
+
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20">
+                            <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-lg mb-3 border border-brand-500/20">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-base mb-2">Concept-Based Learning</h3>
+                            <p class="text-slate-400 text-sm">Focus on understanding instead of memorization alone. Build real comprehension.</p>
+                        </div>
+
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20">
+                            <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-lg mb-3 border border-brand-500/20">
+                                <i class="fa-solid fa-book-bookmark"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-base mb-2">Board-Specific Preparation</h3>
+                            <p class="text-slate-400 text-sm">Teaching aligned with the requirements of different examination systems.</p>
+                        </div>
+
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20">
+                            <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-lg mb-3 border border-brand-500/20">
+                                <i class="fa-solid fa-pen-ruler"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-base mb-2">Regular Practice</h3>
+                            <p class="text-slate-400 text-sm">Worksheets, questions, numerical problems and structured revision.</p>
+                        </div>
+
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20">
+                            <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-lg mb-3 border border-brand-500/20">
+                                <i class="fa-solid fa-user-check"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-base mb-2">Personal Attention</h3>
+                            <p class="text-slate-400 text-sm">Small-group and classroom-focused learning where possible for better support.</p>
+                        </div>
+
+                        <div class="p-6 rounded-2xl bg-dark-900 border border-brand-500/20">
+                            <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-lg mb-3 border border-brand-500/20">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-base mb-2">Technology-Assisted Learning</h3>
+                            <p class="text-slate-400 text-sm">Use of digital resources, AI-assisted educational tools and modern learning techniques.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI / MODERN LEARNING SECTION -->
+            <section class="py-16 bg-dark-900 border-b border-brand-500/20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <span class="text-brand-400 font-bold text-xs uppercase tracking-widest bg-black border border-brand-500/20 px-3 py-1 rounded-full">Modern Learning</span>
+                            <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3 leading-tight">Technology Supports the Teacher. It Doesn't Replace the Teacher.</h2>
+                            <p class="text-slate-300 text-sm sm:text-base mt-4 leading-relaxed">
+                                We believe the best learning happens when experienced teaching is combined with modern educational technology. AI-assisted tools help us personalise practice, generate questions and explain concepts in new ways.
+                            </p>
+                            <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+                                <strong class="text-brand-400">Human teaching + technology = better learning support.</strong>
+                            </p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-5 rounded-2xl bg-black/60 border border-brand-500/20">
+                                <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-lg mb-3 border border-brand-500/20">
+                                    <i class="fa-solid fa-user-gear"></i>
+                                </div>
+                                <h3 class="font-bold text-white text-sm mb-1">Personalized Practice</h3>
+                                <p class="text-slate-400 text-xs">Adaptive exercises tailored to each student's level.</p>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-black/60 border border-brand-500/20">
+                                <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-lg mb-3 border border-brand-500/20">
+                                    <i class="fa-solid fa-rotate"></i>
+                                </div>
+                                <h3 class="font-bold text-white text-sm mb-1">Structured Revision</h3>
+                                <p class="text-slate-400 text-xs">Smart revision plans that reinforce weak areas.</p>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-black/60 border border-brand-500/20">
+                                <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-lg mb-3 border border-brand-500/20">
+                                    <i class="fa-solid fa-list-check"></i>
+                                </div>
+                                <h3 class="font-bold text-white text-sm mb-1">Question Generation</h3>
+                                <p class="text-slate-400 text-xs">AI-assisted practice questions for exam preparation.</p>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-black/60 border border-brand-500/20">
+                                <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-lg mb-3 border border-brand-500/20">
+                                    <i class="fa-solid fa-book"></i>
+                                </div>
+                                <h3 class="font-bold text-white text-sm mb-1">Digital Notes</h3>
+                                <p class="text-slate-400 text-xs">Organised digital resources and interactive learning materials.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RESULTS / ACHIEVEMENTS PLACEHOLDER -->
+            <section class="py-16 bg-dark-950 border-b border-brand-500/20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <span class="text-brand-400 font-bold text-xs uppercase tracking-widest bg-black border border-brand-500/20 px-3 py-1 rounded-full">Results</span>
+                        <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3">Our Students' Progress</h2>
+                        <p class="text-slate-400 text-sm mt-3">Real achievements will be showcased here as verified results become available.</p>
+                    </div>
+                    <div class="max-w-3xl mx-auto">
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-dashed border-brand-500/30 text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mx-auto mb-4 border border-brand-500/20">
+                                <i class="fa-solid fa-trophy"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-2">Verified Results Coming Soon</h3>
+                            <p class="text-slate-400 text-sm max-w-md mx-auto">
+                                We believe in transparency. As verified student results become available, they will be displayed here professionally.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TESTIMONIALS PLACEHOLDER -->
+            <section class="py-16 bg-dark-900 border-b border-brand-500/20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <span class="text-brand-400 font-bold text-xs uppercase tracking-widest bg-black border border-brand-500/20 px-3 py-1 rounded-full">Testimonials</span>
+                        <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-3">What Students & Parents Say</h2>
+                        <p class="text-slate-400 text-sm mt-3">Genuine feedback from our community will be featured here.</p>
+                    </div>
+                    <div class="max-w-3xl mx-auto">
+                        <div class="p-8 rounded-3xl bg-dark-950 border border-dashed border-brand-500/30 text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mx-auto mb-4 border border-brand-500/20">
+                                <i class="fa-solid fa-quote-left"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-2">Real Feedback Coming Soon</h3>
+                            <p class="text-slate-400 text-sm max-w-md mx-auto">
+                                We value genuine feedback. As real testimonials from students and parents are collected, they will be featured here.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ADMISSIONS CTA SECTION -->
+            <section class="py-16 bg-gradient-to-r from-brand-900 via-dark-900 to-brand-900 border-b border-brand-500/20">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span class="bg-brand-500 text-black text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest">Admissions Open</span>
+                    <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-white mt-4">Start Your Academic Journey With Us</h2>
+                    <p class="text-slate-300 text-sm sm:text-base mt-3 max-w-2xl mx-auto">
+                        Enrol for structured academic preparation across Grades 1–12 and O/A Levels. Experienced teaching, modern technology and exam-focused preparation.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+                        <button onclick="openModal()" class="bg-brand-500 hover:bg-brand-600 text-black font-extrabold px-8 py-4 rounded-xl shadow-xl shadow-brand-500/20 transition text-center flex items-center justify-center gap-2 w-full sm:w-auto">
+                            <span>Start Your Admission Enquiry</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </button>
+                        <a href="https://wa.me/923363861205" target="_blank" rel="noopener noreferrer" class="bg-dark-900 hover:bg-dark-800 border border-brand-500/40 text-brand-400 font-bold px-6 py-4 rounded-xl shadow-lg transition text-center flex items-center justify-center gap-2 w-full sm:w-auto">
+                            <i class="fa-brands fa-whatsapp text-xl text-brand-500"></i>
+                            <span>Talk to Us</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===================================================================
+             PAGE 2: SUBJECTS PAGE
+             =================================================================== -->
+        <div id="page-subjects" class="page-view hidden">
+            <div class="bg-gradient-to-r from-brand-900 to-slate-900 text-white py-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span class="text-brand-400 font-bold text-xs uppercase tracking-widest bg-slate-800 px-3 py-1 rounded-full">Academic Subjects</span>
+                    <h1 class="font-heading font-extrabold text-3xl sm:text-4xl mt-3">Subjects We Teach</h1>
+                    <p class="text-slate-300 text-sm max-w-xl mx-auto mt-2">Structured preparation across core academic subjects for all grades and boards.</p>
+                </div>
+            </div>
+
+            <section class="py-12 bg-dark-950">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Mathematics -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-square-root-variable"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-3">Mathematics</h3>
+                            <p class="text-slate-400 text-sm mb-4">Build strong mathematical reasoning from fundamentals to advanced problem solving.</p>
+                            <ul class="space-y-2 text-xs text-slate-400 mb-6">
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Algebra & Geometry</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Calculus & Statistics</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Exam preparation & past papers</li>
+                            </ul>
+                            <button onclick="openModalWithSubject('Mathematics')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for Mathematics
+                            </button>
+                        </div>
+
+                        <!-- Physics -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-atom"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-3">Physics</h3>
+                            <p class="text-slate-400 text-sm mb-4">Understand concepts, equations and numerical problem-solving through structured teaching.</p>
+                            <ul class="space-y-2 text-xs text-slate-400 mb-6">
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Mechanics & Waves</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Electricity & Thermodynamics</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Modern Physics & numericals</li>
+                            </ul>
+                            <button onclick="openModalWithSubject('Physics')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for Physics
+                            </button>
+                        </div>
+
+                        <!-- Chemistry -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-flask"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-3">Chemistry</h3>
+                            <p class="text-slate-400 text-sm mb-4">Learn chemistry through concepts, reactions, mechanisms and exam-oriented practice.</p>
+                            <ul class="space-y-2 text-xs text-slate-400 mb-6">
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Physical & Organic Chemistry</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Inorganic & Analytical Chemistry</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Practical & exam preparation</li>
+                            </ul>
+                            <button onclick="openModalWithSubject('Chemistry')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for Chemistry
+                            </button>
+                        </div>
+
+                        <!-- Biology -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-dna"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-3">Biology</h3>
+                            <p class="text-slate-400 text-sm mb-4">Understand biological systems through diagrams, concepts and structured revision.</p>
+                            <ul class="space-y-2 text-xs text-slate-400 mb-6">
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Human Biology & Genetics</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Ecology & Cell Biology</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Exam preparation & diagrams</li>
+                            </ul>
+                            <button onclick="openModalWithSubject('Biology')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for Biology
+                            </button>
+                        </div>
+
+                        <!-- Computer Science -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-laptop-code"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-3">Computer Science</h3>
+                            <p class="text-slate-400 text-sm mb-4">Develop programming and computational thinking skills alongside academic preparation.</p>
+                            <ul class="space-y-2 text-xs text-slate-400 mb-6">
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Programming & C/C++</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Web development fundamentals</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Computational thinking</li>
+                            </ul>
+                            <button onclick="openModalWithSubject('Computer Science')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for Computer Science
+                            </button>
+                        </div>
+
+                        <!-- Exam Preparation -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-file-pen"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-3">Exam Preparation</h3>
+                            <p class="text-slate-400 text-sm mb-4">Focused preparation for major Pakistani and international examination boards.</p>
+                            <ul class="space-y-2 text-xs text-slate-400 mb-6">
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Karachi Board (BSEK) & BIEK</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Cambridge O Levels & IGCSE</li>
+                                <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> FBISE & AKU-EB preparation</li>
+                            </ul>
+                            <button onclick="openModalWithSubject('Exam Preparation')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for Exam Prep
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===================================================================
+             PAGE 3: PROGRAMS PAGE
+             =================================================================== -->
+        <div id="page-programs" class="page-view hidden">
+            <div class="bg-gradient-to-r from-brand-900 to-slate-900 text-white py-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span class="text-brand-400 font-bold text-xs uppercase tracking-widest bg-slate-800 px-3 py-1 rounded-full">Programs & Levels</span>
+                    <h1 class="font-heading font-extrabold text-3xl sm:text-4xl mt-3">Structured Programs for Every Stage</h1>
+                    <p class="text-slate-300 text-sm max-w-xl mx-auto mt-2">From early school years to advanced examination preparation.</p>
+                </div>
+            </div>
+
+            <section class="py-12 bg-dark-950">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- School Classes -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-child-reaching"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-2">School Classes</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-4">Grades 1–8</p>
+                            <p class="text-slate-400 text-sm mb-6">Build strong foundations in core subjects with engaging, age-appropriate teaching.</p>
+                            <button onclick="openModalWithSubject('School Classes (1-8)')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for School Classes
+                            </button>
+                        </div>
+
+                        <!-- Secondary -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-2">Secondary</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-4">Grades 9–10</p>
+                            <p class="text-slate-400 text-sm mb-6">Focused preparation for board examinations with strong conceptual understanding.</p>
+                            <button onclick="openModalWithSubject('Secondary (9-10)')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for Secondary
+                            </button>
+                        </div>
+
+                        <!-- Intermediate -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-2">Intermediate</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-4">Grades 11–12</p>
+                            <p class="text-slate-400 text-sm mb-6">Advanced preparation for Pre-Engineering, Pre-Medical and Computer Science streams.</p>
+                            <button onclick="openModalWithSubject('Intermediate (11-12)')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for Intermediate
+                            </button>
+                        </div>
+
+                        <!-- O/A Levels -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-2">O/A Levels</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-4">Cambridge Preparation</p>
+                            <p class="text-slate-400 text-sm mb-6">Structured preparation for Cambridge O Level and IGCSE examinations.</p>
+                            <button onclick="openModalWithSubject('O/A Levels')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for O/A Levels
+                            </button>
+                        </div>
+
+                        <!-- Board Exam Prep -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-file-pen"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-2">Board Examination Prep</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-4">Major Pakistani Boards</p>
+                            <p class="text-slate-400 text-sm mb-6">Focused preparation for Karachi Board, FBISE, AKU-EB and other major boards.</p>
+                            <button onclick="openModalWithSubject('Board Exam Prep')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for Board Prep
+                            </button>
+                        </div>
+
+                        <!-- International Curricula -->
+                        <div class="p-8 rounded-3xl bg-dark-900 border border-brand-500/20 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-2xl mb-5 border border-brand-500/20">
+                                <i class="fa-solid fa-earth-asia"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-white text-xl mb-2">International Curricula</h3>
+                            <p class="text-xs text-brand-400 font-semibold mb-4">Cambridge · IGCSE</p>
+                            <p class="text-slate-400 text-sm mb-6">Preparation for major Pakistani and international examination boards.</p>
+                            <button onclick="openModalWithSubject('International Curricula')" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3 rounded-xl text-xs transition">
+                                Enquire for International
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===================================================================
+             PAGE 4: ABOUT PAGE
+             =================================================================== -->
+        <div id="page-about" class="page-view hidden">
+            <div class="bg-gradient-to-r from-brand-900 to-slate-900 text-white py-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span class="text-brand-400 font-bold text-xs uppercase tracking-widest bg-slate-800 px-3 py-1 rounded-full">About Us</span>
+                    <h1 class="font-heading font-extrabold text-3xl sm:text-4xl mt-3">The Classes Education System</h1>
+                    <p class="text-slate-300 text-sm max-w-xl mx-auto mt-2">Modern academic coaching powered by experienced teaching and technology.</p>
+                </div>
+            </div>
+
+            <section class="py-12 bg-dark-950">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-12 items-start">
+                        <div>
+                            <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-white mb-4">Our Teaching Philosophy</h2>
+                            <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                                The Classes Education System is a modern, results-focused academic coaching institute. We combine experienced teaching with structured learning, exam preparation and modern educational technology.
+                            </p>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                Our approach is built on conceptual understanding, regular practice and exam-focused preparation. We prepare students for the way exams actually work — not just the way textbooks present them.
+                            </p>
+
+                            <h3 class="font-heading font-bold text-white text-xl mb-4">What We Offer</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-check text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">Academic Excellence</p>
+                                        <p class="text-slate-400 text-xs">Structured teaching focused on real understanding.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-check text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">Experienced Teaching</p>
+                                        <p class="text-slate-400 text-xs">Teaching since 2017 across multiple curricula.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-check text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">Personal Attention</p>
+                                        <p class="text-slate-400 text-xs">Small-group and classroom-focused learning where possible.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-check text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">Structured Preparation</p>
+                                        <p class="text-slate-400 text-xs">Worksheets, questions, numerical problems and revision.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-check text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">Conceptual Understanding</p>
+                                        <p class="text-slate-400 text-xs">Focus on understanding instead of memorization alone.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-check text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">Exam-Focused Practice</p>
+                                        <p class="text-slate-400 text-xs">Understanding the syllabus, question patterns and examination technique.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-check text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">Modern Learning Methods</p>
+                                        <p class="text-slate-400 text-xs">Technology-assisted education with AI-powered learning tools.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="bg-gradient-to-br from-brand-900 to-dark-900 rounded-3xl p-8 border border-brand-500/30 shadow-2xl mb-8">
+                                <div class="flex items-center space-x-4 mb-6">
+                                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-400 flex items-center justify-center text-black font-heading font-extrabold text-2xl shadow-lg shadow-brand-500/20">
+                                        SW
+                                    </div>
+                                    <div>
+                                        <h3 class="font-heading font-bold text-white text-xl">Sir Wasi</h3>
+                                        <p class="text-brand-400 text-xs font-semibold">Founder · Head of Mathematics & Physics</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-3 text-sm text-slate-300">
+                                    <p class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-500 mt-1"></i> Mechanical Engineer — NED University</p>
+                                    <p class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-500 mt-1"></i> Teaching since 2017</p>
+                                    <p class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-500 mt-1"></i> Co-founder and Head of Mathematics & Physics</p>
+                                    <p class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-500 mt-1"></i> Experienced in Pakistani & international curricula</p>
+                                    <p class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-500 mt-1"></i> Strong interest in AI-powered education & modern EdTech</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-dark-900 rounded-3xl p-8 border border-brand-500/20">
+                                <h3 class="font-heading font-bold text-white text-xl mb-4">Curricula We Support</h3>
+                                <p class="text-slate-400 text-sm mb-4">Preparation for major Pakistani and international examination boards.</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-black/60 text-slate-300 text-xs font-semibold px-3 py-1.5 rounded-lg border border-brand-500/20">Karachi Board (BSEK)</span>
+                                    <span class="bg-black/60 text-slate-300 text-xs font-semibold px-3 py-1.5 rounded-lg border border-brand-500/20">Intermediate (BIEK)</span>
+                                    <span class="bg-black/60 text-slate-300 text-xs font-semibold px-3 py-1.5 rounded-lg border border-brand-500/20">Aga Khan Board (AKU-EB)</span>
+                                    <span class="bg-black/60 text-slate-300 text-xs font-semibold px-3 py-1.5 rounded-lg border border-brand-500/20">FBISE</span>
+                                    <span class="bg-black/60 text-slate-300 text-xs font-semibold px-3 py-1.5 rounded-lg border border-brand-500/20">Cambridge O Levels</span>
+                                    <span class="bg-black/60 text-slate-300 text-xs font-semibold px-3 py-1.5 rounded-lg border border-brand-500/20">Cambridge IGCSE</span>
+                                    <span class="bg-black/60 text-slate-300 text-xs font-semibold px-3 py-1.5 rounded-lg border border-brand-500/20">International Curricula</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===================================================================
+             PAGE 5: CONTACT PAGE
+             =================================================================== -->
+        <div id="page-contact" class="page-view hidden">
+            <div class="bg-gradient-to-r from-brand-900 to-slate-900 text-white py-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span class="text-brand-400 font-bold text-xs uppercase tracking-widest bg-slate-800 px-3 py-1 rounded-full">Contact Us</span>
+                    <h1 class="font-heading font-extrabold text-3xl sm:text-4xl mt-3">Get in Touch</h1>
+                    <p class="text-slate-300 text-sm max-w-xl mx-auto mt-2">We're here to help with admissions, class schedules and any questions you may have.</p>
+                </div>
+            </div>
+
+            <section class="py-12 bg-dark-950">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-12">
+                        <div>
+                            <h2 class="font-heading font-extrabold text-2xl text-white mb-6">Contact Information</h2>
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-4 p-5 rounded-2xl bg-dark-900 border border-brand-500/20">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-white text-sm">Phone</h3>
+                                        <p class="text-slate-400 text-xs mt-1">0336-3861205</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4 p-5 rounded-2xl bg-dark-900 border border-brand-500/20">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-brands fa-whatsapp"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-white text-sm">WhatsApp</h3>
+                                        <p class="text-slate-400 text-xs mt-1">0336-3861205</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4 p-5 rounded-2xl bg-dark-900 border border-brand-500/20">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-white text-sm">Email</h3>
+                                        <p class="text-slate-400 text-xs mt-1">admissions@theclasses.edu.pk</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4 p-5 rounded-2xl bg-dark-900 border border-brand-500/20">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0 border border-brand-500/20">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-white text-sm">Address</h3>
+                                        <p class="text-slate-400 text-xs mt-1">R-156 Salman Garden, Near Jamia Millia Road,<br>Malir 15, Karachi, Pakistan</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 p-5 rounded-2xl bg-dark-900 border border-brand-500/20">
+                                <h3 class="font-bold text-white text-sm mb-3">Social Media</h3>
+                                <p class="text-slate-400 text-xs mb-4">Follow us for updates, tips and announcements.</p>
+                                <div class="flex space-x-3">
+                                    <a href="#" aria-label="Facebook (placeholder)" class="w-10 h-10 rounded-xl bg-black/60 border border-brand-500/20 text-slate-400 hover:text-brand-500 hover:border-brand-500 flex items-center justify-center transition">
+                                        <i class="fa-brands fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" aria-label="Instagram (placeholder)" class="w-10 h-10 rounded-xl bg-black/60 border border-brand-500/20 text-slate-400 hover:text-brand-500 hover:border-brand-500 flex items-center justify-center transition">
+                                        <i class="fa-brands fa-instagram"></i>
+                                    </a>
+                                    <a href="#" aria-label="TikTok (placeholder)" class="w-10 h-10 rounded-xl bg-black/60 border border-brand-500/20 text-slate-400 hover:text-brand-500 hover:border-brand-500 flex items-center justify-center transition">
+                                        <i class="fa-brands fa-tiktok"></i>
+                                    </a>
+                                    <a href="#" aria-label="YouTube (placeholder)" class="w-10 h-10 rounded-xl bg-black/60 border border-brand-500/20 text-slate-400 hover:text-brand-500 hover:border-brand-500 flex items-center justify-center transition">
+                                        <i class="fa-brands fa-youtube"></i>
+                                    </a>
+                                </div>
+                                <p class="text-slate-500 text-[10px] mt-3">Social media links are placeholders — update with actual account URLs.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="mb-8">
+                                <h2 class="font-heading font-extrabold text-2xl text-white mb-4">Our Location</h2>
+                                <div class="bg-dark-900 rounded-3xl p-4 border border-brand-500/20">
+                                    <div class="rounded-2xl overflow-hidden">
+                                        <iframe
+                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d226.232936378982!2d67.18376287479931!3d24.873172600000014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33b445c6dc9d1%3A0x5e7af8c65613fd7c!2sThe%20Classes%20Education!5e0!3m2!1sen!2s!4v1787266197504!5m2!1sen!2s"
+                                            width="100%"
+                                            height="450"
+                                            style="border:0;"
+                                            allowfullscreen=""
+                                            loading="lazy"
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            title="The Classes Education System - Google Maps Location"
+                                        ></iframe>
+                                    </div>
+                                    <div class="flex items-center justify-between px-2 pt-4">
+                                        <div>
+                                            <p class="text-white font-bold text-sm">R-156 Salman Garden</p>
+                                            <p class="text-slate-400 text-xs mt-1">Near Jamia Millia Road, Malir 15, Karachi</p>
+                                        </div>
+                                        <a href="https://www.google.com/maps/place/R-156+Salman+Garden+Jamia+Millia+Road+Malir+15+Karachi+Pakistan"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-black font-bold px-4 py-2.5 rounded-xl text-xs transition">
+                                            <i class="fa-solid fa-map-location-dot"></i> Get Directions
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2 class="font-heading font-extrabold text-2xl text-white mb-6">Admission Enquiry</h2>
+                            <div class="bg-dark-900 rounded-3xl p-6 sm:p-8 border border-brand-500/20">
+                                <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-4 text-xs">
+                                    <div>
+                                        <label class="block font-bold text-slate-300 mb-1">Student's Full Name *</label>
+                                        <input type="text" id="contactName" required placeholder="e.g. Muhammad Ali" class="w-full bg-dark-800 border border-dark-700 rounded-xl p-3 text-slate-200 focus:ring-2 focus:ring-brand-500 focus:outline-none placeholder-slate-500">
+                                    </div>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block font-bold text-slate-300 mb-1">WhatsApp Phone No. *</label>
+                                            <input type="tel" id="contactPhone" required placeholder="+92 300 1234567" class="w-full bg-dark-800 border border-dark-700 rounded-xl p-3 text-slate-200 focus:ring-2 focus:ring-brand-500 focus:outline-none placeholder-slate-500">
+                                        </div>
+                                        <div>
+                                            <label class="block font-bold text-slate-300 mb-1">Email Address</label>
+                                            <input type="email" id="contactEmail" placeholder="student@gmail.com" class="w-full bg-dark-800 border border-dark-700 rounded-xl p-3 text-slate-200 focus:ring-2 focus:ring-brand-500 focus:outline-none placeholder-slate-500">
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div>
+                                            <label for="contactLevelSelect" class="block font-bold text-slate-300 mb-1">Grade / Level *</label>
+                                            <select id="contactLevelSelect" required class="w-full bg-dark-800 border border-dark-700 rounded-xl p-3 text-slate-200 focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                                                <option value="">-- Choose Level --</option>
+                                                <option value="School Classes (1-8)">School Classes (1–8)</option>
+                                                <option value="Secondary (9-10)">Secondary (9–10)</option>
+                                                <option value="Intermediate (11-12)">Intermediate (11–12)</option>
+                                                <option value="O/A Levels">O/A Levels</option>
+                                                <option value="Board Exam Prep">Board Exam Prep</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="contactSubjectSelect" class="block font-bold text-slate-300 mb-1">Subject *</label>
+                                            <select id="contactSubjectSelect" required class="w-full bg-dark-800 border border-dark-700 rounded-xl p-3 text-slate-200 focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                                                <option value="">-- Choose Subject --</option>
+                                                <option value="Mathematics">Mathematics</option>
+                                                <option value="Physics">Physics</option>
+                                                <option value="Chemistry">Chemistry</option>
+                                                <option value="Biology">Biology</option>
+                                                <option value="Computer Science">Computer Science</option>
+                                                <option value="Exam Preparation">Exam Preparation</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block font-bold text-slate-300 mb-1">Preferred Time / Special Notes</label>
+                                        <textarea rows="3" id="contactNotes" placeholder="e.g. Prefer evening slots after 5 PM." class="w-full bg-dark-800 border border-dark-700 rounded-xl p-3 text-slate-200 focus:ring-2 focus:ring-brand-500 focus:outline-none placeholder-slate-500"></textarea>
+                                    </div>
+
+                                    <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-black font-bold py-3.5 rounded-xl text-sm shadow-lg transition">
+                                        Submit Admission Enquiry
+                                    </button>
+                                </form>
+
+                                <div id="contactSuccess" class="hidden text-center py-8 space-y-3">
+                                    <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mx-auto">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                    <h4 class="font-heading font-extrabold text-xl text-white">Enquiry Submitted!</h4>
+                                    <p class="text-xs text-slate-400">Thank you for your interest. Our team will contact you shortly to discuss admission.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800 text-xs mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <span class="font-heading font-extrabold text-lg text-white">The Classes<span class="text-brand-500"> Education</span></span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed">
+                        Modern academic coaching for Grades 1–12, O/A Levels and major Pakistani and international examination boards. Karachi, Pakistan.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3 uppercase tracking-wider">Navigation</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" data-page="home" class="hover:text-white transition">Home</a></li>
+                        <li><a href="#subjects" data-page="subjects" class="hover:text-white transition">Subjects</a></li>
+                        <li><a href="#programs" data-page="programs" class="hover:text-white transition">Programs</a></li>
+                        <li><a href="#about" data-page="about" class="hover:text-white transition">About</a></li>
+                        <li><a href="#contact" data-page="contact" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3 uppercase tracking-wider">Programs</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#programs" data-page="programs" class="hover:text-white transition">School Classes (1–8)</a></li>
+                        <li><a href="#programs" data-page="programs" class="hover:text-white transition">Secondary (9–10)</a></li>
+                        <li><a href="#programs" data-page="programs" class="hover:text-white transition">Intermediate (11–12)</a></li>
+                        <li><a href="#programs" data-page="programs" class="hover:text-white transition">O/A Levels</a></li>
+                        <li><a href="#programs" data-page="programs" class="hover:text-white transition">Board Exam Prep</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3 uppercase tracking-wider">Contact</h4>
+                    <p class="mb-1"><i class="fa-solid fa-phone text-brand-500 mr-2"></i> 0336-3861205</p>
+                    <p class="mb-1"><i class="fa-solid fa-brands fa-whatsapp text-brand-500 mr-2"></i> 0336-3861205</p>
+                    <p class="mb-1"><i class="fa-solid fa-envelope text-brand-500 mr-2"></i> admissions@theclasses.edu.pk</p>
+                    <p class="mb-3"><i class="fa-solid fa-location-dot text-brand-500 mr-2"></i> R-156 Salman Garden, Near Jamia Millia Road, Malir 15, Karachi</p>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-6 flex flex-col md:flex-row justify-between items-center text-slate-500 text-[11px]">
+                <p>&copy; 2026 The Classes Education System. All rights reserved.</p>
+                <div class="flex space-x-4 mt-2 md:mt-0">
+                    <a href="#" class="hover:text-slate-300">Privacy Policy</a>
+                    <a href="#" class="hover:text-slate-300">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ADMISSION ENQUIRY MODAL -->
+    <div id="bookingModal" class="fixed inset-0 z-50 hidden bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal()" aria-label="Close Modal" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-xl font-bold p-1">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="mb-6">
+                <span class="bg-brand-100 text-brand-700 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md">Admission Enquiry</span>
+                <h3 class="font-heading font-extrabold text-2xl text-slate-900 mt-2">Start Your Admission Enquiry</h3>
+                <p class="text-xs text-slate-500 mt-1">Tell us about the student and we'll get back to you with details.</p>
+            </div>
+
+            <form id="modalForm" onsubmit="handleFormSubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Student's Full Name *</label>
+                    <input type="text" id="modalName" required placeholder="e.g. Muhammad Ali" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">WhatsApp Phone No. *</label>
+                        <input type="tel" id="modalPhone" required placeholder="+92 300 1234567" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Email Address</label>
+                        <input type="email" id="modalEmail" placeholder="student@gmail.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label for="modalLevelSelect" class="block font-bold text-slate-700 mb-1">Grade / Level *</label>
+                        <select id="modalLevelSelect" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-brand-500 focus:outline-none text-slate-700 font-medium">
+                            <option value="">-- Choose Level --</option>
+                            <option value="School Classes (1-8)">School Classes (1–8)</option>
+                            <option value="Secondary (9-10)">Secondary (9–10)</option>
+                            <option value="Intermediate (11-12)">Intermediate (11–12)</option>
+                            <option value="O/A Levels">O/A Levels</option>
+                            <option value="Board Exam Prep">Board Exam Prep</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="modalSubjectSelect" class="block font-bold text-slate-700 mb-1">Subject *</label>
+                        <select id="modalSubjectSelect" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-brand-500 focus:outline-none text-slate-700 font-medium">
+                            <option value="">-- Choose Subject --</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Biology">Biology</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Exam Preparation">Exam Preparation</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Preferred Time / Special Notes</label>
+                    <textarea rows="2" id="modalNotes" placeholder="e.g. Prefer evening slots after 5 PM." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-brand-500 focus:outline-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl text-sm shadow-lg transition">
+                    Submit Admission Enquiry
+                </button>
+            </form>
+
+            <div id="modalSuccess" class="hidden text-center py-8 space-y-3">
+                <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mx-auto">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h4 class="font-heading font-extrabold text-xl text-slate-900">Enquiry Submitted!</h4>
+                <p class="text-xs text-slate-600">Thank you for your interest. Our team will contact you shortly to discuss admission.</p>
+                <button onclick="closeModal()" class="mt-4 bg-slate-900 text-white px-6 py-2.5 rounded-xl text-xs font-bold">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

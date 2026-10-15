@@ -1,10 +1,12 @@
 import {
   HeroSection,
-  FeaturesSection,
-  CourseCategoriesSection,
-  TestimonialsSection,
-  FacultySection,
+  TrustSection,
+  SubjectsSection,
+  ProgramsSection,
   WhyChooseUsSection,
+  AISection,
+  ResultsSection,
+  TestimonialsSection,
   CTASection,
 } from "@/components/landing/sections";
 
@@ -12,11 +14,13 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <FeaturesSection />
-      <CourseCategoriesSection />
-      <TestimonialsSection />
-      <FacultySection />
+      <TrustSection />
+      <SubjectsSection />
+      <ProgramsSection />
       <WhyChooseUsSection />
+      <AISection />
+      <ResultsSection />
+      <TestimonialsSection />
       <CTASection />
     </>
   );

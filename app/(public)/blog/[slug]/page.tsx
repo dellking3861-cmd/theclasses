@@ -53,22 +53,22 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
   const cleanContent = sanitizeHtml(post.content, SANITIZE_OPTIONS);
 
   return (
-    <section className="py-16 bg-[#fefce8] min-h-screen">
+    <section className="min-h-screen bg-stone-50 py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-yellow-600 transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-sm text-stone-500 hover:text-amber-600 transition-colors mb-8"
         >
           <ArrowLeft className="h-4 w-4" /> Back to Blog
         </Link>
 
-        <article>
+        <article className="bg-white rounded-2xl p-8 sm:p-10 border border-stone-100 shadow-sm">
           <div className="mb-6 space-y-3">
             <Badge variant="info" className="text-xs">{post.category}</Badge>
-            <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold text-stone-900 leading-tight font-display">
               {post.title}
             </h1>
-            <div className="flex items-center gap-4 text-sm text-slate-500">
+            <div className="flex items-center gap-4 text-sm text-stone-400">
               <span className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
                 {post.published_at ? formatDate(post.published_at) : "Soon"}
@@ -80,17 +80,17 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
             </div>
           </div>
 
-          <p className="text-lg text-slate-600 border-l-4 border-yellow-400 pl-4 italic mb-8">
+          <p className="text-lg text-stone-500 border-l-4 border-amber-400 pl-4 italic mb-8">
             {post.excerpt}
           </p>
 
-          <div className="prose prose-lg prose-slate max-w-none" dangerouslySetInnerHTML={{ __html: cleanContent }} />
+          <div className="prose prose-lg prose-stone max-w-none" dangerouslySetInnerHTML={{ __html: cleanContent }} />
         </article>
 
-        <div className="mt-12 pt-8 border-t border-yellow-200">
+        <div className="mt-8 pt-8 border-t border-stone-200">
           <Link
             href="/admissions"
-            className="inline-flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg font-medium transition-colors btn-hover"
           >
             Interested in learning more? Apply Now
             <ArrowLeft className="h-4 w-4 rotate-180" />

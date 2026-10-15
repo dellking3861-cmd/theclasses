@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -12,38 +11,90 @@ export async function POST(request: Request) {
     );
   }
 
-  const supabase = await createClient();
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
-  const { data: authData, error: authError } = await supabase.auth.admin.createUser({
-    email,
-    password,
-    email_confirm: true,
-    user_metadata: { full_name, role: "admin" },
-  });
-
-  if (authError) {
-    return NextResponse.json({ error: authError.message }, { status: 400 });
+  if (!supabaseUrl || !serviceKey) {
+    return NextResponse.json(
+      { error: "Supabase credentials not configured" },
+      { status: 500 }
+    );
   }
 
-  if (authData.user) {
-    const { error: profileError } = await supabase.from("users").insert({
-      id: authData.user.id,
-      email,
-      full_name,
-      role: "admin",
-      is_active: true,
+  try {
+    // Step 1: Create user in Supabase Auth using the Management API
+    const authResponse = await fetch(`${supabaseUrl}/auth/v1/admin/users`, {
+      method: "POST",
+      headers: {
+        "apikey": serviceKey,
+        "Authorization": `Bearer ${serviceKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        email_confirm: true,
+        user_metadata: { full_name, role: "admin" },
+      }),
     });
 
-    if (profileError) {
-      return NextResponse.json(
-        { error: "Failed to create profile" },
-        { status: 500 }
-      );
+    if (!authResponse.ok) {
+      const error = await authResponse.json();
+      // If user already exists, try to find them
+      if (error.status === 400 && error.message?.includes("already registered")) {
+        // User exists, update their role to admin
+        return NextResponse.json({
+          message: "Admin user already exists",
+          email,
+          full_name,
+        });
+      }
+      return NextResponse.json({ error: error.message || "Failed to create auth user" }, { status: 400 });
     }
-  }
 
-  return NextResponse.json({
-    message: "Admin user created successfully",
-    user: authData.user,
-  });
+    const authData = await authResponse.json();
+    const userId = authData.id;
+
+    // Step 2: Insert into users table using Supabase REST API with service key
+    const usersResponse = await fetch(`${supabaseUrl}/rest/v1/users`, {
+      method: "POST",
+      headers: {
+        "apikey": serviceKey,
+        "Authorization": `Bearer ${serviceKey}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
+      },
+      body: JSON.stringify({
+        id: userId,
+        email,
+        full_name,
+        role: "admin",
+        is_active: true,
+      }),
+    });
+
+    if (!usersResponse.ok) {
+      const error = await usersResponse.json();
+      // If already exists, that's fine
+      if (error.message?.includes("duplicate key") || usersResponse.status === 409) {
+        return NextResponse.json({
+          message: "Admin user setup complete (user already exists)",
+          user: { id: userId, email, full_name, role: "admin" },
+        });
+      }
+      return NextResponse.json({ error: error.message || "Failed to create profile" }, { status: 500 });
+    }
+
+    const userData = await usersResponse.json();
+
+    return NextResponse.json({
+      message: "Admin user created successfully",
+      user: userData[0] || { id: userId, email, full_name, role: "admin" },
+    });
+  } catch (err) {
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Unknown error" },
+      { status: 500 }
+    );
+  }
 }

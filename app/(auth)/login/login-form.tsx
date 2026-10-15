@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { loginSchema, type LoginInput } from "@/lib/validations";
-import { ROLE_DASHBOARD_PATHS, APP_NAME } from "@/lib/constants";
+import { APP_NAME } from "@/lib/constants";
 import type { UserRole } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,7 +46,7 @@ export default function LoginForm() {
 
       toast.success("Welcome back!");
       const userRole = result.user.role as UserRole;
-      const dashboardPath = redirect || ROLE_DASHBOARD_PATHS[userRole] || "/dashboard/student";
+      const dashboardPath = redirect || `/dashboard/${userRole}`;
       router.push(dashboardPath);
       router.refresh();
     } catch {

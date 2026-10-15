@@ -13,6 +13,7 @@ const PUBLIC_ROUTES = [
   "/login",
   "/register",
   "/forgot-password",
+  "/api",
 ];
 
 const AUTH_ROUTES = ["/login", "/register", "/forgot-password"];

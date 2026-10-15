@@ -6,9 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { createClient } from "@/lib/supabase/client";
 import { loginSchema, type LoginInput } from "@/lib/validations";
-import { ROLE_DASHBOARD_PATHS, APP_NAME, type UserRole } from "@/lib/constants";
+import { ROLE_DASHBOARD_PATHS, APP_NAME } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -31,36 +30,23 @@ export default function LoginForm() {
   async function onSubmit(data: LoginInput) {
     setIsLoading(true);
     try {
-      const supabase = createClient();
-      const { data: authData, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
 
-      if (error) {
-        toast.error(error.message);
+      const result = await response.json();
+
+      if (!response.ok) {
+        toast.error(result.error || "Login failed");
         return;
       }
 
-      if (authData.user) {
-        const { data: profile } = await supabase
-          .from("users")
-          .select("role, is_active")
-          .eq("id", authData.user.id)
-          .single();
-
-        if (profile && !profile.is_active) {
-          await supabase.auth.signOut();
-          toast.error("Your account has been deactivated. Contact support.");
-          return;
-        }
-
-        toast.success("Welcome back!");
-        const dashboardPath = redirect ||
-          (profile?.role ? ROLE_DASHBOARD_PATHS[profile.role as UserRole] : "/dashboard/student");
-        router.push(dashboardPath);
-        router.refresh();
-      }
+      toast.success("Welcome back!");
+      const dashboardPath = redirect || ROLE_DASHBOARD_PATHS[result.user.role] || "/dashboard/student";
+      router.push(dashboardPath);
+      router.refresh();
     } catch {
       toast.error("An unexpected error occurred. Please try again.");
     } finally {
@@ -99,7 +85,9 @@ export default function LoginForm() {
 
         <p className="text-center text-sm text-slate-500 mt-6">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-yellow-500 hover:text-yellow-600 font-medium">Register</Link>
+          <Link href="/register" className="text-yellow-500 hover:text-yellow-600 font-medium">
+            Register
+          </Link>
         </p>
       </div>
     </div>

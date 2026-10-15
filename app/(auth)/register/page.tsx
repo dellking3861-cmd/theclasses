@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { createClient } from "@/lib/supabase/client";
 import { registerSchema, type RegisterInput } from "@/lib/validations";
 import { APP_NAME } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
@@ -36,45 +35,21 @@ export default function RegisterPage() {
   async function onSubmit(data: RegisterInput) {
     setIsLoading(true);
     try {
-      const supabase = createClient();
-      const { data: authData, error } = await supabase.auth.signUp({
-        email: data.email,
-        password: data.password,
-        options: {
-          data: {
-            full_name: data.full_name,
-            role: data.role,
-          },
-        },
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
 
-      if (error) {
-        toast.error(error.message);
+      const result = await response.json();
+
+      if (!response.ok) {
+        toast.error(result.error || "Registration failed");
         return;
       }
 
-      if (authData.user) {
-        const { error: profileError } = await supabase.from("users").insert({
-          id: authData.user.id,
-          email: data.email,
-          full_name: data.full_name,
-          phone: data.phone || null,
-          role: data.role,
-        });
-
-        if (profileError) {
-          console.error("Profile creation error:", profileError);
-        }
-
-        if (data.role === "student") {
-          await supabase.from("students").insert({ user_id: authData.user.id });
-        } else if (data.role === "parent") {
-          await supabase.from("parents").insert({ user_id: authData.user.id });
-        }
-
-        toast.success("Account created! Please check your email to verify.");
-        router.push("/login");
-      }
+      toast.success("Account created! Please check your email to verify.");
+      router.push("/login");
     } catch {
       toast.error("An unexpected error occurred. Please try again.");
     } finally {

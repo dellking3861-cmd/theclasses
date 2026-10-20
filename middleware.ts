@@ -107,7 +107,7 @@ export async function middleware(request: NextRequest) {
 
     try {
       const profileResponse = await fetch(
-        `${supabaseUrl}/rest/v1/users?select=role,is_active&eq=id,${user.id}`,
+        `${supabaseUrl}/rest/v1/users?select=role,is_active&id=eq.${user.id}`,
         {
           headers: {
             apikey: anonKey,

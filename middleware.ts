@@ -1,8 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { ROLE_DASHBOARD_PATHS, type UserRole } from "@/lib/constants";
 
-const Buffer = globalThis.Buffer;
-
 const PUBLIC_ROUTES = [
   "/home",
   "/about",
@@ -77,7 +75,9 @@ export async function middleware(request: NextRequest) {
       let session: { access_token?: string } | null = null;
       if (sessionValue.startsWith("base64-")) {
         const b64 = sessionValue.slice(7);
-        session = JSON.parse(Buffer.from(b64, "base64").toString());
+        // Use atob for edge runtime compatibility
+        const json = atob(b64.replace(/-/g, '+').replace(/_/g, '/'));
+        session = JSON.parse(json);
       } else {
         session = JSON.parse(sessionValue);
       }

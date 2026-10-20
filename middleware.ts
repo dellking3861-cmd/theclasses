@@ -116,25 +116,28 @@ export async function middleware(request: NextRequest) {
         }
       );
 
-      if (profileResponse.ok) {
-        const profiles = await profileResponse.json();
-        const profile = profiles[0];
+      if (!profileResponse.ok) {
+        return NextResponse.redirect(new URL("/login", request.url));
+      }
 
-        if (!profile?.is_active) {
-          return NextResponse.redirect(
-            new URL("/login?error=inactive", request.url)
-          );
-        }
+      const profiles = await profileResponse.json();
+      const profile = profiles[0];
 
-        const requiredRole = getRequiredRole(pathname);
-        if (requiredRole && profile.role !== requiredRole) {
-          const correctDashboard =
-            ROLE_DASHBOARD_PATHS[profile.role as UserRole] || "/home";
-          return NextResponse.redirect(new URL(correctDashboard, request.url));
-        }
+      if (!profile?.is_active) {
+        return NextResponse.redirect(
+          new URL("/login?error=inactive", request.url)
+        );
+      }
+
+      const requiredRole = getRequiredRole(pathname);
+      if (requiredRole && profile.role !== requiredRole) {
+        const correctDashboard =
+          ROLE_DASHBOARD_PATHS[profile.role as UserRole] || "/home";
+        return NextResponse.redirect(new URL(correctDashboard, request.url));
       }
     } catch {
-      // If profile check fails, allow access (fail open)
+      // If profile check fails, deny access instead of letting it through
+      return NextResponse.redirect(new URL("/login", request.url));
     }
   }
 

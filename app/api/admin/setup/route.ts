@@ -1,6 +1,27 @@
 import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+
+async function requireAdmin(): Promise<boolean> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return false;
+
+  const { data: profile } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  return profile?.role === "admin";
+}
 
 export async function POST(request: Request) {
+  if (!(await requireAdmin())) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   const body = await request.json();
   const { email, password, full_name } = body;
 
@@ -26,8 +47,8 @@ export async function POST(request: Request) {
     const authResponse = await fetch(`${supabaseUrl}/auth/v1/admin/users`, {
       method: "POST",
       headers: {
-        "apikey": serviceKey,
-        "Authorization": `Bearer ${serviceKey}`,
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -59,10 +80,10 @@ export async function POST(request: Request) {
     const usersResponse = await fetch(`${supabaseUrl}/rest/v1/users`, {
       method: "POST",
       headers: {
-        "apikey": serviceKey,
-        "Authorization": `Bearer ${serviceKey}`,
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
         "Content-Type": "application/json",
-        "Prefer": "return=representation",
+        Prefer: "return=representation",
       },
       body: JSON.stringify({
         id: userId,

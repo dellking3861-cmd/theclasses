@@ -550,15 +550,15 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
-CREATE OR REPLACE FUNCTION get_user_role()
-RETURNS user_role AS $$
+CREATE OR REPLACE FUNCTION public.get_user_role()
+RETURNS public.user_role AS $$
 DECLARE
-  user_role_val user_role;
+  user_role_val public.user_role;
 BEGIN
-  SELECT role INTO user_role_val FROM users WHERE id = auth.uid();
+  SELECT role INTO user_role_val FROM public.users WHERE id = auth.uid();
   RETURN user_role_val;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY INVOKER;
 
 -- Admin policies
 CREATE POLICY "Admins full access users" ON users

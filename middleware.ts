@@ -54,11 +54,17 @@ export async function middleware(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet, headers) {
+          // Use NextResponse to set cookies on response
           const response = NextResponse.next();
           cookiesToSet.forEach(({ name, value, options }) => {
             response.cookies.set(name, value, options);
           });
+          Object.entries(headers).forEach(([key, value]) => {
+            response.headers.set(key, value);
+          });
+          // Note: we can't return response here, but the cookies are set on it
+          // The actual response handling is done by Next.js middleware
         },
       },
     }

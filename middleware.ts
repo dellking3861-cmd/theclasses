@@ -1,3 +1,4 @@
+import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { ROLE_DASHBOARD_PATHS, type UserRole } from "@/lib/constants";
 
@@ -16,15 +17,12 @@ const PUBLIC_ROUTES = [
 ];
 
 const AUTH_ROUTES = ["/login", "/register", "/forgot-password"];
-
 const DASHBOARD_PREFIX = "/dashboard";
 
 function isPublicRoute(pathname: string): boolean {
   return (
     pathname === "/" ||
-    PUBLIC_ROUTES.some(
-      (route) => pathname === route || pathname.startsWith(`${route}/`)
-    )
+    PUBLIC_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`))
   );
 }
 
@@ -44,62 +42,37 @@ function getRequiredRole(pathname: string): UserRole | null {
   return null;
 }
 
-// Simple JWT decode without external dependencies
-function decodeJWT(token: string): { sub?: string; email?: string } | null {
-  try {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
-    );
-    return JSON.parse(jsonPayload);
-  } catch {
-    return null;
-  }
-}
-
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Get session from cookie
-  const sessionCookie = request.cookies.get("sb-bkpemjyzktnmamqertnj-auth-token");
-  const sessionValue = sessionCookie?.value;
-
-  let user: { id: string; email: string } | null = null;
-  if (sessionValue) {
-    try {
-      // Supabase SSR cookie may be base64-prefixed
-      let session: { access_token?: string } | null = null;
-      if (sessionValue.startsWith("base64-")) {
-        const b64 = sessionValue.slice(7);
-        // Use atob for edge runtime compatibility
-        const json = atob(b64.replace(/-/g, '+').replace(/_/g, '/'));
-        session = JSON.parse(json);
-      } else {
-        session = JSON.parse(sessionValue);
-      }
-      if (session?.access_token) {
-        const decoded = decodeJWT(session.access_token);
-        if (decoded?.sub) {
-          user = { id: decoded.sub, email: decoded.email || "" };
-        }
-      }
-    } catch {
-      // Invalid session cookie
+  // Create Supabase client with cookie handling
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          const response = NextResponse.next();
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options);
+          });
+        },
+      },
     }
-  }
+  );
+
+  // Get authenticated user
+  const { data: { user } } = await supabase.auth.getUser();
 
   if (pathname === "/") {
     return NextResponse.redirect(new URL("/home", request.url));
   }
 
   if (isAuthRoute(pathname) && user) {
-    // Redirect logged-in users away from auth pages
-    const dashboardPath =
-      ROLE_DASHBOARD_PATHS["admin" as UserRole] || "/dashboard/admin";
+    const dashboardPath = ROLE_DASHBOARD_PATHS["admin" as UserRole] || "/dashboard/admin";
     return NextResponse.redirect(new URL(dashboardPath, request.url));
   }
 
@@ -110,51 +83,25 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
-    // Check role via simple fetch (not using Supabase client to avoid DNS issues)
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+    // Get profile role
+    const { data: profile } = await supabase
+      .from("users")
+      .select("role, is_active")
+      .eq("id", user.id)
+      .single();
 
-    try {
-      const profileResponse = await fetch(
-        `${supabaseUrl}/rest/v1/users?select=role,is_active&id=eq.${user.id}`,
-        {
-          headers: {
-            apikey: anonKey,
-            Authorization: `Bearer ${anonKey}`,
-          },
-        }
-      );
+    if (!profile?.is_active) {
+      return NextResponse.redirect(new URL("/login?error=inactive", request.url));
+    }
 
-      if (!profileResponse.ok) {
-        return NextResponse.redirect(new URL("/login", request.url));
-      }
-
-      const profiles = await profileResponse.json();
-      const profile = profiles[0];
-
-      if (!profile?.is_active) {
-        return NextResponse.redirect(
-          new URL("/login?error=inactive", request.url)
-        );
-      }
-
-      const requiredRole = getRequiredRole(pathname);
-      if (requiredRole && profile.role !== requiredRole) {
-        const correctDashboard =
-          ROLE_DASHBOARD_PATHS[profile.role as UserRole] || "/home";
-        return NextResponse.redirect(new URL(correctDashboard, request.url));
-      }
-    } catch {
-      // If profile check fails, deny access instead of letting it through
-      return NextResponse.redirect(new URL("/login", request.url));
+    const requiredRole = getRequiredRole(pathname);
+    if (requiredRole && profile.role !== requiredRole) {
+      const correctDashboard = ROLE_DASHBOARD_PATHS[profile.role as UserRole] || "/home";
+      return NextResponse.redirect(new URL(correctDashboard, request.url));
     }
   }
 
-  if (
-    !isPublicRoute(pathname) &&
-    !isDashboardRoute(pathname) &&
-    !isAuthRoute(pathname)
-  ) {
+  if (!isPublicRoute(pathname) && !isDashboardRoute(pathname) && !isAuthRoute(pathname)) {
     return NextResponse.redirect(new URL("/home", request.url));
   }
 

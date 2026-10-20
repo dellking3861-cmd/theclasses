@@ -1,5 +1,6 @@
 "use client";
 
+import { useTransition } from "react";
 import { cn } from "@/utils/cn";
 import { useSidebarStore } from "@/store";
 import { DashboardSidebar, DashboardHeader, type NavItem } from "@/components/layout/dashboard-sidebar";
@@ -15,13 +16,20 @@ interface DashboardShellProps {
 
 export function DashboardShell({ user, navItems, children, title }: DashboardShellProps) {
   const { isCollapsed } = useSidebarStore();
+  const [, startTransition] = useTransition();
+
+  const handleSignOut = () => {
+    startTransition(() => {
+      signOutAction();
+    });
+  };
 
   return (
     <div className="min-h-screen bg-slate-50">
       <DashboardSidebar
         navItems={navItems}
         user={user}
-        onSignOut={signOutAction}
+        onSignOut={handleSignOut}
       />
       <div
         className={cn(

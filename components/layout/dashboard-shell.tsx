@@ -1,10 +1,8 @@
 "use client";
 
-import { useTransition } from "react";
 import { cn } from "@/utils/cn";
 import { useSidebarStore } from "@/store";
 import { DashboardSidebar, DashboardHeader, type NavItem } from "@/components/layout/dashboard-sidebar";
-import { signOutAction } from "@/app/actions/auth";
 import type { User } from "@/types";
 
 interface DashboardShellProps {
@@ -16,12 +14,15 @@ interface DashboardShellProps {
 
 export function DashboardShell({ user, navItems, children, title }: DashboardShellProps) {
   const { isCollapsed } = useSidebarStore();
-  const [, startTransition] = useTransition();
 
-  const handleSignOut = () => {
-    startTransition(() => {
-      signOutAction();
-    });
+  const handleSignOut = async () => {
+    try {
+      await fetch("/api/auth/signout", { method: "POST" });
+      window.location.href = "/login";
+    } catch {
+      // Fallback
+      window.location.href = "/login";
+    }
   };
 
   return (

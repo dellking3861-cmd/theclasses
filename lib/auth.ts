@@ -2,7 +2,6 @@ import { createClient } from "@/lib/supabase/server";
 import type { User } from "@/types";
 import type { UserRole } from "@/lib/constants";
 import { redirect } from "next/navigation";
-import { ROLE_DASHBOARD_PATHS } from "@/lib/constants";
 
 export async function getSession() {
   const supabase = await createClient();
@@ -64,7 +63,8 @@ export async function requireAuth(requiredRole?: UserRole): Promise<User> {
   }
 
   if (requiredRole && user.role !== requiredRole) {
-    redirect(ROLE_DASHBOARD_PATHS[user.role as UserRole] || "/home");
+    // If the user tries to access a page meant for another role, send them to their own dashboard.
+    redirect(`/dashboard/${user.role}`);
   }
 
   return user;

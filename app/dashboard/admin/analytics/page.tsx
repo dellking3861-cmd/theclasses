@@ -2,7 +2,7 @@
 
 import { PageHeader, StatCard } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from "recharts";
+import SimpleBarChart from "@/components/charts/SimpleBarChart";
 import { Users, CreditCard, ClipboardCheck, TrendingUp } from "lucide-react";
 
 const enrollmentData = [
@@ -40,30 +40,14 @@ export default function AdminAnalyticsPage() {
         <Card>
           <CardHeader><CardTitle>Enrollment Trend</CardTitle></CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={enrollmentData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="month" stroke="#64748b" fontSize={12} />
-                <YAxis stroke="#64748b" fontSize={12} />
-                <Tooltip />
-                <Bar dataKey="students" fill="#4f46e5" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            <SimpleBarChart data={enrollmentData.map(item => ({ label: item.month, value: item.students }))} />
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader><CardTitle>Revenue Trend</CardTitle></CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="month" stroke="#64748b" fontSize={12} />
-                <YAxis stroke="#64748b" fontSize={12} />
-                <Tooltip formatter={(value) => `PKR ${Number(value).toLocaleString()}`} />
-                <Line type="monotone" dataKey="revenue" stroke="#4f46e5" strokeWidth={2} dot={{ fill: "#4f46e5" }} />
-              </LineChart>
-            </ResponsiveContainer>
+            <SimpleBarChart data={revenueData.map(item => ({ label: item.month, value: item.revenue / 10000 }))} />
           </CardContent>
         </Card>
       </div>
@@ -71,16 +55,7 @@ export default function AdminAnalyticsPage() {
       <Card>
         <CardHeader><CardTitle>Students by Board</CardTitle></CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie data={boardDistribution} cx="50%" cy="50%" innerRadius={60} outerRadius={100} dataKey="value" label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}>
-                {boardDistribution.map((entry) => (
-                  <Cell key={entry.name} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+          <SimpleBarChart data={boardDistribution.map(item => ({ label: item.name, value: item.value }))} />
         </CardContent>
       </Card>
     </div>

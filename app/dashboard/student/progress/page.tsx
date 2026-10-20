@@ -2,7 +2,7 @@
 
 import { PageHeader, StatCard } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import SimpleBarChart from "@/components/charts/SimpleBarChart";
 import { TrendingUp, ClipboardCheck, FileText, Award } from "lucide-react";
 
 const progressData = [
@@ -27,15 +27,7 @@ export default function StudentProgressPage() {
       <Card>
         <CardHeader><CardTitle>Subject Performance</CardTitle></CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={progressData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="subject" stroke="#64748b" fontSize={12} />
-              <YAxis stroke="#64748b" fontSize={12} domain={[0, 100]} />
-              <Tooltip formatter={(value) => `${Number(value)}%`} />
-              <Bar dataKey="score" fill="#4f46e5" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+          <SimpleBarChart data={progressData.map(item => ({ label: item.subject, value: item.score }))} />
         </CardContent>
       </Card>
     </div>

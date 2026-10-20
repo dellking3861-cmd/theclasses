@@ -2,6 +2,14 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 export async function createClient() {
+  // Ensure required env vars are present in production. If any are missing, throw a clear error.
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    throw new Error('Supabase URL (NEXT_PUBLIC_SUPABASE_URL) is not configured. Set it in Vercel production env vars.')
+  }
+  if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    throw new Error('Supabase anon key (NEXT_PUBLIC_SUPABASE_ANON_KEY) is not configured. Set it in Vercel production env vars.')
+  }
+
   const cookieStore = await cookies();
 
   return createServerClient(

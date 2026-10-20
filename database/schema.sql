@@ -546,14 +546,14 @@ CREATE POLICY "Users can update own profile" ON users
   FOR UPDATE USING (auth.uid() = id);
 
 -- Admins have full access helper function
-CREATE OR REPLACE FUNCTION is_admin()
+CREATE OR REPLACE FUNCTION public.is_admin()
 RETURNS BOOLEAN AS $$
 BEGIN
   RETURN EXISTS (
-    SELECT 1 FROM users WHERE id = auth.uid() AND role = 'admin'
+    SELECT 1 FROM public.users WHERE id = auth.uid() AND role = 'admin'
   );
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY INVOKER;
 
 CREATE OR REPLACE FUNCTION public.get_user_role()
 RETURNS public.user_role AS $$
@@ -567,19 +567,23 @@ $$ LANGUAGE plpgsql SECURITY INVOKER;
 
 -- Admin policies
 CREATE POLICY "Admins full access users" ON users
-  FOR ALL USING (is_admin());
+  FOR ALL USING (public.is_admin());
 
 CREATE POLICY "Admins full access students" ON students
-  FOR ALL USING (is_admin());
+  FOR ALL USING (public.is_admin());
 
 CREATE POLICY "Admins full access teachers" ON teachers
-  FOR ALL USING (is_admin());
+  FOR ALL USING (public.is_admin());
 
 CREATE POLICY "Admins full access courses" ON courses
-  FOR ALL USING (is_admin());
+  FOR ALL USING (public.is_admin());
 
 CREATE POLICY "Admins full access payments" ON payments
-  FOR ALL USING (is_admin());
+  FOR ALL USING (public.is_admin());
+
+-- Grant execute rights to these helper functions for all authenticated users
+GRANT EXECUTE ON FUNCTION public.is_admin() TO authenticated, anon;
+GRANT EXECUTE ON FUNCTION public.get_user_role() TO authenticated, anon;
 
 -- Students can view own data
 CREATE POLICY "Students view own record" ON students

@@ -1,6 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { ROLE_DASHBOARD_PATHS, type UserRole } from "@/lib/constants";
 
+const Buffer = globalThis.Buffer;
+
 const PUBLIC_ROUTES = [
   "/home",
   "/about",
@@ -71,7 +73,14 @@ export async function middleware(request: NextRequest) {
   let user: { id: string; email: string } | null = null;
   if (sessionValue) {
     try {
-      const session = JSON.parse(sessionValue);
+      // Supabase SSR cookie may be base64-prefixed
+      let session: { access_token?: string } | null = null;
+      if (sessionValue.startsWith("base64-")) {
+        const b64 = sessionValue.slice(7);
+        session = JSON.parse(Buffer.from(b64, "base64").toString());
+      } else {
+        session = JSON.parse(sessionValue);
+      }
       if (session?.access_token) {
         const decoded = decodeJWT(session.access_token);
         if (decoded?.sub) {

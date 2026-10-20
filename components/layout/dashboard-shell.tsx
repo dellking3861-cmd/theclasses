@@ -21,7 +21,7 @@ export function DashboardShell({ user, navItems, children, title }: DashboardShe
       <DashboardSidebar
         navItems={navItems}
         user={user}
-        onSignOut={() => signOutAction()}
+        onSignOut={signOutAction}
       />
       <div
         className={cn(

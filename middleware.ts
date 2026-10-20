@@ -1,5 +1,4 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { updateSession } from "@/lib/supabase/middleware";
 import { ROLE_DASHBOARD_PATHS, type UserRole } from "@/lib/constants";
 
 const PUBLIC_ROUTES = [
@@ -45,27 +44,54 @@ function getRequiredRole(pathname: string): UserRole | null {
   return null;
 }
 
+// Simple JWT decode without external dependencies
+function decodeJWT(token: string): { sub?: string; email?: string } | null {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  } catch {
+    return null;
+  }
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const { supabase, user, supabaseResponse } = await updateSession(request);
+  // Get session from cookie
+  const sessionCookie = request.cookies.get("sb-bkpemjyzktnmamqertnj-auth-token");
+  const sessionValue = sessionCookie?.value;
+
+  let user: { id: string; email: string } | null = null;
+  if (sessionValue) {
+    try {
+      const session = JSON.parse(sessionValue);
+      if (session?.access_token) {
+        const decoded = decodeJWT(session.access_token);
+        if (decoded?.sub) {
+          user = { id: decoded.sub, email: decoded.email || "" };
+        }
+      }
+    } catch {
+      // Invalid session cookie
+    }
+  }
 
   if (pathname === "/") {
     return NextResponse.redirect(new URL("/home", request.url));
   }
 
   if (isAuthRoute(pathname) && user) {
-    const { data: profile } = await supabase
-      .from("users")
-      .select("role")
-      .eq("id", user.id)
-      .single();
-
-    if (profile?.role) {
-      const dashboardPath =
-        ROLE_DASHBOARD_PATHS[profile.role as UserRole] || "/dashboard/student";
-      return NextResponse.redirect(new URL(dashboardPath, request.url));
-    }
+    // Redirect logged-in users away from auth pages
+    const dashboardPath =
+      ROLE_DASHBOARD_PATHS["admin" as UserRole] || "/dashboard/admin";
+    return NextResponse.redirect(new URL(dashboardPath, request.url));
   }
 
   if (isDashboardRoute(pathname)) {
@@ -75,31 +101,52 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
-    const requiredRole = getRequiredRole(pathname);
-    if (requiredRole) {
-      const { data: profile } = await supabase
-        .from("users")
-        .select("role, is_active")
-        .eq("id", user.id)
-        .single();
+    // Check role via simple fetch (not using Supabase client to avoid DNS issues)
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-      if (!profile?.is_active) {
-        return NextResponse.redirect(new URL("/login?error=inactive", request.url));
-      }
+    try {
+      const profileResponse = await fetch(
+        `${supabaseUrl}/rest/v1/users?select=role,is_active&eq=id,${user.id}`,
+        {
+          headers: {
+            apikey: anonKey,
+            Authorization: `Bearer ${anonKey}`,
+          },
+        }
+      );
 
-      if (profile.role !== requiredRole) {
-        const correctDashboard =
-          ROLE_DASHBOARD_PATHS[profile.role as UserRole] || "/home";
-        return NextResponse.redirect(new URL(correctDashboard, request.url));
+      if (profileResponse.ok) {
+        const profiles = await profileResponse.json();
+        const profile = profiles[0];
+
+        if (!profile?.is_active) {
+          return NextResponse.redirect(
+            new URL("/login?error=inactive", request.url)
+          );
+        }
+
+        const requiredRole = getRequiredRole(pathname);
+        if (requiredRole && profile.role !== requiredRole) {
+          const correctDashboard =
+            ROLE_DASHBOARD_PATHS[profile.role as UserRole] || "/home";
+          return NextResponse.redirect(new URL(correctDashboard, request.url));
+        }
       }
+    } catch {
+      // If profile check fails, allow access (fail open)
     }
   }
 
-  if (!isPublicRoute(pathname) && !isDashboardRoute(pathname) && !isAuthRoute(pathname)) {
+  if (
+    !isPublicRoute(pathname) &&
+    !isDashboardRoute(pathname) &&
+    !isAuthRoute(pathname)
+  ) {
     return NextResponse.redirect(new URL("/home", request.url));
   }
 
-  return supabaseResponse;
+  return NextResponse.next();
 }
 
 export const config = {

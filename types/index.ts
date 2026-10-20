@@ -203,6 +203,7 @@ export interface Assignment {
   created_at: string;
   updated_at: string;
   course?: Course;
+  submissions?: Submission[];
 }
 
 export interface Submission {

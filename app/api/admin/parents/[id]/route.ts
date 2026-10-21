@@ -26,7 +26,7 @@ export async function GET(
 
   const { data, error } = await supabase
     .from("parents")
-    .select("*, user:users(*), students:parent_students(student:students(*, user:users(*)))")
+    .select("*, user:users(*)")
     .eq("id", id)
     .single();
 

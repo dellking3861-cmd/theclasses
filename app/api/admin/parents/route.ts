@@ -29,7 +29,7 @@ export async function GET(request: Request) {
 
   let query = supabase
     .from("parents")
-    .select("*, user:users(*), students:parent_students(student:students(*, user:users(*)))", { count: "exact" })
+    .select("*, user:users(*)", { count: "exact" })
     .order("created_at", { ascending: false })
     .range(from, to);
 

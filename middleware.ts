@@ -46,6 +46,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Create Supabase client with cookie handling
+  const response = NextResponse.next();
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -54,17 +55,10 @@ export async function middleware(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet, headers) {
-          // Use NextResponse to set cookies on response
-          const response = NextResponse.next();
+        setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) => {
             response.cookies.set(name, value, options);
           });
-          Object.entries(headers).forEach(([key, value]) => {
-            response.headers.set(key, value);
-          });
-          // Note: we can't return response here, but the cookies are set on it
-          // The actual response handling is done by Next.js middleware
         },
       },
     }
@@ -111,7 +105,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/home", request.url));
   }
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {

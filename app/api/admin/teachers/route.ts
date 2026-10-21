@@ -31,15 +31,12 @@ export async function GET(request: Request) {
 
   let query = supabase
     .from("teachers")
-    .select("*, user:users(*), branch:branches(*)", { count: "exact" })
+    .select("*, user:users(*)", { count: "exact" })
     .order("created_at", { ascending: false })
     .range(from, to);
 
   if (search) {
     query = query.or(`user.full_name.ilike.%${search}%,user.email.ilike.%${search}%,employee_id.ilike.%${search}%`);
-  }
-  if (branchId) {
-    query = query.eq("branch_id", branchId);
   }
   if (status === "active") {
     query = query.eq("is_active", true);

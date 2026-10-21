@@ -7,21 +7,61 @@ import { APP_NAME } from "@/lib/constants";
 import { useSidebarStore } from "@/store";
 import { Avatar } from "@/components/ui/badge";
 import type { User } from "@/types";
-import type { LucideIcon } from "lucide-react";
 import {
+  LayoutDashboard,
+  Users,
   GraduationCap,
+  BookOpen,
+  CreditCard,
+  ClipboardCheck,
+  BarChart3,
+  FileText,
+  Megaphone,
+  Layers,
+  Building2,
+  UserCheck,
   Menu,
   X,
   ChevronLeft,
   LogOut,
   Bell,
+  Upload,
+  PenTool,
+  MessageSquare,
+  Video,
+  Brain,
+  Calendar,
+  Download,
 } from "lucide-react";
 
 export interface NavItem {
   href: string;
   label: string;
-  icon: LucideIcon;
+  icon: string;
 }
+
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  LayoutDashboard,
+  Users,
+  GraduationCap,
+  BookOpen,
+  CreditCard,
+  ClipboardCheck,
+  BarChart3,
+  FileText,
+  Megaphone,
+  Layers,
+  Building2,
+  UserCheck,
+  Upload,
+  PenTool,
+  MessageSquare,
+  Video,
+  Brain,
+  Calendar,
+  Download,
+  Bell,
+};
 
 interface DashboardSidebarProps {
   navItems: NavItem[];
@@ -71,6 +111,7 @@ export function DashboardSidebar({ navItems, user, onSignOut }: DashboardSidebar
         <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
           {navItems.map((item) => {
             const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            const Icon = iconMap[item.icon];
             return (
               <Link
                 key={item.href}
@@ -85,7 +126,7 @@ export function DashboardSidebar({ navItems, user, onSignOut }: DashboardSidebar
                 )}
                 title={isCollapsed ? item.label : undefined}
               >
-                <item.icon className={cn("h-5 w-5 flex-shrink-0", isActive && "text-yellow-500")} />
+                <Icon className={cn("h-5 w-5 flex-shrink-0", isActive && "text-yellow-500")} />
                 {!isCollapsed && <span>{item.label}</span>}
               </Link>
             );

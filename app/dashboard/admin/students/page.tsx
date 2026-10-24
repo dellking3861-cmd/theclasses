@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { AdminService } from "@/services";
+import { useState, useEffect } from "react";
+import { adminApi } from "@/lib/api";
 import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,17 +10,46 @@ import { Users, Plus } from "lucide-react";
 import { Dialog } from "@/components/ui/dialog";
 import { StudentForm } from "@/components/forms/student-form";
 
-export default function AdminStudentsPage() {
-  let students = { data: [], total: 0, page: 1, pageSize: 20 };
+interface Student {
+  id: string;
+  roll_number: string | null;
+  board: string | null;
+  grade: string | null;
+  is_active: boolean;
+  user?: {
+    full_name: string;
+    email: string;
+    avatar_url: string | null;
+  };
+}
 
-  try {
-    students = await AdminService.getStudents();
-  } catch {
-    // Database not connected
-  }
+interface StudentsResponse {
+  data: Student[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+export default function AdminStudentsPage() {
+  const [students, setStudents] = useState<{ data: Student[]; total: number; page: number; pageSize: number }>({ data: [], total: 0, page: 1, pageSize: 20 });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const data = await adminApi.getStudents();
+        setStudents(data);
+      } catch {
+        // Database not connected
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchStudents();
+  }, []);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingStudent, setEditingStudent] = useState<typeof students.data[0] | null>(null);
+  const [editingStudent, setEditingStudent] = useState<Student | null>(null);
   const [branches, setBranches] = useState<{ id: string; name: string }[]>([]);
   const [batches, setBatches] = useState<{ id: string; name: string }[]>([]);
 
@@ -29,7 +58,7 @@ export default function AdminStudentsPage() {
     setIsDialogOpen(true);
   };
 
-  const handleEdit = (student: typeof students.data[0]) => {
+  const handleEdit = (student: Student) => {
     setEditingStudent(student);
     setIsDialogOpen(true);
   };
@@ -42,6 +71,10 @@ export default function AdminStudentsPage() {
   const handleSuccess = () => {
     window.location.reload();
   };
+
+  if (isLoading) {
+    return <div className="flex items-center justify-center h-64">Loading...</div>;
+  }
 
   return (
     <div>
@@ -117,8 +150,8 @@ export default function AdminStudentsPage() {
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
-          branches={branches}
-          batches={batches}
+          branches={[]}
+          batches={[]}
         />
       </Dialog>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { AdminService } from "@/services";
+import { useState, useEffect } from "react";
+import { adminApi } from "@/lib/api";
 import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,19 +11,63 @@ import { BookOpen, Plus } from "lucide-react";
 import { Dialog } from "@/components/ui/dialog";
 import { CourseForm } from "@/components/forms/course-form";
 
-export default async function AdminCoursesPage() {
-  let courses: Awaited<ReturnType<typeof AdminService.getCourses>> = { data: [], total: 0, page: 1, pageSize: 20 };
+interface Course {
+  id: string;
+  title: string;
+  slug: string;
+  description: string | null;
+  course_type: string;
+  board: string | null;
+  subject: string | null;
+  program: string | null;
+  teacher_id: string | null;
+  branch_id: string | null;
+  batch_id: string | null;
+  fee_amount: number;
+  duration_months: number;
+  max_enrollments: number;
+  thumbnail_url: string | null;
+  is_published: boolean;
+  start_date: string | null;
+  end_date: string | null;
+  created_at: string;
+  updated_at: string;
+  teacher?: {
+    user?: {
+      full_name: string;
+    };
+  };
+  branch?: {
+    name: string;
+  };
+  batch?: {
+    name: string;
+  };
+}
 
-  try {
-    courses = await AdminService.getCourses();
-  } catch {}
-
-  function getCourseLabel(course: (typeof courses.data)[0]) {
-    if (course.course_type === "board") {
-      return `${course.subject ? SUBJECT_LABELS[course.subject] : ""} — ${course.board ? BOARD_LABELS[course.board] : ""}`;
-    }
-    return course.program ? PROGRAM_LABELS[course.program] : course.title;
+function getCourseLabel(course: Course) {
+  if (course.course_type === "board") {
+    return `${course.subject ? SUBJECT_LABELS[course.subject] : ""} — ${course.board ? BOARD_LABELS[course.board] : ""}`;
   }
+  return course.program ? PROGRAM_LABELS[course.program] : course.title;
+}
+
+export default function AdminCoursesPage() {
+  const [courses, setCourses] = useState<{ data: Course[]; total: number; page: number; pageSize: number }>({ data: [], total: 0, page: 1, pageSize: 20 });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const data = await adminApi.getCourses();
+        setCourses(data);
+      } catch {}
+      finally {
+        setIsLoading(false);
+      }
+    };
+    fetchCourses();
+  }, []);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<typeof courses.data[0] | null>(null);
@@ -47,6 +91,17 @@ export default async function AdminCoursesPage() {
   const handleSuccess = () => {
     window.location.reload();
   };
+
+  function getCourseLabel(course: Course) {
+    if (course.course_type === "board") {
+      return `${course.subject ? SUBJECT_LABELS[course.subject] : ""} — ${course.board ? BOARD_LABELS[course.board] : ""}`;
+    }
+    return course.program ? PROGRAM_LABELS[course.program] : course.title;
+  }
+
+  if (isLoading) {
+    return <div className="flex items-center justify-center h-64">Loading...</div>;
+  }
 
   return (
     <div>

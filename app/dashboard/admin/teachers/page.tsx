@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { AdminService } from "@/services";
+import { useState, useEffect } from "react";
+import { adminApi } from "@/lib/api";
 import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,14 +10,42 @@ import { GraduationCap, Plus } from "lucide-react";
 import { Dialog } from "@/components/ui/dialog";
 import { TeacherForm } from "@/components/forms/teacher-form";
 
-export default async function AdminTeachersPage() {
-  let teachers: Awaited<ReturnType<typeof AdminService.getTeachers>> = { data: [], total: 0, page: 1, pageSize: 20 };
+interface Teacher {
+  id: string;
+  employee_id: string | null;
+  experience_years: number;
+  is_active: boolean;
+  user?: {
+    full_name: string;
+    email: string;
+    avatar_url: string | null;
+  };
+}
 
-  try {
-    teachers = await AdminService.getTeachers();
-  } catch {
-    // Database not connected
-  }
+interface TeachersResponse {
+  data: Teacher[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+export default function AdminTeachersPage() {
+  const [teachers, setTeachers] = useState<{ data: Teacher[]; total: number; page: number; pageSize: number }>({ data: [], total: 0, page: 1, pageSize: 20 });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTeachers = async () => {
+      try {
+        const data = await adminApi.getTeachers();
+        setTeachers(data);
+      } catch {
+        // Database not connected
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchTeachers();
+  }, []);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingTeacher, setEditingTeacher] = useState<typeof teachers.data[0] | null>(null);
@@ -41,6 +69,10 @@ export default async function AdminTeachersPage() {
   const handleSuccess = () => {
     window.location.reload();
   };
+
+  if (isLoading) {
+    return <div className="flex items-center justify-center h-64">Loading...</div>;
+  }
 
   return (
     <div>

@@ -25,7 +25,7 @@ const courseSchema = z.object({
   duration_months: z.number().min(1),
   max_enrollments: z.number().min(1),
   thumbnail_url: z.string().optional(),
-  is_published: z.boolean().default(false),
+  is_published: z.boolean(),
   start_date: z.string().optional(),
   end_date: z.string().optional(),
 });

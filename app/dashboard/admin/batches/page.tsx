@@ -1,19 +1,84 @@
-import { AdminService } from "@/services";
+"use client";
+
+import { useState, useEffect } from "react";
+import { adminApi } from "@/lib/api";
 import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/utils/format";
-import { Layers, Plus, Building2, UserCheck, CreditCard } from "lucide-react";
+import { Layers, Plus } from "lucide-react";
+import { Dialog } from "@/components/ui/dialog";
+import { BatchForm } from "@/components/forms/batch-form";
 
-export default async function AdminBatchesPage() {
-  let batches: Awaited<ReturnType<typeof AdminService.getBatches>> = [];
-  try { batches = await AdminService.getBatches(); } catch {}
+interface Batch {
+  id: string;
+  name: string;
+  branch_id: string | null;
+  start_date: string;
+  end_date: string | null;
+  max_students: number;
+  is_active: boolean;
+  branch?: {
+    name: string;
+  };
+}
+
+interface BatchesResponse {
+  data: Batch[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+export default function AdminBatchesPage() {
+  const [batches, setBatches] = useState<Batch[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBatches = async () => {
+      try {
+        const data = await adminApi.getBatches();
+        setBatches(data.data || []);
+      } catch {}
+      finally {
+        setIsLoading(false);
+      }
+    };
+    fetchBatches();
+  }, []);
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingBatch, setEditingBatch] = useState<Batch | null>(null);
+  const [branches, setBranches] = useState<{ id: string; name: string }[]>([]);
+
+  const handleOpenAdd = () => {
+    setEditingBatch(null);
+    setIsDialogOpen(true);
+  };
+
+  const handleEdit = (batch: Batch) => {
+    setEditingBatch(batch);
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+    setEditingBatch(null);
+  };
+
+  const handleSuccess = () => {
+    window.location.reload();
+  };
+
+  if (isLoading) {
+    return <div className="flex items-center justify-center h-64">Loading...</div>;
+  }
 
   return (
     <div>
-      <PageHeader title="Batch Management" description="Manage student batches" action={<Button><Plus className="h-4 w-4" /> Create Batch</Button>} />
+      <PageHeader title="Batch Management" description="Manage student batches" action={<Button onClick={handleOpenAdd}><Plus className="h-4 w-4" /> Create Batch</Button>} />
       {batches.length === 0 ? (
-        <Card><CardContent><EmptyState icon={Layers} title="No batches" description="Create batches to organize students." action={<Button><Plus className="h-4 w-4" /> Create Batch</Button>} /></CardContent></Card>
+        <Card><CardContent><EmptyState icon={Layers} title="No batches" description="Create batches to organize students." action={<Button onClick={handleOpenAdd}><Plus className="h-4 w-4" /> Create Batch</Button>} /></CardContent></Card>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {batches.map((batch) => (
@@ -31,6 +96,15 @@ export default async function AdminBatchesPage() {
           ))}
         </div>
       )}
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Batch" description="Add a new batch to the system">
+        <BatchForm
+          open={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          onSuccess={() => window.location.reload()}
+          branches={[]}
+        />
+      </Dialog>
     </div>
   );
 }

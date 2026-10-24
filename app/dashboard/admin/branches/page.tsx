@@ -1,30 +1,80 @@
-import { requireAuth } from "@/lib/auth";
-import { AdminService } from "@/services";
+"use client";
+
+import { useState, useEffect } from "react";
+import { adminApi } from "@/lib/api";
 import { PageHeader, StatCard, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Building2, Calendar, MapPin } from "lucide-react";
+import { Building2, Calendar, MapPin, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
+import { BranchForm } from "@/components/forms/branch-form";
 
-export default async function AdminBranchesPage() {
-  await requireAuth("admin");
+interface Branch {
+  id: string;
+  name: string;
+  address: string;
+  city: string;
+  phone: string | null;
+  email: string | null;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
 
-  let branches: Awaited<ReturnType<typeof AdminService.getBranches>> = [];
+export default function AdminBranchesPage() {
+  const [branches, setBranches] = useState<{ id: string; name: string; address: string; city: string; phone: string | null; email: string | null; is_active: boolean; created_at: string; updated_at: string }[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  try {
-    branches = await AdminService.getBranches();
-  } catch {
-    // Database not available
-  }
+  useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const data = await adminApi.getBranches();
+        setBranches(data.data || []);
+      } catch {
+        // Database not available
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchBranches();
+  }, []);
 
   const branchList = branches || [];
   const activeCount = branchList.filter((b) => b.is_active).length;
   const inactiveCount = branchList.filter((b) => !b.is_active).length;
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingBranch, setEditingBranch] = useState<typeof branchList[0] | null>(null);
+
+  const handleOpenAdd = () => {
+    setEditingBranch(null);
+    setIsDialogOpen(true);
+  };
+
+  const handleEdit = (branch: typeof branchList[0]) => {
+    setEditingBranch(branch);
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+    setEditingBranch(null);
+  };
+
+  const handleSuccess = () => {
+    window.location.reload();
+  };
+
+  if (isLoading) {
+    return <div className="flex items-center justify-center h-64">Loading...</div>;
+  }
 
   return (
     <div>
       <PageHeader
         title="Branches"
         description={`${activeCount} active, ${inactiveCount} inactive`}
+        action={<Button onClick={handleOpenAdd}><Plus className="h-4 w-4" /> Add Branch</Button>}
       />
 
       <div className="grid sm:grid-cols-3 gap-6 mb-8">
@@ -46,11 +96,7 @@ export default async function AdminBranchesPage() {
                 icon={Building2}
                 title="No branches"
                 description="Create a branch to get started."
-                action={
-                  <Button>
-                    <Building2 className="h-4 w-4" /> Add Branch
-                  </Button>
-                }
+                action={<Button onClick={() => setIsDialogOpen(true)}>Add Branch</Button>}
               />
             </CardContent>
           </Card>
@@ -78,7 +124,13 @@ export default async function AdminBranchesPage() {
         )}
       </div>
 
-      <Button className="w-full mt-6">Add New Branch</Button>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Branch" description="Add a new branch to the system">
+        <BranchForm
+          open={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          onSuccess={() => window.location.reload()}
+        />
+      </Dialog>
     </div>
   );
 }

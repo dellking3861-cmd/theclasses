@@ -56,11 +56,11 @@ export function StudentForm({ open, onClose, onSuccess, initialData, branches = 
       branch_id: "",
       batch_id: "",
       date_of_birth: "",
-      gender: "",
+      gender: undefined,
       address: "",
       emergency_contact: "",
       grade: "",
-      board: "",
+      board: undefined,
     },
   });
 
@@ -95,7 +95,7 @@ export function StudentForm({ open, onClose, onSuccess, initialData, branches = 
   return (
     <Dialog open={open} onOpenChange={onClose} title={isEditing ? "Edit Student" : "Add Student"} description={isEditing ? "Update student information" : "Add a new student to the system"}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogHeader />
+        <DialogHeader title={isEditing ? "Edit Student" : "Add Student"} description={isEditing ? "Update student information" : "Add a new student to the system"} />
         <DialogContent className="space-y-4">
           <div className="grid sm:grid-cols-2 gap-4">
             <Input label="Full Name" placeholder="John Doe" error={errors.full_name?.message} {...register("full_name")} />

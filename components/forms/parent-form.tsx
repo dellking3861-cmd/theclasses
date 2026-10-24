@@ -79,7 +79,7 @@ export function ParentForm({ open, onClose, onSuccess, initialData }: ParentForm
   return (
     <Dialog open={open} onOpenChange={onClose} title={isEditing ? "Edit Parent" : "Add Parent"} description={isEditing ? "Update parent information" : "Add a new parent to the system"}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogHeader />
+        <DialogHeader title={isEditing ? "Edit Parent" : "Add Parent"} description={isEditing ? "Update parent information" : "Add a new parent to the system"} />
         <DialogContent className="space-y-4">
           <div className="grid sm:grid-cols-2 gap-4">
             <Input label="Full Name" placeholder="Ahmed Ali" error={errors.full_name?.message} {...register("full_name")} />

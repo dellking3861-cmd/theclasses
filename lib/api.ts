@@ -194,46 +194,4 @@ export const adminApi = {
   createParent: (data: any) => fetchApi('/parents', { method: 'POST', body: JSON.stringify(data) }),
   updateParent: (id: string, data: any) => fetchApi(`/parents/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteParent: (id: string) => fetchApi(`/parents/${id}`, { method: 'DELETE' }),
-
-  // Announcements
-  getAnnouncements: (params?: { page?: number; pageSize?: number; search?: string }) => {
-    const searchParams = new URLSearchParams();
-    if (params?.page) searchParams.append('page', params.page.toString());
-    if (params?.pageSize) searchParams.append('pageSize', params.pageSize.toString());
-    if (params?.search) searchParams.append('search', params.search);
-    return fetchApi<{ data: any[]; total: number; page: number; pageSize: number }>(`/announcements?${searchParams.toString()}`);
-  },
-
-  createAnnouncement: (data: any) => fetchApi('/announcements', { method: 'POST', body: JSON.stringify(data) }),
-  updateAnnouncement: (id: string, data: any) => fetchApi(`/announcements/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
-  deleteAnnouncement: (id: string) => fetchApi(`/announcements/${id}`, { method: 'DELETE' }),
-
-  // Batches
-  getBatches: (params?: { page?: number; pageSize?: number; search?: string; branchId?: string; status?: string }) => {
-    const searchParams = new URLSearchParams();
-    if (params?.page) searchParams.append('page', params.page.toString());
-    if (params?.pageSize) searchParams.append('pageSize', params.pageSize.toString());
-    if (params?.search) searchParams.append('search', params.search);
-    if (params?.branchId) searchParams.append('branchId', params.branchId);
-    if (params?.status) searchParams.append('status', params.status);
-    return fetchApi<{ data: any[]; total: number; page: number; pageSize: number }>(`/batches?${searchParams.toString()}`);
-  },
-
-  createBatch: (data: any) => fetchApi('/batches', { method: 'POST', body: JSON.stringify(data) }),
-  updateBatch: (id: string, data: any) => fetchApi(`/batches/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
-  deleteBatch: (id: string) => fetchApi(`/batches/${id}`, { method: 'DELETE' }),
-
-  // Branches
-  getBranches: (params?: { page?: number; pageSize?: number; search?: string; status?: string }) => {
-    const searchParams = new URLSearchParams();
-    if (params?.page) searchParams.append('page', params.page.toString());
-    if (params?.pageSize) searchParams.append('pageSize', params.pageSize.toString());
-    if (params?.search) searchParams.append('search', params.search);
-    if (params?.status) searchParams.append('status', params.status);
-    return fetchApi<{ data: any[]; total: number; page: number; pageSize: number }>(`/branches?${searchParams.toString()}`);
-  },
-
-  createBranch: (data: any) => fetchApi('/branches', { method: 'POST', body: JSON.stringify(data) }),
-  updateBranch: (id: string, data: any) => fetchApi(`/branches/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
-  deleteBranch: (id: string) => fetchApi(`/branches/${id}`, { method: 'DELETE' }),
 };

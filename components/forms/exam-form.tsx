@@ -16,11 +16,11 @@ const examSchema = z.object({
   title: z.string().min(2, "Exam title required"),
   description: z.string().optional(),
   exam_type: z.enum(["quiz", "midterm", "final", "practice", "entry_test"]),
-  total_marks: z.number().min(1).default(100),
-  passing_marks: z.number().min(0).default(40),
-  duration_minutes: z.number().min(1).default(60),
+  total_marks: z.number().min(1),
+  passing_marks: z.number().min(0),
+  duration_minutes: z.number().min(1),
   scheduled_at: z.string().min(1, "Schedule date required"),
-  is_published: z.boolean().default(false),
+  is_published: z.boolean(),
 });
 
 type ExamFormData = z.infer<typeof examSchema>;
@@ -89,10 +89,10 @@ export function ExamForm({ open, onClose, onSuccess, initialData, courses = [], 
   return (
     <Dialog open={open} onOpenChange={onClose} title={isEditing ? "Edit Exam" : "Create Exam"} description={isEditing ? "Update exam information" : "Create a new exam"}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogHeader />
+        <DialogHeader title={isEditing ? "Edit Exam" : "Create Exam"} description={isEditing ? "Update exam information" : "Create a new exam"} />
         <DialogContent className="space-y-4">
           <Select label="Course" placeholder="Select course" error={errors.course_id?.message} options={courses.map(c => ({ value: c.id, label: c.title }))} {...register("course_id")} />
-          <Select label="Teacher" placeholder="Select teacher" error={errors.teacher_id?.message} options={teachers.map(t => ({ value: t.id, label: t.user?.full_name || t.id }))} {...register("teacher_id")} />
+          <Select label="Teacher" placeholder="Select teacher" error={errors.teacher_id?.message} options={teachers.map(t => ({ value: t.id, label: t.full_name }))} {...register("teacher_id")} />
           <Input label="Title" placeholder="Midterm Exam" error={errors.title?.message} {...register("title")} />
           <Input label="Description" placeholder="Exam description" error={errors.description?.message} {...register("description")} />
           <div className="grid sm:grid-cols-2 gap-4">

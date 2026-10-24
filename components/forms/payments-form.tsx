@@ -45,13 +45,13 @@ export function PaymentForm({ open, onClose, onSuccess, initialData, students = 
     resolver: zodResolver(paymentSchema),
     defaultValues: initialData || {
       student_id: "",
-      course_id: null,
+      course_id: undefined,
       amount: 0,
       paid_amount: 0,
       status: "pending",
-      method: null,
+      method: undefined,
       due_date: "",
-      paid_at: null,
+      paid_at: undefined,
       receipt_number: "",
       notes: "",
     },
@@ -88,7 +88,7 @@ export function PaymentForm({ open, onClose, onSuccess, initialData, students = 
   return (
     <Dialog open={open} onOpenChange={onClose} title={isEditing ? "Edit Payment" : "Add Payment"} description={isEditing ? "Update payment information" : "Add a new payment record"}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogHeader />
+        <DialogHeader title={isEditing ? "Edit Payment" : "Add Payment"} description={isEditing ? "Update payment information" : "Add a new payment record"} />
         <DialogContent className="space-y-4">
           <Select label="Student" placeholder="Select student" error={errors.student_id?.message} options={[]} {...register("student_id")} />
           <div className="grid sm:grid-cols-2 gap-4">

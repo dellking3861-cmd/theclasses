@@ -92,7 +92,7 @@ export function TeacherForm({ open, onClose, onSuccess, initialData, branches = 
   return (
     <Dialog open={open} onOpenChange={onClose} title={isEditing ? "Edit Teacher" : "Add Teacher"} description={isEditing ? "Update teacher information" : "Add a new teacher to the system"}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogHeader />
+        <DialogHeader title={isEditing ? "Edit Teacher" : "Add Teacher"} description={isEditing ? "Update teacher information" : "Add a new teacher to the system"} />
         <DialogContent className="space-y-4">
           <div className="grid sm:grid-cols-2 gap-4">
             <Input label="Full Name" placeholder="John Smith" error={errors.full_name?.message} {...register("full_name")} />

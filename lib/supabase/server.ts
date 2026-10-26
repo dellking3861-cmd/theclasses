@@ -33,3 +33,28 @@ export async function createClient() {
     }
   );
 }
+
+// Admin client with service role key for admin operations (bypasses RLS)
+export async function createAdminClient() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    throw new Error('Supabase URL (NEXT_PUBLIC_SUPABASE_URL) is not configured.')
+  }
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error('Supabase service role key (SUPABASE_SERVICE_ROLE_KEY) is not configured.')
+  }
+
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return [];
+        },
+        setAll() {
+          // Admin client doesn't need cookies
+        },
+      },
+    }
+  );
+}

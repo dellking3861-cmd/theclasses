@@ -161,8 +161,8 @@ export default function AdminStudentsPage() {
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
-          branches={[]}
-          batches={[]}
+          branches={branches}
+          batches={batches}
         />
       </Dialog>
     </div>

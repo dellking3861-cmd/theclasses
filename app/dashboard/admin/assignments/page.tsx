@@ -114,8 +114,8 @@ export default function AdminAssignmentsPage() {
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
-          courses={[]}
-          teachers={[]}
+          courses={courses}
+          teachers={teachers}
         />
       </Dialog>
     </div>

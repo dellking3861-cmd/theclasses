@@ -111,6 +111,7 @@ export default function AdminFeesPage() {
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
+          students={students}
         />
       </Dialog>
     </div>

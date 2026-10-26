@@ -125,7 +125,7 @@ export default function AdminTeachersPage() {
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
-          branches={[]}
+          branches={branches}
         />
       </Dialog>
     </div>

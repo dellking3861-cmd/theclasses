@@ -32,6 +32,20 @@ export default function AdminExamsPage() {
   const [courses, setCourses] = useState<{ id: string; title: string }[]>([]);
   const [teachers, setTeachers] = useState<{ id: string; full_name: string }[]>([]);
 
+  useEffect(() => {
+    const fetchAll = async () => {
+      try {
+        const [coursesData, teachersData] = await Promise.all([
+          adminApi.getCourses(),
+          adminApi.getTeachers(),
+        ]);
+        setCourses(coursesData.data || []);
+        setTeachers(teachersData.data || []);
+      } catch {}
+    };
+    fetchAll();
+  }, []);
+
   const handleOpenAdd = () => {
     setEditingExam(null);
     setIsDialogOpen(true);

@@ -15,18 +15,23 @@ const statusVariant: Record<string, "success" | "warning" | "danger" | "info" | 
 export default function AdminPaymentsPage() {
   const [payments, setPayments] = useState<{ data: any[]; total: number; page: number; pageSize: number }>({ data: [], total: 0, page: 1, pageSize: 20 });
   const [isLoading, setIsLoading] = useState(true);
+  const [students, setStudents] = useState<{ id: string; full_name: string }[]>([]);
 
   useEffect(() => {
-    const fetchPayments = async () => {
+    const fetchAll = async () => {
       try {
-        const data = await adminApi.getPayments();
-        setPayments(data);
+        const [paymentsData, studentsData] = await Promise.all([
+          adminApi.getPayments(),
+          adminApi.getStudents(),
+        ]);
+        setPayments(paymentsData);
+        setStudents(studentsData.data?.map(s => ({ id: s.id, full_name: s.user?.full_name || s.user?.email || s.id })) || []);
       } catch {}
       finally {
         setIsLoading(false);
       }
     };
-    fetchPayments();
+    fetchAll();
   }, []);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);

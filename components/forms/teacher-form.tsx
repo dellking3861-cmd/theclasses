@@ -16,7 +16,7 @@ const teacherSchema = z.object({
   full_name: z.string().min(2, "Name must be at least 2 characters"),
   phone: z.string().optional(),
   employee_id: z.string().optional(),
-  branch_id: z.string().uuid().optional(),
+  branch_id: z.string().uuid().optional().or(z.literal("")),
   specialization: z.array(z.enum(["mathematics", "physics", "chemistry", "biology", "computer_science", "english"])).optional(),
   qualification: z.string().optional(),
   experience_years: z.number().min(0).optional(),

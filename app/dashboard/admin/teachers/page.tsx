@@ -34,17 +34,21 @@ export default function AdminTeachersPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchTeachers = async () => {
+    const fetchAll = async () => {
       try {
-        const data = await adminApi.getTeachers();
-        setTeachers(data);
+        const [teachersData, branchesData] = await Promise.all([
+          adminApi.getTeachers(),
+          adminApi.getBranches(),
+        ]);
+        setTeachers(teachersData);
+        setBranches(branchesData.data || []);
       } catch {
         // Database not connected
       } finally {
         setIsLoading(false);
       }
     };
-    fetchTeachers();
+    fetchAll();
   }, []);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);

@@ -31,6 +31,16 @@ export default function AdminAnnouncementsPage() {
   const [editingAnnouncement, setEditingAnnouncement] = useState<typeof announcements[0] | null>(null);
   const [branches, setBranches] = useState<{ id: string; name: string }[]>([]);
 
+  useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const data = await adminApi.getBranches();
+        setBranches(data.data || []);
+      } catch {}
+    };
+    fetchBranches();
+  }, []);
+
   const handleOpenAdd = () => {
     setEditingAnnouncement(null);
     setIsDialogOpen(true);

@@ -73,6 +73,16 @@ export default function AdminCoursesPage() {
   const [editingCourse, setEditingCourse] = useState<typeof courses.data[0] | null>(null);
   const [branches, setBranches] = useState<{ id: string; name: string }[]>([]);
 
+  useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const data = await adminApi.getBranches();
+        setBranches(data.data || []);
+      } catch {}
+    };
+    fetchBranches();
+  }, []);
+
   const handleOpenAdd = () => {
     setEditingCourse(null);
     setIsDialogOpen(true);

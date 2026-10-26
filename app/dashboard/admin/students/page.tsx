@@ -35,17 +35,23 @@ export default function AdminStudentsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchStudents = async () => {
+    const fetchAll = async () => {
       try {
-        const data = await adminApi.getStudents();
-        setStudents(data);
+        const [studentsData, branchesData, batchesData] = await Promise.all([
+          adminApi.getStudents(),
+          adminApi.getBranches(),
+          adminApi.getBatches(),
+        ]);
+        setStudents(studentsData);
+        setBranches(branchesData.data || []);
+        setBatches(batchesData.data || []);
       } catch {
         // Database not connected
       } finally {
         setIsLoading(false);
       }
     };
-    fetchStudents();
+    fetchAll();
   }, []);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);

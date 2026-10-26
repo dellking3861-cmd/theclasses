@@ -12,11 +12,11 @@ import { Dialog, DialogHeader, DialogContent, DialogFooter } from "@/components/
 
 const paymentSchema = z.object({
   student_id: z.string().uuid(),
-  course_id: z.string().uuid().optional(),
+  course_id: z.string().uuid().optional().or(z.literal("")),
   amount: z.number().min(0.01),
   paid_amount: z.number().min(0),
   status: z.enum(["pending", "paid", "overdue", "partial", "refunded"]),
-  method: z.enum(["cash", "bank_transfer", "jazzcash", "easypaisa", "card", "online"]).optional(),
+  method: z.enum(["cash", "bank_transfer", "jazzcash", "easypaisa", "card", "online"]).optional().or(z.literal("")),
   due_date: z.string(),
   paid_at: z.string().optional(),
   receipt_number: z.string().optional(),

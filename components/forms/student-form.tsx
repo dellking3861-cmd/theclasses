@@ -16,14 +16,14 @@ const studentSchema = z.object({
   full_name: z.string().min(2, "Name must be at least 2 characters"),
   phone: z.string().optional(),
   roll_number: z.string().optional(),
-  branch_id: z.string().uuid().optional(),
-  batch_id: z.string().uuid().optional(),
+  branch_id: z.string().uuid().optional().or(z.literal("")),
+  batch_id: z.string().uuid().optional().or(z.literal("")),
   date_of_birth: z.string().optional(),
-  gender: z.enum(["male", "female", "other"]).optional(),
+  gender: z.enum(["male", "female", "other"]).optional().or(z.literal("")),
   address: z.string().optional(),
   emergency_contact: z.string().optional(),
   grade: z.string().optional(),
-  board: z.enum(["aku_eb", "sindh_board", "cambridge_o", "cambridge_a"]).optional(),
+  board: z.enum(["aku_eb", "sindh_board", "cambridge_o", "cambridge_a"]).optional().or(z.literal("")),
 });
 
 type StudentFormData = z.infer<typeof studentSchema>;

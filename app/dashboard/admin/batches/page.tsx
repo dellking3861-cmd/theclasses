@@ -51,6 +51,16 @@ export default function AdminBatchesPage() {
   const [editingBatch, setEditingBatch] = useState<Batch | null>(null);
   const [branches, setBranches] = useState<{ id: string; name: string }[]>([]);
 
+  useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const data = await adminApi.getBranches();
+        setBranches(data.data || []);
+      } catch {}
+    };
+    fetchBranches();
+  }, []);
+
   const handleOpenAdd = () => {
     setEditingBatch(null);
     setIsDialogOpen(true);

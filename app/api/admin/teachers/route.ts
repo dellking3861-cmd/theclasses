@@ -108,7 +108,6 @@ export async function POST(request: Request) {
     .insert({
       user_id: userId,
       employee_id: employee_id || null,
-      branch_id: branch_id || null,
       specialization: specialization || [],
       qualification: qualification || null,
       experience_years: experience_years || 0,

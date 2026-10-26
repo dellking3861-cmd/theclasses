@@ -16,6 +16,7 @@ export default function AdminFeesPage() {
   const [fees, setFees] = useState<{ data: { id: string; student_id: string; course_id: string | null; amount: number; paid_amount: number; status: string; method: string | null; due_date: string; paid_at: string | null; receipt_number: string | null; notes: string | null; created_by: string | null; student?: { user?: { full_name: string } }; course?: { title: string } }[]; total: number; page: number; pageSize: number }>({ data: [], total: 0, page: 1, pageSize: 20 });
   const [isLoading, setIsLoading] = useState(true);
   const [students, setStudents] = useState<{ id: string; full_name: string }[]>([]);
+  const [studentsLoaded, setStudentsLoaded] = useState(false);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -26,6 +27,7 @@ export default function AdminFeesPage() {
         ]);
         setFees(feesData);
         setStudents(studentsData.data?.map(s => ({ id: s.id, full_name: s.user?.full_name || s.user?.email || s.id })) || []);
+        setStudentsLoaded(true);
       } catch {}
       finally {
         setIsLoading(false);
@@ -38,6 +40,9 @@ export default function AdminFeesPage() {
   const [editingFee, setEditingFee] = useState<typeof fees.data[0] | null>(null);
 
   const handleOpenAdd = () => {
+    if (!studentsLoaded || students.length === 0) {
+      return; // wait for students to load
+    }
     setEditingFee(null);
     setIsDialogOpen(true);
   };
@@ -64,7 +69,7 @@ export default function AdminFeesPage() {
     <div>
       <PageHeader title="Fee Management" description="Manage student fee records and payments" action={<Button onClick={handleOpenAdd}><Plus className="h-4 w-4" /> Add Fee Record</Button>} />
       {fees.data.length === 0 ? (
-        <Card><CardContent><EmptyState icon={CreditCard} title="No fee records" description="Add fee records to track student payments." action={<Button onClick={() => setIsDialogOpen(true)}><Plus className="h-4 w-4" /> Add Fee Record</Button>} /></CardContent></Card>
+        <Card><CardContent><EmptyState icon={CreditCard} title="No fee records" description="Add fee records to track student payments." action={<Button onClick={handleOpenAdd}><Plus className="h-4 w-4" /> Add Fee Record</Button>} /></CardContent></Card>
       ) : (
         <Card>
           <div className="overflow-x-auto">

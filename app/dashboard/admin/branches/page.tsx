@@ -96,7 +96,7 @@ export default function AdminBranchesPage() {
                 icon={Building2}
                 title="No branches"
                 description="Create a branch to get started."
-                action={<Button onClick={() => setIsDialogOpen(true)}>Add Branch</Button>}
+                action={<Button onClick={handleOpenAdd}>Add Branch</Button>}
               />
             </CardContent>
           </Card>

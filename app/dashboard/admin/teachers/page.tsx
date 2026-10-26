@@ -32,6 +32,7 @@ interface TeachersResponse {
 export default function AdminTeachersPage() {
   const [teachers, setTeachers] = useState<{ data: Teacher[]; total: number; page: number; pageSize: number }>({ data: [], total: 0, page: 1, pageSize: 20 });
   const [isLoading, setIsLoading] = useState(true);
+  const [branchesLoaded, setBranchesLoaded] = useState(false);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -42,6 +43,7 @@ export default function AdminTeachersPage() {
         ]);
         setTeachers(teachersData);
         setBranches(branchesData.data || []);
+        setBranchesLoaded(true);
       } catch {
         // Database not connected
       } finally {
@@ -56,6 +58,9 @@ export default function AdminTeachersPage() {
   const [branches, setBranches] = useState<{ id: string; name: string }[]>([]);
 
   const handleOpenAdd = () => {
+    if (!branchesLoaded || branches.length === 0) {
+      return; // wait for branches to load
+    }
     setEditingTeacher(null);
     setIsDialogOpen(true);
   };

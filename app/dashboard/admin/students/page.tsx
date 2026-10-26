@@ -33,6 +33,7 @@ interface StudentsResponse {
 export default function AdminStudentsPage() {
   const [students, setStudents] = useState<{ data: Student[]; total: number; page: number; pageSize: number }>({ data: [], total: 0, page: 1, pageSize: 20 });
   const [isLoading, setIsLoading] = useState(true);
+  const [branchesLoaded, setBranchesLoaded] = useState(false);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -45,6 +46,7 @@ export default function AdminStudentsPage() {
         setStudents(studentsData);
         setBranches(branchesData.data || []);
         setBatches(batchesData.data || []);
+        setBranchesLoaded(true);
       } catch {
         // Database not connected
       } finally {
@@ -60,6 +62,9 @@ export default function AdminStudentsPage() {
   const [batches, setBatches] = useState<{ id: string; name: string }[]>([]);
 
   const handleOpenAdd = () => {
+    if (!branchesLoaded || branches.length === 0) {
+      return; // wait for branches to load
+    }
     setEditingStudent(null);
     setIsDialogOpen(true);
   };

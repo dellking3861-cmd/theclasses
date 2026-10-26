@@ -41,7 +41,18 @@ export default function AdminAnnouncementsPage() {
     fetchBranches();
   }, []);
 
+  const [branchesLoaded, setBranchesLoaded] = useState(false);
+
+  useEffect(() => {
+    if (branches.length > 0) {
+      setBranchesLoaded(true);
+    }
+  }, [branches]);
+
   const handleOpenAdd = () => {
+    if (!branchesLoaded || branches.length === 0) {
+      return; // wait for branches to load
+    }
     setEditingAnnouncement(null);
     setIsDialogOpen(true);
   };
@@ -68,7 +79,7 @@ export default function AdminAnnouncementsPage() {
     <div>
       <PageHeader title="Announcements" description="Send announcements to students, teachers, and parents" action={<Button onClick={handleOpenAdd}><Plus className="h-4 w-4" /> New Announcement</Button>} />
       {announcements.length === 0 ? (
-        <Card><CardContent><EmptyState icon={Megaphone} title="No announcements" description="Create announcements to keep everyone informed." action={<Button onClick={() => setIsDialogOpen(true)}><Plus className="h-4 w-4" /> New Announcement</Button>} /></CardContent></Card>
+        <Card><CardContent><EmptyState icon={Megaphone} title="No announcements" description="Create announcements to keep everyone informed." action={<Button onClick={handleOpenAdd}><Plus className="h-4 w-4" /> New Announcement</Button>} /></CardContent></Card>
       ) : (
         <div className="space-y-4">
           {announcements.map((a) => (

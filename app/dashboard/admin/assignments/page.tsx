@@ -45,7 +45,18 @@ export default function AdminAssignmentsPage() {
     fetchAll();
   }, []);
 
+  const [depsLoaded, setDepsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (courses.length > 0 && teachers.length > 0) {
+      setDepsLoaded(true);
+    }
+  }, [courses, teachers]);
+
   const handleOpenAdd = () => {
+    if (!depsLoaded || courses.length === 0 || teachers.length === 0) {
+      return; // wait for deps to load
+    }
     setEditingAssignment(null);
     setIsDialogOpen(true);
   };
@@ -72,7 +83,7 @@ export default function AdminAssignmentsPage() {
     <div>
       <PageHeader title="Assignments" description="Manage course assignments" action={<Button onClick={handleOpenAdd}><Plus className="h-4 w-4" /> Create Assignment</Button>} />
       {assignments.length === 0 ? (
-        <Card><CardContent><EmptyState icon={FileText} title="No assignments" description="Create assignments for your courses." action={<Button onClick={() => setIsDialogOpen(true)}><Plus className="h-4 w-4" /> Create Assignment</Button>} /></CardContent></Card>
+        <Card><CardContent><EmptyState icon={FileText} title="No assignments" description="Create assignments for your courses." action={<Button onClick={handleOpenAdd}><Plus className="h-4 w-4" /> Create Assignment</Button>} /></CardContent></Card>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {assignments.map((assignment) => (

@@ -55,6 +55,7 @@ function getCourseLabel(course: Course) {
 export default function AdminCoursesPage() {
   const [courses, setCourses] = useState<{ data: Course[]; total: number; page: number; pageSize: number }>({ data: [], total: 0, page: 1, pageSize: 20 });
   const [isLoading, setIsLoading] = useState(true);
+  const [branchesLoaded, setBranchesLoaded] = useState(false);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -78,12 +79,16 @@ export default function AdminCoursesPage() {
       try {
         const data = await adminApi.getBranches();
         setBranches(data.data || []);
+        setBranchesLoaded(true);
       } catch {}
     };
     fetchBranches();
   }, []);
 
   const handleOpenAdd = () => {
+    if (!branchesLoaded || branches.length === 0) {
+      return; // wait for branches to load
+    }
     setEditingCourse(null);
     setIsDialogOpen(true);
   };

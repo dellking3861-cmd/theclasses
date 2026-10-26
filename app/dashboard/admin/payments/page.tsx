@@ -16,6 +16,7 @@ export default function AdminPaymentsPage() {
   const [payments, setPayments] = useState<{ data: any[]; total: number; page: number; pageSize: number }>({ data: [], total: 0, page: 1, pageSize: 20 });
   const [isLoading, setIsLoading] = useState(true);
   const [students, setStudents] = useState<{ id: string; full_name: string }[]>([]);
+  const [studentsLoaded, setStudentsLoaded] = useState(false);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -26,6 +27,7 @@ export default function AdminPaymentsPage() {
         ]);
         setPayments(paymentsData);
         setStudents(studentsData.data?.map(s => ({ id: s.id, full_name: s.user?.full_name || s.user?.email || s.id })) || []);
+        setStudentsLoaded(true);
       } catch {}
       finally {
         setIsLoading(false);
@@ -38,6 +40,9 @@ export default function AdminPaymentsPage() {
   const [editingPayment, setEditingPayment] = useState<typeof payments.data[0] | null>(null);
 
   const handleOpenAdd = () => {
+    if (!studentsLoaded || students.length === 0) {
+      return; // wait for students to load
+    }
     setEditingPayment(null);
     setIsDialogOpen(true);
   };

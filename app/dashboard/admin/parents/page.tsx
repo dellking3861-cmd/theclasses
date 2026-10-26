@@ -76,7 +76,7 @@ export default function AdminParentsPage() {
     <div>
       <PageHeader title="Parent Accounts" description="Manage parent accounts and student links" action={<Button onClick={handleOpenAdd}><Plus className="h-4 w-4" /> Add Parent</Button>} />
       {parents.length === 0 ? (
-        <Card><CardContent><EmptyState icon={UserCheck} title="No parent accounts" description="Add parent accounts to link with student profiles." action={<Button onClick={() => setIsDialogOpen(true)}><Plus className="h-4 w-4" /> Add Parent</Button>} /></CardContent></Card>
+        <Card><CardContent><EmptyState icon={UserCheck} title="No parent accounts" description="Add parent accounts to link with student profiles." action={<Button onClick={handleOpenAdd}><Plus className="h-4 w-4" /> Add Parent</Button>} /></CardContent></Card>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {parents.map((parent) => (

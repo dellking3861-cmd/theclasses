@@ -33,6 +33,7 @@ interface BatchesResponse {
 export default function AdminBatchesPage() {
   const [batches, setBatches] = useState<Batch[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [branchesLoaded, setBranchesLoaded] = useState(false);
 
   useEffect(() => {
     const fetchBatches = async () => {
@@ -56,12 +57,16 @@ export default function AdminBatchesPage() {
       try {
         const data = await adminApi.getBranches();
         setBranches(data.data || []);
+        setBranchesLoaded(true);
       } catch {}
     };
     fetchBranches();
   }, []);
 
   const handleOpenAdd = () => {
+    if (!branchesLoaded || branches.length === 0) {
+      return; // wait for branches to load
+    }
     setEditingBatch(null);
     setIsDialogOpen(true);
   };

@@ -28,6 +28,8 @@
   --color-destructive: var(--destructive);
   --color-ring: var(--ring);
   --font-sans: var(--font-jakarta);
+  /* Headings: elements with the font-display utility */
+  --font-display: var(--font-outfit), var(--font-jakarta), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
   --radius-lg: var(--radius);
 }

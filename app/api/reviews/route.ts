@@ -19,6 +19,7 @@ export async function GET() {
       rating: profile.rating ?? 0,
       totalReviews: profile.reviewCount,
       reviews: profile.reviews,
+      reviewsReturned: profile.reviews.length,
       // Additional profile details
       openingHours: profile.openingHours,
       openNow: profile.openNow,

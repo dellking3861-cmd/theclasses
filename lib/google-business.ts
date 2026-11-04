@@ -110,7 +110,8 @@ export async function getBusinessProfile(): Promise<BusinessProfile | null> {
           publishTime: r.publishTime ?? null,
           reviewUri: r.googleMapsUri ?? null,
         }))
-        .filter((r) => r.text.length > 0),
+        // Reviews with written text first; star-only reviews are kept after them
+        .sort((a, b) => Number(b.text.length > 0) - Number(a.text.length > 0)),
       openingHours: d.regularOpeningHours?.weekdayDescriptions ?? [],
       openNow: d.regularOpeningHours?.openNow ?? null,
       phone: d.nationalPhoneNumber ?? null,

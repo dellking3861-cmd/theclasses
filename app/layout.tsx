@@ -1,19 +1,26 @@
 import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import { Toaster } from "sonner";
 import { APP_NAME, APP_DESCRIPTION } from "@/lib/constants";
 import "./globals.css";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+// Fonts are self-hosted (app/fonts, SIL Open Font License) so neither the
+// build nor visitors' browsers depend on Google Fonts.
+const jakarta = localFont({
+  src: "./fonts/PlusJakartaSans-Variable-latin.woff2",
+  weight: "200 800",
+  variable: "--font-jakarta",
+  display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+// Bundled for headings but not used yet (no `font-display` utility is
+// defined), so it isn't preloaded; the browser only fetches it once used.
+const outfit = localFont({
+  src: "./fonts/Outfit-Variable-latin.woff2",
+  weight: "100 900",
+  variable: "--font-outfit",
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {

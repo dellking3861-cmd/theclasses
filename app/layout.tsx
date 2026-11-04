@@ -13,14 +13,12 @@ const jakarta = localFont({
   display: "swap",
 });
 
-// Bundled for headings but not used yet (no `font-display` utility is
-// defined), so it isn't preloaded; the browser only fetches it once used.
+// Headings (the `font-display` utility, defined in globals.css)
 const outfit = localFont({
   src: "./fonts/Outfit-Variable-latin.woff2",
   weight: "100 900",
   variable: "--font-outfit",
   display: "swap",
-  preload: false,
 });
 
 export const metadata: Metadata = {

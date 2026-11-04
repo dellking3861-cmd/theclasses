@@ -87,7 +87,7 @@ export default function AILearningProgramsPage() {
             <Sparkles className="h-4 w-4" />
             AI-Powered Education
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold">AI Learning Programs</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold font-display">AI Learning Programs</h1>
           <p className="mt-4 text-lg text-yellow-50 max-w-2xl mx-auto">
             Future-ready programs combining expert instruction with cutting-edge AI tools
             to accelerate your learning journey.

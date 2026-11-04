@@ -73,6 +73,8 @@ export async function POST(request: Request) {
     password,
     email_confirm: true,
     user_metadata: { full_name, role: "parent" },
+    // Tells the on_auth_user_created trigger to skip: this route creates the profile itself.
+    app_metadata: { provisioned_by: "admin" },
   });
 
   if (authError) {

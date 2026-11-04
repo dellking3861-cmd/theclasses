@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { contactSchema, type ContactInput } from "@/lib/validations";
+import { submitEnquiry, honeypotValue } from "@/lib/enquiries";
 import { Mail, Phone, MapPin, Clock, MessageSquare } from "lucide-react";
 
 export default function ContactPage() {
@@ -20,10 +21,23 @@ export default function ContactPage() {
     resolver: zodResolver(contactSchema),
   });
 
-  async function onSubmit(data: ContactInput) {
-    await new Promise((r) => setTimeout(r, 1000));
-    toast.success("Message sent! We&apos;ll respond within 24 hours.");
-    reset();
+  async function onSubmit(data: ContactInput, event?: React.BaseSyntheticEvent) {
+    try {
+      await submitEnquiry({
+        kind: "contact",
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        grade: data.subject,
+        subject: `Enquiry for ${data.subject}`,
+        message: data.message,
+        website: honeypotValue(event),
+      });
+      toast.success("Message sent! We'll respond within 24 hours.");
+      reset();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    }
   }
 
   return (
@@ -82,13 +96,15 @@ export default function ContactPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+                  {/* Honeypot: hidden from people, bots fill it in */}
+                  <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
                   <div className="grid sm:grid-cols-2 gap-5">
                     <Input label="Full Name *" error={errors.name?.message} {...register("name")} />
                     <Input label="Phone *" error={errors.phone?.message} {...register("phone")} />
                   </div>
                   <Input label="Email *" type="email" error={errors.email?.message} {...register("email")} />
-                  <Input label="Student's Class/Grade *" {...register("subject")} />
+                  <Input label="Student's Class/Grade *" placeholder="e.g., Class 10, O Level, A1" error={errors.subject?.message} {...register("subject")} />
                   <Textarea label="Message *" error={errors.message?.message} {...register("message")} rows={4} />
                   <Button type="submit" className="bg-amber-600 hover:bg-amber-700 w-full btn-hover" isLoading={isSubmitting}>
                     Submit Enquiry

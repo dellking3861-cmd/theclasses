@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isValidSelection } from "@/lib/curriculum";
 import { createClient } from "@/lib/supabase/server";
 
 async function requireAdmin(supabase: any) {
@@ -49,7 +50,16 @@ export async function PUT(
 
   const { id } = await params;
   const body = await request.json();
-  const { title, description, course_type, board, subject, program, teacher_id, branch_id, batch_id, fee_amount, duration_months, max_enrollments, thumbnail_url, is_published, start_date, end_date } = body;
+  const { title, description, course_type, stage, board, group_code, subject, program, teacher_id, branch_id, batch_id, fee_amount, duration_months, max_enrollments, thumbnail_url, is_published, start_date, end_date } = body;
+
+  // Board courses need a real board/level/group/subject combination; programs have none.
+  const isBoardCourse = (course_type || "board") === "board";
+  if (isBoardCourse && !(board && stage && subject && isValidSelection({ board, stage, group: group_code, subject }))) {
+    return NextResponse.json({ error: "Choose a valid level, board, group and subject" }, { status: 400 });
+  }
+  const curriculum = isBoardCourse
+    ? { stage, board, group_code: group_code || null, subject }
+    : { stage: null, board: null, group_code: null, subject: null };
 
   const { data, error } = await supabase
     .from("courses")
@@ -57,8 +67,7 @@ export async function PUT(
       title,
       description,
       course_type,
-      board,
-      subject,
+      ...curriculum,
       program,
       teacher_id: teacher_id || null,
       branch_id: branch_id || null,

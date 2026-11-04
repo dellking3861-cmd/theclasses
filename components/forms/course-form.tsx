@@ -9,15 +9,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Dialog, DialogHeader, DialogContent, DialogFooter } from "@/components/ui/dialog";
-import { BOARD_LABELS, SUBJECT_LABELS, PROGRAM_LABELS } from "@/lib/constants";
+import { isValidSelection } from "@/lib/curriculum";
+import { CurriculumSelect, type CurriculumValue } from "@/components/forms/curriculum-select";
 
 const courseSchema = z.object({
   title: z.string().min(2, "Course title required"),
   slug: z.string().min(2, "Slug required").regex(/^[a-z0-9-]+$/),
   description: z.string().optional(),
   course_type: z.enum(["board", "special_program"]),
-  board: z.enum(["aku_eb", "sindh_board", "cambridge_o", "cambridge_a"]).optional().or(z.literal("")),
-  subject: z.enum(["mathematics", "physics", "chemistry", "biology", "computer_science", "english"]).optional().or(z.literal("")),
+  stage: z.string().optional(),
+  board: z.string().optional(),
+  group_code: z.string().optional(),
+  subject: z.string().optional(),
   program: z.enum(["ai_web_development", "spoken_english", "programming_fundamentals", "freelancing", "entry_test_preparation"]).optional().or(z.literal("")),
   teacher_id: z.string().uuid().optional().or(z.literal("")),
   branch_id: z.string().uuid().optional().or(z.literal("")),
@@ -29,6 +32,14 @@ const courseSchema = z.object({
   is_published: z.boolean(),
   start_date: z.string().optional(),
   end_date: z.string().optional(),
+}).superRefine((d, ctx) => {
+  if (d.course_type !== "board") return;
+  if (!d.stage) ctx.addIssue({ code: "custom", path: ["stage"], message: "Choose a level" });
+  if (!d.board) ctx.addIssue({ code: "custom", path: ["board"], message: "Choose a board" });
+  if (!d.subject) ctx.addIssue({ code: "custom", path: ["subject"], message: "Choose a subject" });
+  if (!isValidSelection({ board: d.board, stage: d.stage, group: d.group_code, subject: d.subject })) {
+    ctx.addIssue({ code: "custom", path: ["subject"], message: "That subject isn't offered for this board, level and group" });
+  }
 });
 
 type CourseFormData = z.infer<typeof courseSchema>;
@@ -48,6 +59,8 @@ export function CourseForm({ open, onClose, onSuccess, initialData, branches = [
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<CourseFormData>({
     resolver: zodResolver(courseSchema),
@@ -56,9 +69,11 @@ export function CourseForm({ open, onClose, onSuccess, initialData, branches = [
       slug: "",
       description: "",
       course_type: "board",
-      board: undefined,
-      subject: undefined,
-      program: undefined,
+      stage: "",
+      board: "",
+      group_code: "",
+      subject: "",
+      program: "",
       teacher_id: undefined,
       branch_id: undefined,
       batch_id: undefined,
@@ -71,6 +86,21 @@ export function CourseForm({ open, onClose, onSuccess, initialData, branches = [
       end_date: "",
     },
   });
+
+  const courseType = watch("course_type");
+  const curriculum: CurriculumValue = {
+    stage: watch("stage") ?? "",
+    board: watch("board") ?? "",
+    group: watch("group_code") ?? "",
+    subject: watch("subject") ?? "",
+  };
+  function setCurriculum(v: CurriculumValue) {
+    const opts = { shouldDirty: true, shouldValidate: !!errors.subject || !!errors.board || !!errors.stage };
+    setValue("stage", v.stage, opts);
+    setValue("board", v.board, opts);
+    setValue("group_code", v.group, opts);
+    setValue("subject", v.subject, opts);
+  }
 
   const onSubmit = async (data: CourseFormData) => {
     setIsLoading(true);
@@ -100,13 +130,6 @@ export function CourseForm({ open, onClose, onSuccess, initialData, branches = [
     }
   };
 
-  function getCourseLabel(course: CourseFormData) {
-    if (course.course_type === "board") {
-      return `${course.subject ? SUBJECT_LABELS[course.subject] : ""} — ${course.board ? BOARD_LABELS[course.board] : ""}`;
-    }
-    return course.program ? PROGRAM_LABELS[course.program] : course.title;
-  }
-
   return (
     <Dialog open={open} onOpenChange={onClose} title={isEditing ? "Edit Course" : "Create Course"} description={isEditing ? "Update course information" : "Create a new course"}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -122,22 +145,19 @@ export function CourseForm({ open, onClose, onSuccess, initialData, branches = [
               { value: "board", label: "Board" },
               { value: "special_program", label: "Special Program" },
             ]} {...register("course_type")} />
-            <Select label="Board" placeholder="Select board" error={errors.board?.message} options={[
-              { value: "aku_eb", label: "AKU-EB" },
-              { value: "sindh_board", label: "Sindh Board" },
-              { value: "cambridge_o", label: "Cambridge O-Level" },
-              { value: "cambridge_a", label: "Cambridge A-Level" },
-            ]} {...register("board")} />
           </div>
+          {courseType === "board" && (
+            <CurriculumSelect
+              value={curriculum}
+              onChange={setCurriculum}
+              showSubject
+              required
+              idPrefix="course"
+              errors={{ stage: errors.stage?.message, board: errors.board?.message, group: errors.group_code?.message, subject: errors.subject?.message }}
+            />
+          )}
           <div className="grid sm:grid-cols-2 gap-4">
-            <Select label="Subject" placeholder="Select subject" error={errors.subject?.message} options={[
-              { value: "mathematics", label: "Mathematics" },
-              { value: "physics", label: "Physics" },
-              { value: "chemistry", label: "Chemistry" },
-              { value: "biology", label: "Biology" },
-              { value: "computer_science", label: "Computer Science" },
-              { value: "english", label: "English" },
-            ]} {...register("subject")} />
+{courseType === "special_program" && (
             <Select label="Program" placeholder="Select program" error={errors.program?.message} options={[
               { value: "ai_web_development", label: "AI Web Development" },
               { value: "spoken_english", label: "Spoken English" },
@@ -145,6 +165,7 @@ export function CourseForm({ open, onClose, onSuccess, initialData, branches = [
               { value: "freelancing", label: "Freelancing" },
               { value: "entry_test_preparation", label: "Entry Test Preparation" },
             ]} {...register("program")} />
+            )}
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <Select label="Teacher" placeholder="Select teacher" error={errors.teacher_id?.message} options={[]} {...register("teacher_id")} />
@@ -152,11 +173,11 @@ export function CourseForm({ open, onClose, onSuccess, initialData, branches = [
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <Select label="Batch" placeholder="Select batch" error={errors.batch_id?.message} options={[]} {...register("batch_id")} />
-            <Input label="Fee Amount" type="number" min={0} error={errors.fee_amount?.message} {...register("fee_amount")} />
+            <Input label="Fee Amount" type="number" min={0} error={errors.fee_amount?.message} {...register("fee_amount", { valueAsNumber: true })} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Input label="Duration (months)" type="number" min={1} error={errors.duration_months?.message} {...register("duration_months")} />
-            <Input label="Max Enrollments" type="number" min={1} error={errors.max_enrollments?.message} {...register("max_enrollments")} />
+            <Input label="Duration (months)" type="number" min={1} error={errors.duration_months?.message} {...register("duration_months", { valueAsNumber: true })} />
+            <Input label="Max Enrollments" type="number" min={1} error={errors.max_enrollments?.message} {...register("max_enrollments", { valueAsNumber: true })} />
           </div>
           <Input label="Thumbnail URL" placeholder="https://example.com/image.jpg" error={errors.thumbnail_url?.message} {...register("thumbnail_url")} />
           <div className="grid sm:grid-cols-2 gap-4">

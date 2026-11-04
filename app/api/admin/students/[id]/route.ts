@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isValidSelection } from "@/lib/curriculum";
 import { createClient } from "@/lib/supabase/server";
 
 async function requireAdmin(supabase: any) {
@@ -49,7 +50,11 @@ export async function PUT(
 
   const { id } = await params;
   const body = await request.json();
-  const { phone, roll_number, branch_id, batch_id, date_of_birth, gender, address, emergency_contact, grade, board, is_active } = body;
+  const { phone, roll_number, branch_id, batch_id, date_of_birth, gender, address, emergency_contact, grade, board, stage, group_code, is_active } = body;
+
+  if (!isValidSelection({ board, stage, group: group_code }) || (board && !stage)) {
+    return NextResponse.json({ error: "Choose a valid board, level and group" }, { status: 400 });
+  }
 
   const { data, error } = await supabase
     .from("students")
@@ -64,6 +69,8 @@ export async function PUT(
       emergency_contact: emergency_contact || null,
       grade: grade || null,
       board: board || null,
+      stage: board ? stage : null,
+      group_code: board ? group_code || null : null,
       is_active,
       updated_at: new Date().toISOString(),
     })

@@ -27,7 +27,10 @@ export const studentSchema = z.object({
   email: z.string().email("Valid email is required"),
   phone: z.string().optional(),
   roll_number: z.string().optional(),
-  board: z.enum(["aku_eb", "sindh_board", "cambridge_o", "cambridge_a"]).optional(),
+  // Board/level/group codes come from lib/curriculum.ts (validated with isValidSelection)
+  board: z.string().optional(),
+  stage: z.enum(["secondary", "higher_secondary"]).optional(),
+  group_code: z.enum(["bio", "comp", "arts"]).optional(),
   grade: z.string().optional(),
   date_of_birth: z.string().optional(),
   gender: z.enum(["male", "female", "other"]).optional(),
@@ -53,11 +56,10 @@ export const courseSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
   description: z.string().optional(),
   course_type: z.enum(["board", "special_program"]),
-  board: z.enum(["aku_eb", "sindh_board", "cambridge_o", "cambridge_a"]).optional(),
-  subject: z.enum([
-    "mathematics", "physics", "chemistry", "biology",
-    "computer_science", "english",
-  ]).optional(),
+  board: z.string().optional(),
+  stage: z.enum(["secondary", "higher_secondary"]).optional(),
+  group_code: z.enum(["bio", "comp", "arts"]).optional(),
+  subject: z.string().optional(),
   program: z.enum([
     "ai_web_development", "spoken_english", "programming_fundamentals",
     "freelancing", "entry_test_preparation",
@@ -140,8 +142,6 @@ export const admissionSchema = z.object({
   name: z.string().trim().min(2, "Name is required").max(200),
   email: z.string().trim().email("Valid email is required").max(255),
   phone: z.string().trim().max(30).optional(),
-  board: z.string().max(50).optional(),
-  subject: z.string().max(200).optional(),
   grade: z.string().trim().max(50).optional(),
   message: z.string().trim().max(5000).optional(),
 });
@@ -156,6 +156,8 @@ export const enquirySchema = z.object({
   subject: z.string().trim().max(200).optional(),
   message: z.string().trim().max(5000).optional(),
   board: z.string().trim().max(50).optional(),
+  stage: z.enum(["secondary", "higher_secondary"]).optional(),
+  group_code: z.enum(["bio", "comp", "arts"]).optional(),
   grade: z.string().trim().max(50).optional(),
   // Honeypot: hidden field real users never fill in
   website: z.string().max(200).optional(),

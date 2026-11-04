@@ -60,6 +60,8 @@ export interface Student {
   user_id: string;
   roll_number: string | null;
   board: string | null;
+  stage: "secondary" | "higher_secondary" | null;
+  group_code: "bio" | "comp" | "arts" | null;
   grade: string | null;
   date_of_birth: string | null;
   gender: string | null;
@@ -94,6 +96,8 @@ export interface Course {
   description: string | null;
   course_type: "board" | "special_program";
   board: string | null;
+  stage: "secondary" | "higher_secondary" | null;
+  group_code: "bio" | "comp" | "arts" | null;
   subject: string | null;
   program: string | null;
   teacher_id: string | null;

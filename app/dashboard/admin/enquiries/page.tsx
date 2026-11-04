@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { PageHeader, Badge, EmptyState, LoadingSpinner } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatDateTime } from "@/utils/format";
+import { describeSelection, subjectLabel } from "@/lib/curriculum";
 import { Inbox, Mail, Phone, MessageCircle } from "lucide-react";
 
 type Status = "new" | "contacted" | "enrolled" | "closed";
@@ -18,6 +19,8 @@ interface Enquiry {
   subject: string | null;
   message: string;
   board: string | null;
+  stage: string | null;
+  group_code: string | null;
   grade: string | null;
   status: Status;
   created_at: string;
@@ -167,9 +170,14 @@ export default function AdminEnquiriesPage() {
                   </label>
                 </div>
 
-                {(e.subject || e.grade || e.board) && (
+                {(e.board || e.stage || e.subject || e.grade) && (
                   <p className="text-sm text-slate-700">
-                    {[e.subject, e.grade && `Grade: ${e.grade}`, e.board && `Board: ${e.board}`].filter(Boolean).join(" · ")}
+                    {[
+                      describeSelection(e.board, e.stage, e.group_code),
+                      // Admission subjects are catalog codes; Contact-form subjects are free text
+                      e.subject && (e.board ? subjectLabel(e.subject) : e.subject),
+                      e.grade && `Grade/class: ${e.grade}`,
+                    ].filter(Boolean).join(" · ")}
                   </p>
                 )}
                 {e.message && <p className="text-sm text-slate-600 whitespace-pre-wrap break-words">{e.message}</p>}

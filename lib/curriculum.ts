@@ -14,7 +14,10 @@
  *   published by FBISE (implemented from SSC-I / HSSC-I 2025). This is the
  *   framework for FBISE and is being adopted by AKU-EB and the Sindh boards.
  * - Older FBISE SSC scheme (social-science elective list).
- * - Board/press notices for BSEK/BIEK group names.
+ * - BIEK "Scheme of Studies for the Higher Secondary Certificate Examinations"
+ *   (biek.edu.pk): BIEK compulsory subjects and its Pre-Engineering, Science
+ *   General, Commerce and Humanities groups.
+ * - Board/press notices for BSEK group names.
  * - Cambridge International and Pearson Edexcel qualification listings.
  *   Cambridge/Edexcel have no formal "groups": the streams below are the
  *   recommended combinations (they mirror the Pakistani groups, which IBCC
@@ -22,7 +25,7 @@
  */
 
 export type Stage = "secondary" | "higher_secondary";
-export type GroupCode = "bio" | "comp" | "arts";
+export type GroupCode = "bio" | "eng" | "comp" | "commerce" | "arts";
 export type SubjectKind = "compulsory" | "core" | "elective";
 
 export interface CurriculumBoard {
@@ -98,10 +101,14 @@ export const SUBJECTS: Record<string, string> = {
   accounting: "Accounting",
   business_studies: "Business Studies",
   commerce: "Commerce",
+  business_mathematics: "Business Mathematics",
+  commercial_geography: "Commercial Geography",
+  banking: "Banking",
   civics: "Civics",
   education: "Education",
   geography: "Geography",
   history: "History",
+  general_history: "General History",
   islamic_history: "Islamic History",
   islamic_studies: "Islamic Studies",
   sociology: "Sociology",
@@ -111,7 +118,10 @@ export const SUBJECTS: Record<string, string> = {
   english_literature: "English Literature",
   english_general_paper: "English General Paper",
   urdu_elective: "Urdu (Elective)",
+  english_elective: "English (Elective)",
+  sindhi_elective: "Sindhi (Elective)",
   arabic: "Arabic",
+  persian: "Persian",
   fine_arts: "Art, Model Drawing & Fine Arts",
   home_economics: "Home Economics",
   physiology_hygiene: "Physiology & Hygiene",
@@ -143,13 +153,38 @@ const PK_SECONDARY_GROUPS: CurriculumGroup[] = [
 
 const PK_HIGHER_GROUPS: CurriculumGroup[] = [
   { code: "bio", name: "Pre-Medical", core: ["physics", "chemistry", "biology"] },
+  { code: "eng", name: "Pre-Engineering", core: ["physics", "chemistry", "mathematics"] },
   { code: "comp", name: "Computer Science (ICS)", core: ["computer_science", "mathematics"], electivesRequired: 1, electives: ["physics", "statistics", "economics"],
     note: "Also called Science General. Computer Science and Mathematics with Physics, Statistics or Economics." },
+  { code: "commerce", name: "Commerce", core: ["accounting", "commerce", "economics"],
+    note: "Under the 2024 national scheme these are examined as Banking, Accounting & Finance; Business & Commerce; and Economics. Students on the older scheme also take Business Mathematics, Statistics and Banking." },
   { code: "arts", name: "Humanities (Arts)", core: [], electivesRequired: 3, electives: PK_HIGHER_ARTS_ELECTIVES,
     note: "Choose any three electives. Exact elective options vary by board and college." },
 ];
 
+// BIEK publishes its own HSC scheme (older than the 2024 national scheme)
+const BIEK_GROUPS: CurriculumGroup[] = [
+  { code: "bio", name: "Pre-Medical", core: ["physics", "chemistry", "biology"],
+    note: "Biology is examined as Zoology and Botany." },
+  { code: "eng", name: "Pre-Engineering", core: ["physics", "chemistry", "mathematics"] },
+  { code: "comp", name: "Computer Science (Science General)", core: ["computer_science", "mathematics"], electivesRequired: 1, electives: ["physics", "statistics", "economics"],
+    note: "Science General: three of Physics, Computer Science, Mathematics, Economics and Statistics. Physics must be taken with Mathematics." },
+  { code: "commerce", name: "Commerce",
+    core: ["accounting", "commerce", "economics", "business_mathematics", "commercial_geography", "statistics", "banking"],
+    note: "Part I: Principles of Accounting, Principles of Commerce, Principles of Economics, Business Mathematics. Part II: Principles of Accounting, Commercial Geography, Statistics, Banking." },
+  { code: "arts", name: "Humanities (Arts)", core: [], electivesRequired: 3,
+    electives: [
+      "civics", "sociology", "statistics",
+      "education", "geography", "islamic_history",
+      "economics", "general_history", "islamic_studies", "psychology",
+      "urdu_elective", "english_elective", "sindhi_elective", "arabic", "persian", "mathematics",
+      "computer_science", "fine_arts", "health_physical_education",
+    ],
+    note: "Choose three, at most one from each of BIEK’s subject sets (A: Civics, Sociology, Statistics · B: Education, Geography, Islamic History · C: Economics, General History, Islamic Studies, Psychology · D: languages, Mathematics · E: Computer Science, Fine Arts, Health & PE)." },
+];
+
 const SINDH_NOTE = "In Sindh, students also take Sindhi: Urdu speakers take Asan Sindhi, Sindhi speakers take Urdu Salees.";
+const BIEK_NOTE = "Islamiyat is replaced by Civics for non-Muslim students. Sindhi-medium students may take a Sindhi paper in place of Urdu Paper II.";
 
 const INTL_STREAM_NOTE = "Cambridge and Edexcel have no formal groups. These are our recommended subject combinations, matching the Pakistani groups that IBCC uses for equivalence.";
 
@@ -186,7 +221,7 @@ export const OFFERINGS: CurriculumOffering[] = [
 
   // Grades 11–12
   { board: "biek", stage: "higher_secondary", label: "Intermediate (HSC)",
-    compulsory: [...PK_HIGHER_COMPULSORY, "sindhi"], groups: PK_HIGHER_GROUPS, note: SINDH_NOTE },
+    compulsory: ["english", "urdu", "islamiyat", "pakistan_studies"], groups: BIEK_GROUPS, note: BIEK_NOTE },
   { board: "aku_eb", stage: "higher_secondary", label: "Intermediate (HSSC)",
     compulsory: PK_HIGHER_COMPULSORY, groups: PK_HIGHER_GROUPS, note: SINDH_NOTE },
   { board: "fbise", stage: "higher_secondary", label: "Intermediate (HSSC)",
@@ -195,7 +230,10 @@ export const OFFERINGS: CurriculumOffering[] = [
     compulsory: [],
     groups: [
       { code: "bio", name: "Science – Biology stream (Pre-Medical)", core: ["physics", "chemistry", "biology"] },
+      { code: "eng", name: "Science – Engineering stream (Pre-Engineering)", core: ["mathematics", "physics", "chemistry"],
+        note: "Further Mathematics is a useful fourth subject for engineering." },
       { code: "comp", name: "Science – Computer stream", core: ["mathematics", "computer_science"], electivesRequired: 1, electives: ["physics", "further_mathematics", "information_technology", "economics"] },
+      { code: "commerce", name: "Commerce stream", core: ["accounting", "economics", "business_studies"] },
       { code: "arts", name: "Arts & Humanities stream", core: [], electivesRequired: 3,
         electives: ["economics", "accounting", "business_studies", "sociology", "psychology", "law", "english_literature", "english_general_paper", "history", "geography", "urdu", "mathematics"],
         note: "Choose any three." },
@@ -205,8 +243,11 @@ export const OFFERINGS: CurriculumOffering[] = [
     compulsory: [],
     groups: [
       { code: "bio", name: "Science – Biology stream (Pre-Medical)", core: ["physics", "chemistry", "biology"] },
+      { code: "eng", name: "Science – Engineering stream (Pre-Engineering)", core: ["mathematics", "physics", "chemistry"],
+        note: "Further Mathematics is a useful fourth subject for engineering." },
       { code: "comp", name: "Science – Computer stream", core: ["mathematics", "computer_science"], electivesRequired: 1, electives: ["physics", "further_mathematics", "information_technology", "economics"],
         note: "Edexcel International A Level Computer Science was first taught in September 2026. Information Technology remains available." },
+      { code: "commerce", name: "Commerce stream", core: ["accounting", "economics", "business_studies"] },
       { code: "arts", name: "Arts & Humanities stream", core: [], electivesRequired: 3,
         electives: ["economics", "accounting", "business_studies", "psychology", "english_literature", "history", "geography", "mathematics"],
         note: "Choose any three." },
@@ -217,7 +258,7 @@ export const OFFERINGS: CurriculumOffering[] = [
 // ─── Helpers ────────────────────────────────────────────────────────────
 
 export const STAGE_CODES = Object.keys(STAGES) as Stage[];
-export const GROUP_CODES: GroupCode[] = ["bio", "comp", "arts"];
+export const GROUP_CODES = ["bio", "eng", "comp", "commerce", "arts"] as const satisfies readonly GroupCode[];
 export const BOARD_CODES = BOARDS.map((b) => b.code);
 export const SUBJECT_CODES = Object.keys(SUBJECTS);
 

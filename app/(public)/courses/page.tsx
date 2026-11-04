@@ -4,7 +4,7 @@ import { CoursesExplorer } from "./courses-explorer";
 export const metadata: Metadata = {
   title: "Courses",
   description:
-    "Matric (BSEK, AKU-EB, FBISE), Cambridge O Level and Edexcel IGCSE for Grades 9–10; Intermediate (BIEK, AKU-EB, FBISE), Cambridge A Level and Edexcel International A Level for Grades 11–12. Biology, Computer and Arts groups.",
+    "Matric (BSEK, AKU-EB, FBISE), Cambridge O Level and Edexcel IGCSE for Grades 9–10; Intermediate (BIEK, AKU-EB, FBISE), Cambridge A Level and Edexcel International A Level for Grades 11–12. Pre-Medical, Pre-Engineering, Computer Science, Commerce and Humanities groups.",
 };
 
 const first = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);

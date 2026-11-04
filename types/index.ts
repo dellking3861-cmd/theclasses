@@ -1,3 +1,4 @@
+import type { GroupCode } from "@/lib/curriculum";
 import type { UserRole } from "@/lib/constants";
 
 export interface User {
@@ -61,7 +62,7 @@ export interface Student {
   roll_number: string | null;
   board: string | null;
   stage: "secondary" | "higher_secondary" | null;
-  group_code: "bio" | "comp" | "arts" | null;
+  group_code: GroupCode | null;
   grade: string | null;
   date_of_birth: string | null;
   gender: string | null;
@@ -97,7 +98,7 @@ export interface Course {
   course_type: "board" | "special_program";
   board: string | null;
   stage: "secondary" | "higher_secondary" | null;
-  group_code: "bio" | "comp" | "arts" | null;
+  group_code: GroupCode | null;
   subject: string | null;
   program: string | null;
   teacher_id: string | null;

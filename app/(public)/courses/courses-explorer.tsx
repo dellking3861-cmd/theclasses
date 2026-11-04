@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PROGRAM_LABELS } from "@/lib/constants";
@@ -95,21 +95,31 @@ function GroupCard({ group, board, stage, highlight }: { group: CurriculumGroup;
   );
 }
 
-export function CoursesExplorer() {
+export interface CoursesQuery {
+  stage?: string;
+  board?: string;
+  subject?: string;
+}
+
+/**
+ * Receives the URL query from the server page (not useSearchParams) so the
+ * curriculum is rendered into the HTML for search engines. Navigation uses
+ * router.replace, which re-renders the server page with the new query.
+ */
+export function CoursesExplorer({ query }: { query: CoursesQuery }) {
   const router = useRouter();
-  const params = useSearchParams();
 
   // Resolve tab/board from the URL (supports old ?board=cambridge_o links)
-  const rawBoard = params.get("board") ?? "";
+  const rawBoard = query.board ?? "";
   const legacy = LEGACY_BOARD[rawBoard];
-  const rawStage = params.get("stage") ?? legacy?.stage ?? "";
+  const rawStage = query.stage ?? legacy?.stage ?? "";
   const tab: Tab = rawStage === "programs" ? "programs" : STAGE_CODES.includes(rawStage as Stage) ? (rawStage as Stage) : (stagesForBoard(legacy?.board ?? rawBoard)[0] ?? "secondary");
   const stage: Stage = tab === "programs" ? "secondary" : tab;
   const boards = boardsForStage(stage);
   const requestedBoard = legacy?.board ?? rawBoard;
   const board = boards.some((b) => b.code === requestedBoard) ? requestedBoard : boards[0].code;
   const offering = getOffering(board, stage);
-  const highlight = params.get("subject") ?? undefined;
+  const highlight = query.subject || undefined;
 
   function go(next: { stage?: Tab; board?: string }) {
     const sp = new URLSearchParams();

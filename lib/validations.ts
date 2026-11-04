@@ -6,9 +6,10 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
-  full_name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  phone: z.string().min(10, "Please enter a valid phone number").optional(),
+  full_name: z.string().trim().min(2, "Name must be at least 2 characters").max(200),
+  email: z.string().trim().email("Please enter a valid email address").max(255),
+  // Optional: an empty input ("") is allowed, otherwise it must look like a phone number
+  phone: z.union([z.literal(""), z.string().trim().min(10, "Please enter a valid phone number").max(30)]).optional(),
   password: z.string().min(8, "Password must be at least 8 characters"),
   confirm_password: z.string(),
   role: z.enum(["student", "parent"]),
@@ -115,11 +116,11 @@ export const batchSchema = z.object({
 });
 
 export const contactSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Valid email is required"),
-  phone: z.string().optional(),
-  subject: z.string().min(3, "Subject is required"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  name: z.string().trim().min(2, "Name is required").max(200),
+  email: z.string().trim().email("Valid email is required").max(255),
+  phone: z.string().trim().min(10, "Please enter a valid phone number").max(30),
+  subject: z.string().trim().min(1, "Please enter the student's class/grade").max(200),
+  message: z.string().trim().min(10, "Message must be at least 10 characters").max(5000),
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
@@ -133,3 +134,30 @@ export type AnnouncementInput = z.infer<typeof announcementSchema>;
 export type BranchInput = z.infer<typeof branchSchema>;
 export type BatchInput = z.infer<typeof batchSchema>;
 export type ContactInput = z.infer<typeof contactSchema>;
+
+// Admission application (public form)
+export const admissionSchema = z.object({
+  name: z.string().trim().min(2, "Name is required").max(200),
+  email: z.string().trim().email("Valid email is required").max(255),
+  phone: z.string().trim().max(30).optional(),
+  board: z.string().max(50).optional(),
+  subject: z.string().max(200).optional(),
+  grade: z.string().trim().max(50).optional(),
+  message: z.string().trim().max(5000).optional(),
+});
+export type AdmissionInput = z.infer<typeof admissionSchema>;
+
+// Server-side schema for POST /api/enquiries (both public forms)
+export const enquirySchema = z.object({
+  kind: z.enum(["contact", "admission"]),
+  name: z.string().trim().min(2).max(200),
+  email: z.string().trim().email().max(255),
+  phone: z.string().trim().max(30).optional(),
+  subject: z.string().trim().max(200).optional(),
+  message: z.string().trim().max(5000).optional(),
+  board: z.string().trim().max(50).optional(),
+  grade: z.string().trim().max(50).optional(),
+  // Honeypot: hidden field real users never fill in
+  website: z.string().max(200).optional(),
+});
+export type EnquiryInput = z.infer<typeof enquirySchema>;

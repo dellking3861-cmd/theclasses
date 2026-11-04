@@ -4,6 +4,7 @@ import { ErrorBoundary } from "@/components/error-boundary";
 
 const adminNav = [
   { href: "/dashboard/admin", label: "Overview", icon: "LayoutDashboard" },
+  { href: "/dashboard/admin/enquiries", label: "Enquiries", icon: "MessageSquare" },
   { href: "/dashboard/admin/students", label: "Students", icon: "Users" },
   { href: "/dashboard/admin/teachers", label: "Teachers", icon: "GraduationCap" },
   { href: "/dashboard/admin/courses", label: "Courses", icon: "BookOpen" },

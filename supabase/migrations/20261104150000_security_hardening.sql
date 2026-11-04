@@ -4,6 +4,9 @@
 -- - is_admin() pinned search_path and requires an active account
 -- - RLS enabled on parent_students and timetable
 -- Safe to re-run: every object is dropped/replaced before creation.
+-- Also reconciles drift found on the live project (bkpemjyzktnmamqertnj):
+-- parents/parent_students had RLS off, and their hand-written policies
+-- referenced their own tables (infinite recursion once RLS is enabled).
 -- ============================================================
 
 -- ------------------------------------------------------------
@@ -22,8 +25,9 @@ AS $$
   );
 $$;
 
-REVOKE EXECUTE ON FUNCTION public.is_admin() FROM PUBLIC, anon;
-GRANT EXECUTE ON FUNCTION public.is_admin() TO authenticated, service_role;
+-- anon must keep EXECUTE: policies granted TO public (e.g. on courses, branches,
+-- users) call is_admin() for anonymous visitors too. It returns false for them.
+GRANT EXECUTE ON FUNCTION public.is_admin() TO anon, authenticated, service_role;
 
 -- ------------------------------------------------------------
 -- C1: self-update policy with an explicit WITH CHECK
@@ -71,6 +75,13 @@ CREATE TRIGGER users_prevent_privilege_change
 -- C3: parent_students had RLS disabled (world-readable/writable)
 -- ------------------------------------------------------------
 ALTER TABLE public.parent_students ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.parents ENABLE ROW LEVEL SECURITY;
+
+-- Drift policies from the live DB: self-referencing (recursive) or comparing
+-- parent_id (a parents.id) with auth.uid() (a users.id), so never correct.
+DROP POLICY IF EXISTS "Parent_students parent view" ON public.parent_students;
+DROP POLICY IF EXISTS "Parent_students admin access" ON public.parent_students;
+DROP POLICY IF EXISTS "Parents view linked" ON public.parents;
 
 DROP POLICY IF EXISTS "Admins manage parent links" ON public.parent_students;
 CREATE POLICY "Admins manage parent links" ON public.parent_students
@@ -88,8 +99,8 @@ CREATE POLICY "Parents view own links" ON public.parent_students
     )
   );
 
--- parents had RLS on but no policies at all, so every "Parents view linked …"
--- policy (which joins parents) silently matched nothing.
+-- parents: admins manage, a parent reads only their own row. Non-recursive,
+-- so the "Parents view linked …" policies on other tables can join parents.
 DROP POLICY IF EXISTS "Admins full access parents" ON public.parents;
 CREATE POLICY "Admins full access parents" ON public.parents
   FOR ALL TO authenticated
@@ -105,6 +116,10 @@ CREATE POLICY "Parents view own record" ON public.parents
 -- C3: timetable had RLS disabled
 -- ------------------------------------------------------------
 ALTER TABLE public.timetable ENABLE ROW LEVEL SECURITY;
+
+-- Replace drift policies from the live DB with the is_admin() versions.
+DROP POLICY IF EXISTS "Timetable admin access" ON public.timetable;
+DROP POLICY IF EXISTS "Timetable authenticated view" ON public.timetable;
 
 DROP POLICY IF EXISTS "Admins manage timetable" ON public.timetable;
 CREATE POLICY "Admins manage timetable" ON public.timetable

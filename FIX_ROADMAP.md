@@ -2,6 +2,8 @@
 
 This roadmap turns every finding in [`AUDIT.md`](./AUDIT.md) into ordered work items. Each item lists the files, the change and how to check it is done (a **Done when** test). The IDs (C1, H3, M4…) match the audit.
 
+> **Status (2026-11-04):** Phase 0 ✅ and Phase 1 ✅ are done in code, in migrations `20261104150000_security_hardening.sql` and `20261104160000_onboarding.sql`. **Neither migration has been run on the live database yet.** `posts` (H4) already existed on the live project, and its definition is now checked in as `20261014205449_create_posts_table.sql`.
+
 **Order matters.** Phase 0 closes the security holes and must ship before any real user is onboarded. A phase is finished only when every one of its **Done when** checks passes.
 
 | Phase | Theme | Items | Estimate | Gate to next phase |
@@ -321,6 +323,7 @@ Create `app/api/admin/branches/[id]/route.ts` with GET, PUT and DELETE, followin
 | M2 wrong redirect | `middleware.ts:72` | Look up the role (as the dashboard branch already does) before redirecting from auth pages | A logged-in student visiting `/login` goes straight to `/dashboard/student` |
 | Contact overflow | `app/(public)/contact/page.tsx:41` | `grid grid-cols-1 min-[360px]:grid-cols-2` | No horizontal scroll at 320px |
 | Tap targets | header login link, "Forgot password", footer links | `min-h-11` / `py-2.5` on mobile | All tappable elements ≥44px at 375px |
+| Select defaults | `components/ui/select.tsx` | The placeholder `<option>` is `disabled` and no default value is set, so the browser silently selects the **first real option**. Admin forms can save the first branch, batch or course without anyone choosing it. Default to `""` when a placeholder is given (fixed for the Admissions form only) | Every form with a placeholder select shows the placeholder until a choice is made |
 | Bell button | `dashboard-sidebar.tsx` | Add an `aria-label`. Hide it until notifications are wired up | — |
 
 **Phase exit:** re-run the responsive script (the audit's Playwright check) across 320, 375, 768 and 1280px with no overflow, and do a manual pass of each dashboard on a real phone.

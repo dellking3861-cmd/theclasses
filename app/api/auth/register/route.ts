@@ -16,48 +16,26 @@ export async function POST(request: Request) {
     );
   }
 
-  const { email, password, full_name, role } = parsed.data;
+  const { email, password, full_name, phone, role } = parsed.data;
 
-  const { data: authData, error: authError } = await supabase.auth.signUp({
+  // The profile (users + students/parents row) is created by the
+  // on_auth_user_created database trigger, which only accepts student/parent.
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || new URL(request.url).origin;
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      data: {
-        full_name,
-        role,
-      },
+      data: { full_name, phone: phone || null, role },
+      emailRedirectTo: `${appUrl}/login`,
     },
   });
 
-  if (authError) {
-    return NextResponse.json({ error: authError.message }, { status: 400 });
-  }
-
-  if (authData.user) {
-    const { error: profileError } = await supabase.from("users").insert({
-      id: authData.user.id,
-      email,
-      full_name,
-      role,
-      is_active: true,
-    });
-
-    if (profileError) {
-      return NextResponse.json(
-        { error: "Failed to create profile" },
-        { status: 500 }
-      );
-    }
-
-    if (role === "student") {
-      await supabase.from("students").insert({ user_id: authData.user.id });
-    } else if (role === "parent") {
-      await supabase.from("parents").insert({ user_id: authData.user.id });
-    }
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
   return NextResponse.json({
-    message: "Registration successful",
-    user: authData.user,
+    message: "Registration successful. Please check your email to verify your account.",
+    needsEmailConfirmation: !data.session,
   });
 }

@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/badge";
 import { Users, Plus } from "lucide-react";
-import { Dialog } from "@/components/ui/dialog";
 import { StudentForm } from "@/components/forms/student-form";
 
 interface Student {
@@ -156,15 +155,13 @@ export default function AdminStudentsPage() {
         </Card>
       )}
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Student" description="Add a new student to the system">
-        <StudentForm
+      <StudentForm
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
           branches={branches}
           batches={batches}
         />
-      </Dialog>
     </div>
   );
 }

@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatCurrency, formatDate } from "@/utils/format";
 import { CreditCard, Plus } from "lucide-react";
-import { Dialog } from "@/components/ui/dialog";
 import { PaymentForm } from "@/components/forms/payments-form";
 
 const statusVariant: Record<string, "success" | "warning" | "danger" | "info" | "default"> = { paid: "success", pending: "warning", overdue: "danger", partial: "info", refunded: "default" };
@@ -106,14 +105,12 @@ export default function AdminFeesPage() {
         </Card>
       )}
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Fee Record" description="Add a new fee record">
-        <PaymentForm
+      <PaymentForm
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
           students={students}
         />
-      </Dialog>
     </div>
   );
 }

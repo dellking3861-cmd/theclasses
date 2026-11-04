@@ -6,7 +6,6 @@ import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, Plus } from "lucide-react";
-import { Dialog } from "@/components/ui/dialog";
 import { AssignmentForm } from "@/components/forms/assignment-form";
 
 export default function AdminAssignmentsPage() {
@@ -109,15 +108,13 @@ export default function AdminAssignmentsPage() {
         </div>
       )}
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Assignment" description="Create a new assignment">
-        <AssignmentForm
+      <AssignmentForm
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
           courses={courses}
           teachers={teachers}
         />
-      </Dialog>
     </div>
   );
 }

@@ -6,7 +6,6 @@ import { PageHeader, StatCard, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Calendar, MapPin, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog } from "@/components/ui/dialog";
 import { BranchForm } from "@/components/forms/branch-form";
 
 interface Branch {
@@ -124,13 +123,11 @@ export default function AdminBranchesPage() {
         )}
       </div>
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Branch" description="Add a new branch to the system">
-        <BranchForm
+      <BranchForm
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
         />
-      </Dialog>
     </div>
   );
 }

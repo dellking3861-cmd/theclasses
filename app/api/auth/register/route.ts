@@ -1,18 +1,22 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { registerSchema } from "@/lib/validations";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
-  const body = await request.json();
+  const body = await request.json().catch(() => null);
 
-  const { email, password, full_name, role } = body;
-
-  if (!email || !password || !full_name || !role) {
+  // Validate on the server: the form only offers student/parent, but the API
+  // must enforce it too, otherwise anyone can POST role "admin" or "teacher".
+  const parsed = registerSchema.safeParse(body);
+  if (!parsed.success) {
     return NextResponse.json(
-      { error: "Missing required fields" },
+      { error: parsed.error.issues[0]?.message ?? "Invalid registration details" },
       { status: 400 }
     );
   }
+
+  const { email, password, full_name, role } = parsed.data;
 
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,

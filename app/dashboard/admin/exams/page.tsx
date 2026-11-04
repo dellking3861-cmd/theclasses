@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatDate, formatDateTime } from "@/utils/format";
 import { FileText, Plus } from "lucide-react";
-import { Dialog } from "@/components/ui/dialog";
 import { ExamForm } from "@/components/forms/exam-form";
 
 export default function AdminExamsPage() {
@@ -115,15 +114,13 @@ export default function AdminExamsPage() {
         </div>
       )}
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Exam" description="Create a new exam">
-        <ExamForm
+      <ExamForm
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
           courses={courses}
           teachers={teachers}
         />
-      </Dialog>
     </div>
   );
 }

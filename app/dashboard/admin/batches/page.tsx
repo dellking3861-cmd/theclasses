@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/utils/format";
 import { Layers, Plus } from "lucide-react";
-import { Dialog } from "@/components/ui/dialog";
 import { BatchForm } from "@/components/forms/batch-form";
 
 interface Batch {
@@ -112,14 +111,12 @@ export default function AdminBatchesPage() {
         </div>
       )}
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Batch" description="Add a new batch to the system">
-        <BatchForm
+      <BatchForm
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
           branches={branches}
         />
-      </Dialog>
     </div>
   );
 }

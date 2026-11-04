@@ -6,7 +6,6 @@ import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { UserCheck, Plus } from "lucide-react";
-import { Dialog } from "@/components/ui/dialog";
 import { ParentForm } from "@/components/forms/parent-form";
 
 interface Parent {
@@ -107,13 +106,11 @@ export default function AdminParentsPage() {
         </div>
       )}
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Parent" description="Add a new parent account">
-        <ParentForm
+      <ParentForm
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
         />
-      </Dialog>
     </div>
   );
 }

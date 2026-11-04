@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatRelativeTime } from "@/utils/format";
 import { Megaphone, Plus } from "lucide-react";
-import { Dialog } from "@/components/ui/dialog";
 import { AnnouncementForm } from "@/components/forms/announcement-form";
 
 export default function AdminAnnouncementsPage() {
@@ -106,14 +105,12 @@ export default function AdminAnnouncementsPage() {
         </div>
       )}
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Announcement" description="Create a new announcement">
-        <AnnouncementForm
+      <AnnouncementForm
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
           branches={branches}
         />
-      </Dialog>
     </div>
   );
 }

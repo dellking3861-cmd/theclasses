@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/badge";
 import { GraduationCap, Plus } from "lucide-react";
-import { Dialog } from "@/components/ui/dialog";
 import { TeacherForm } from "@/components/forms/teacher-form";
 
 interface Teacher {
@@ -120,14 +119,12 @@ export default function AdminTeachersPage() {
         </div>
       )}
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Teacher" description="Add a new teacher to the system">
-        <TeacherForm
+      <TeacherForm
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
           branches={branches}
         />
-      </Dialog>
     </div>
   );
 }

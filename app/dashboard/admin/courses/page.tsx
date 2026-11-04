@@ -9,7 +9,6 @@ import { formatCurrency } from "@/utils/format";
 import { PROGRAM_LABELS } from "@/lib/constants";
 import { describeSelection, subjectLabel } from "@/lib/curriculum";
 import { BookOpen, Plus } from "lucide-react";
-import { Dialog } from "@/components/ui/dialog";
 import { CourseForm } from "@/components/forms/course-form";
 
 interface Course {
@@ -144,14 +143,12 @@ export default function AdminCoursesPage() {
         </div>
       )}
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} title="Add Course" description="Add a new course to the system">
-        <CourseForm
+      <CourseForm
           open={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
           branches={branches}
         />
-      </Dialog>
     </div>
   );
 }

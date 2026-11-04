@@ -16,6 +16,7 @@ import {
   CalendarCheck,
 } from "lucide-react";
 import { CONTACT } from "@/lib/constants";
+import type { BusinessProfile } from "@/lib/google-business";
 import { BOARDS, getOffering } from "@/lib/curriculum";
 import { CourseFinder } from "@/components/landing/course-finder";
 import { WhatsAppIcon } from "@/components/layout/whatsapp-icon";
@@ -34,13 +35,18 @@ function SectionHeading({ eyebrow, title, intro, center = false }: { eyebrow: st
 
 // ─── Hero ────────────────────────────────────────────────────────────────
 
-const heroFacts = [
-  { value: "7+", label: "years of teaching" },
-  { value: "500+", label: "students taught" },
-  { value: "4.7★", label: "Google rating", href: CONTACT.reviewsHref },
-];
-
-export function HeroSection() {
+export function HeroSection({ profile }: { profile: BusinessProfile | null }) {
+  const heroFacts: { value: string; label: string; href?: string }[] = [
+    { value: "7+", label: "years of teaching" },
+    { value: "500+", label: "students taught" },
+  ];
+  if (profile?.rating) {
+    heroFacts.push({
+      value: `${profile.rating.toFixed(1)}★`,
+      label: `${profile.reviewCount} Google reviews`,
+      href: profile.mapsUri ?? CONTACT.reviewsHref,
+    });
+  }
   return (
     <section className="relative overflow-hidden bg-[#fbfaf6]">
       <div className="pointer-events-none absolute -right-40 -top-40 h-[480px] w-[480px] rounded-full bg-brand-200/40 blur-3xl" aria-hidden="true" />
@@ -243,52 +249,88 @@ export function TeachingSection() {
   );
 }
 
-// ─── Reviews ─────────────────────────────────────────────────────────────
+// ─── Reviews (live from Google Business Profile) ─────────────────────
 
-const reviews = [
-  { rating: 5, text: "Very good coaching institute. Sir Wasi explains concepts clearly and students get good results.", year: "2025" },
-  { rating: 5, text: "My son's grades improved significantly after joining. Highly recommended for O Level students.", year: "2025" },
-  { rating: 4, text: "Best coaching for mathematics in the area. Regular tests and doubt clearing sessions.", year: "2024" },
-];
+function Stars({ rating, size = "h-4 w-4" }: { rating: number; size?: string }) {
+  return (
+    <span className="flex" role="img" aria-label={`${rating} out of 5 stars`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star key={i} className={`${size} ${i < Math.round(rating) ? "fill-brand-500 text-brand-500" : "fill-stone-200 text-stone-200"}`} aria-hidden="true" />
+      ))}
+    </span>
+  );
+}
 
-export function ReviewsSection() {
+export function ReviewsSection({ profile }: { profile: BusinessProfile | null }) {
+  const reviewsLink = profile?.mapsUri ?? CONTACT.reviewsHref;
+  const written = profile?.reviews.filter((r) => r.text) ?? [];
+  const starOnly = profile?.reviews.filter((r) => !r.text) ?? [];
+
   return (
     <section className="bg-white py-20 lg:py-24">
       <div className={container}>
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading eyebrow="Reviews" title="What students and parents say" />
           <a
-            href={CONTACT.reviewsHref}
+            href={reviewsLink}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 self-start rounded-xl border border-stone-200 px-4 py-3 hover:border-stone-300 md:self-auto"
           >
-            <span className="font-display text-2xl font-bold text-ink">4.7</span>
-            <span className="flex flex-col">
-              <span className="flex" aria-label="4.7 out of 5 stars">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-brand-500 text-brand-500" aria-hidden="true" />
-                ))}
-              </span>
-              <span className="text-xs text-stone-500">Read all reviews on Google</span>
-            </span>
+            {profile?.rating ? (
+              <>
+                <span className="font-display text-2xl font-bold text-ink">{profile.rating.toFixed(1)}</span>
+                <span className="flex flex-col">
+                  <Stars rating={profile.rating} />
+                  <span className="text-xs text-stone-500">{profile.reviewCount} reviews on Google</span>
+                </span>
+              </>
+            ) : (
+              <span className="text-sm font-medium text-stone-700">Read our reviews on Google</span>
+            )}
           </a>
         </div>
-        <ul className="mt-10 grid gap-6 md:grid-cols-3">
-          {reviews.map((r, i) => (
-            <li key={i} className="flex flex-col rounded-2xl border border-stone-200 p-6">
-              <span className="flex" aria-label={`${r.rating} out of 5 stars`}>
-                {Array.from({ length: 5 }).map((_, j) => (
-                  <Star key={j} className={`h-4 w-4 ${j < r.rating ? "fill-brand-500 text-brand-500" : "text-stone-300"}`} aria-hidden="true" />
-                ))}
-              </span>
-              <blockquote className="mt-4 flex-1 text-stone-700 leading-relaxed">&ldquo;{r.text}&rdquo;</blockquote>
-              <p className="mt-5 flex items-center gap-2 text-sm text-stone-500">
-                <MessageSquareText className="h-4 w-4" aria-hidden="true" /> Google review · {r.year}
-              </p>
-            </li>
-          ))}
-        </ul>
+
+        {written.length > 0 && (
+          <ul className="mt-10 grid gap-6 md:grid-cols-3">
+            {written.slice(0, 3).map((r, i) => (
+              <li key={i} className="flex flex-col rounded-2xl border border-stone-200 p-6">
+                <Stars rating={r.rating} />
+                <blockquote className="mt-4 line-clamp-6 flex-1 leading-relaxed text-stone-700">&ldquo;{r.text}&rdquo;</blockquote>
+                <p className="mt-5 text-sm text-stone-500">
+                  {r.authorUri ? (
+                    <a href={r.authorUri} target="_blank" rel="noopener noreferrer" className="font-medium text-stone-800 hover:underline">{r.author}</a>
+                  ) : (
+                    <span className="font-medium text-stone-800">{r.author}</span>
+                  )}
+                  {r.relativeTime && <> · {r.relativeTime}</>}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {written.length === 0 && starOnly.length > 0 && (
+          <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {starOnly.slice(0, 6).map((r, i) => (
+              <li key={i} className="flex items-center justify-between gap-3 rounded-xl border border-stone-200 px-4 py-3">
+                <span className="min-w-0">
+                  <span className="block truncate font-medium text-stone-800">{r.author}</span>
+                  {r.relativeTime && <span className="block text-xs text-stone-500">{r.relativeTime}</span>}
+                </span>
+                <Stars rating={r.rating} />
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <p className="mt-6 flex items-center gap-2 text-sm text-stone-500">
+          <MessageSquareText className="h-4 w-4" aria-hidden="true" />
+          Reviews and ratings from Google.{" "}
+          <a href={reviewsLink} target="_blank" rel="noopener noreferrer" className="font-medium text-brand-800 hover:underline">
+            See all on Google Maps
+          </a>
+        </p>
       </div>
     </section>
   );

@@ -6,15 +6,20 @@ import {
   ReviewsSection,
   AdmissionSection,
 } from "@/components/landing/sections";
+import { getBusinessProfile } from "@/lib/google-business";
 
-export default function HomePage() {
+// Google Business Profile data (rating, reviews) refreshes every 6 hours
+export const revalidate = 21600;
+
+export default async function HomePage() {
+  const profile = await getBusinessProfile();
   return (
     <>
-      <HeroSection />
+      <HeroSection profile={profile} />
       <BoardsStrip />
       <PathwaysSection />
       <TeachingSection />
-      <ReviewsSection />
+      <ReviewsSection profile={profile} />
       <AdmissionSection />
     </>
   );

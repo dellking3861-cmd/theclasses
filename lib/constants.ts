@@ -11,6 +11,8 @@ export const CONTACT = {
   addressShort: "Malir 15, Karachi",
   mapsHref: "https://www.google.com/maps/search/?api=1&query=The+Classes+R-156+Salman+Garden+Malir+15+Karachi",
   reviewsHref: "https://search.google.com/local/reviews?placeid=ChIJ0cltXEQ7sz4RfP0TVsb4el4",
+  /** Used only if Google Business Profile hours can't be fetched */
+  hoursFallback: ["Monday to Saturday: 4:00 – 8:30 PM", "Sunday: Closed"],
 } as const;
 
 export const ROLES = {

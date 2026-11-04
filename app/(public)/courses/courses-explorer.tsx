@@ -46,7 +46,7 @@ function SubjectPill({ code, highlight }: { code: string; highlight?: boolean })
   return (
     <li
       className={`rounded-full border px-3 py-1 text-sm ${
-        highlight ? "border-amber-400 bg-amber-50 text-amber-800 font-medium" : "border-stone-200 bg-white text-stone-700"
+        highlight ? "border-brand-500 bg-brand-50 text-brand-900 font-medium" : "border-stone-200 bg-white text-stone-700"
       }`}
     >
       {subjectLabel(code)}
@@ -88,7 +88,7 @@ function GroupCard({ group, board, stage, highlight }: { group: CurriculumGroup;
         )}
         <Link
           href={`/admissions?stage=${stage}&board=${board}&group=${group.code}`}
-          className="mt-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-stone-200 px-4 text-sm font-medium text-stone-700 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-700 transition-colors"
+          className="mt-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-stone-200 px-4 text-sm font-medium text-stone-700 hover:bg-brand-50 hover:border-brand-300 hover:text-brand-800 transition-colors"
         >
           Enquire about this group <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
@@ -155,11 +155,11 @@ export function CoursesExplorer({ query }: { query: CoursesQuery }) {
               aria-selected={tab === t.value}
               onClick={() => go({ stage: t.value })}
               className={`min-h-14 rounded-xl px-4 py-3 text-left transition-colors border ${
-                tab === t.value ? "bg-amber-600 border-amber-600 text-white" : "bg-white border-stone-200 text-stone-700 hover:bg-stone-100"
+                tab === t.value ? "bg-ink border-ink text-white" : "bg-white border-stone-200 text-stone-700 hover:bg-stone-100"
               }`}
             >
               <span className="block font-semibold">{t.label}</span>
-              <span className={`block text-xs ${tab === t.value ? "text-amber-100" : "text-stone-400"}`}>{t.sub}</span>
+              <span className={`block text-xs ${tab === t.value ? "text-brand-100" : "text-stone-400"}`}>{t.sub}</span>
             </button>
           ))}
         </div>
@@ -175,7 +175,7 @@ export function CoursesExplorer({ query }: { query: CoursesQuery }) {
                 </CardHeader>
                 <CardContent>
                   <p className="flex items-center gap-1 text-sm text-stone-400 mb-4"><Clock className="h-4 w-4" aria-hidden="true" /> {p.duration} months</p>
-                  <Link href="/admissions" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-stone-200 px-4 text-sm font-medium text-stone-700 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-700">
+                  <Link href="/admissions" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-stone-200 px-4 text-sm font-medium text-stone-700 hover:bg-brand-50 hover:border-brand-300 hover:text-brand-800">
                     Enquire <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </CardContent>
@@ -218,7 +218,7 @@ export function CoursesExplorer({ query }: { query: CoursesQuery }) {
                   )}
                   {offering.note && (
                     <p className="mt-4 flex gap-2 text-sm text-stone-500">
-                      <Info className="h-4 w-4 shrink-0 mt-0.5 text-amber-600" aria-hidden="true" /> {offering.note}
+                      <Info className="h-4 w-4 shrink-0 mt-0.5 text-brand-800" aria-hidden="true" /> {offering.note}
                     </p>
                   )}
                 </div>

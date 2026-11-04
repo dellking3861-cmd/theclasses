@@ -2,6 +2,17 @@ export const APP_NAME = "The Classes";
 export const APP_DESCRIPTION =
   "Pakistan's premier hybrid education platform combining physical coaching centers with online learning, AI-powered tools, and comprehensive student management.";
 
+export const CONTACT = {
+  phoneDisplay: "+92 336 3861205",
+  phoneHref: "tel:+923363861205",
+  whatsappHref: "https://wa.me/923363861205",
+  email: "wasikherro@gmail.com",
+  address: "R-156 Salman Garden, Near Jamia Millia Road, Malir 15, Karachi",
+  addressShort: "Malir 15, Karachi",
+  mapsHref: "https://www.google.com/maps/search/?api=1&query=The+Classes+R-156+Salman+Garden+Malir+15+Karachi",
+  reviewsHref: "https://search.google.com/local/reviews?placeid=ChIJ0cltXEQ7sz4RfP0TVsb4el4",
+} as const;
+
 export const ROLES = {
   ADMIN: "admin",
   TEACHER: "teacher",

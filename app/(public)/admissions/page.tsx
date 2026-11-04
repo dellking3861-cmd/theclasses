@@ -97,7 +97,7 @@ function AdmissionsForm() {
               <CurriculumSelect value={curriculum} onChange={setCurriculum} showSubject subjectLabel="Subject of interest" idPrefix="admission" />
               <Input label="Current Grade/Class" placeholder="e.g., Class 10, A1" {...register("grade")} />
               <Textarea label="Additional Message" placeholder="Tell us about your goals..." error={errors.message?.message} {...register("message")} />
-              <Button type="submit" className="w-full bg-amber-600 hover:bg-amber-700 btn-hover" size="lg" isLoading={isSubmitting}>
+              <Button type="submit" className="w-full bg-brand-500 hover:bg-brand-400 text-ink" size="lg" isLoading={isSubmitting}>
                 Submit Application
               </Button>
             </form>
@@ -111,7 +111,7 @@ function AdmissionsForm() {
             "Scholarship opportunities",
           ].map((benefit) => (
             <div key={benefit} className="flex items-center gap-2 text-sm text-stone-600">
-              <CheckCircle className="h-5 w-5 text-amber-600 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-brand-800 flex-shrink-0" />
               {benefit}
             </div>
           ))}

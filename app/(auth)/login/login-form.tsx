@@ -57,7 +57,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#fefce8] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#fbfaf6] px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/home" className="inline-flex items-center gap-2 mb-6">
@@ -78,16 +78,16 @@ export default function LoginForm() {
               <Input label="Email" type="email" placeholder="you@example.com" error={errors.email?.message} {...register("email")} />
               <Input label="Password" type="password" placeholder="Enter your password" error={errors.password?.message} {...register("password")} />
               <div className="flex justify-end">
-                <Link href="/forgot-password" className="text-sm text-yellow-500 hover:text-yellow-600">Forgot password?</Link>
+                <Link href="/forgot-password" className="inline-flex min-h-11 items-center text-sm font-medium text-brand-800 hover:text-ink">Forgot password?</Link>
               </div>
-              <Button type="submit" className="w-full bg-yellow-500 hover:bg-yellow-600" isLoading={isLoading}>Sign In</Button>
+              <Button type="submit" className="w-full bg-brand-500 hover:bg-brand-400 text-ink" isLoading={isLoading}>Sign In</Button>
             </form>
           </CardContent>
         </Card>
 
         <p className="text-center text-sm text-slate-500 mt-6">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-yellow-500 hover:text-yellow-600 font-medium">
+          <Link href="/register" className="text-brand-800 hover:text-brand-800 font-medium">
             Register
           </Link>
         </p>

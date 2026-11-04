@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+/* Brand palette, taken from the logo (gold #F2B700 + charcoal) */
+@theme {
+  --color-brand-50: #fffbeb;
+  --color-brand-100: #fff3c4;
+  --color-brand-200: #ffe68a;
+  --color-brand-300: #ffd84d;
+  --color-brand-400: #fbc81a;
+  --color-brand-500: #f2b700;
+  --color-brand-600: #d49d00;
+  --color-brand-700: #a87b00;
+  --color-brand-800: #7a5900; /* gold that is readable as text on white (6.6:1) */
+  --color-brand-900: #4d3800;
+  --color-ink: #16140f;       /* charcoal from the logo */
+}
+
 :root {
   --background: #ffffff;
   --foreground: #0f0f0f;
@@ -51,8 +66,8 @@ html {
 }
 
 ::selection {
-  background-color: #b8860b;
-  color: #ffffff;
+  background-color: #f2b700;
+  color: #16140f;
 }
 
 @keyframes fade-in {
@@ -97,7 +112,7 @@ html {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #b8860b 0%, #d4af37 100%);
+  background: linear-gradient(135deg, #a87b00 0%, #d49d00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -109,5 +124,5 @@ html {
 
 .btn-hover:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(184, 134, 11, 0.25);
+  box-shadow: 0 8px 24px rgba(22, 20, 15, 0.12);
 }

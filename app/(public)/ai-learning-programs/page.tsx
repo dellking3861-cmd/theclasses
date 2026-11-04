@@ -81,14 +81,14 @@ const aiModules = [
 export default function AILearningProgramsPage() {
   return (
     <>
-      <section className="py-24 bg-gradient-to-br from-yellow-500 via-yellow-600 to-yellow-800 text-white">
+      <section className="py-24 bg-ink text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium mb-6">
             <Sparkles className="h-4 w-4" />
             AI-Powered Education
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold font-display">AI Learning Programs</h1>
-          <p className="mt-4 text-lg text-yellow-50 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-stone-300 max-w-2xl mx-auto">
             Future-ready programs combining expert instruction with cutting-edge AI tools
             to accelerate your learning journey.
           </p>
@@ -97,15 +97,15 @@ export default function AILearningProgramsPage() {
 
       <section className="py-24 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4 text-center">AI Tools Included</h2>
+          <h2 className="text-3xl font-bold text-slate-900 mb-4 text-center font-display">AI study tools <span className="align-middle rounded-full bg-stone-100 px-2.5 py-1 text-sm font-medium text-stone-600">Coming soon</span></h2>
           <p className="text-slate-600 text-center mb-12 max-w-2xl mx-auto">
-            Every program includes access to our suite of AI-powered learning tools.
+            We are building these tools now. Enrolled students will get access as each one launches.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {aiModules.map((mod) => (
-              <div key={mod.title} className="rounded-xl border border-yellow-50 p-6 hover:border-yellow-200 hover:shadow-md transition-all card-3d">
-                <div className="rounded-lg bg-yellow-25 p-3 inline-flex mb-4">
-                  <mod.icon className="h-6 w-6 text-yellow-500" />
+              <div key={mod.title} className="rounded-xl border border-stone-100 p-6 hover:border-brand-400 hover:shadow-md transition-all card-3d">
+                <div className="rounded-lg bg-brand-100 p-3 inline-flex mb-4">
+                  <mod.icon className="h-6 w-6 text-brand-800" />
                 </div>
                 <h3 className="font-semibold text-slate-900 mb-1">{mod.title}</h3>
                 <p className="text-sm text-slate-600">{mod.description}</p>
@@ -115,12 +115,12 @@ export default function AILearningProgramsPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-[#fefce8]">
+      <section className="py-24 bg-[#fbfaf6]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-slate-900 mb-12">Available Programs</h2>
+          <h2 className="text-3xl font-bold text-slate-900 mb-12 font-display">Available programs</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {aiPrograms.map((program) => (
-              <Card key={program.key} hover className="card-3d border-yellow-50">
+              <Card key={program.key} hover className="card-3d border-stone-100">
                 <CardHeader>
                   <Badge variant="success" className="w-fit mb-2">AI Program</Badge>
                   <CardTitle>{PROGRAM_LABELS[program.key]}</CardTitle>
@@ -130,17 +130,17 @@ export default function AILearningProgramsPage() {
                   <ul className="space-y-2 mb-4">
                     {program.features.map((f) => (
                       <li key={f} className="text-sm text-slate-600 flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
                         {f}
                       </li>
                     ))}
                   </ul>
-                  <div className="flex items-center justify-between pt-4 border-t border-yellow-50">
+                  <div className="flex items-center justify-between pt-4 border-t border-stone-100">
                     <div>
                       <p className="text-xs text-slate-500">{program.duration}</p>
                     </div>
                     <Link href="/admissions">
-                      <Button size="sm" className="bg-yellow-500 hover:bg-yellow-600">
+                      <Button size="sm" className="bg-brand-500 hover:bg-brand-400 text-ink">
                         Enroll <ArrowRight className="h-4 w-4" />
                       </Button>
                     </Link>

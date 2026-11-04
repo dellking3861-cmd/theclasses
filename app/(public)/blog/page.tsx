@@ -35,7 +35,7 @@ export default async function BlogPage() {
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8">
             {posts.map((post) => (
-              <Card key={post.slug} className="border-stone-100 hover:border-amber-200 hover:shadow-md transition-all bg-white">
+              <Card key={post.slug} className="border-stone-100 hover:border-brand-300 hover:shadow-md transition-all bg-white">
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
                     <Badge variant="info" className="text-xs">{post.category}</Badge>
@@ -53,7 +53,7 @@ export default async function BlogPage() {
                     </span>
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="text-sm font-medium text-amber-600 hover:text-amber-700 flex items-center gap-1 group"
+                      className="text-sm font-medium text-brand-800 hover:text-brand-800 flex items-center gap-1 group"
                     >
                       Read More{" "}
                       <ArrowRight className="h-4 w-4 transform group-hover:translateX-1 transition-transform" />

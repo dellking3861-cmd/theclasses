@@ -55,7 +55,7 @@ export default function ForgotPasswordPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/home" className="inline-flex items-center gap-2 mb-6">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500">
               <GraduationCap className="h-5 w-5 text-white" />
             </div>
             <span className="text-xl font-bold text-slate-900">{APP_NAME}</span>
@@ -88,7 +88,7 @@ export default function ForgotPasswordPage() {
           )}
         </Card>
 
-        <Link href="/login" className="inline-flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-700 mt-6">
+        <Link href="/login" className="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-brand-800 hover:text-ink mt-4">
           <ArrowLeft className="h-4 w-4" /> Back to Sign In
         </Link>
       </div>

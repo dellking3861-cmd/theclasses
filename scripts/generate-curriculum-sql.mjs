@@ -38,24 +38,31 @@ function seedSql() {
   lines.push("");
 
   // Group subjects are replaced wholesale so removed subjects disappear too.
+  // One compact row per group (compulsory / core / elective arrays), expanded in SQL.
+  const arr = (codes) => (codes.length ? `ARRAY[${codes.map(q).join(", ")}]` : "ARRAY[]::text[]");
   const rows = [];
   for (const o of OFFERINGS) {
     for (const g of o.groups) {
       const seen = new Set();
-      let n = 0;
-      const add = (codes, kind) => codes.forEach((code) => {
-        if (seen.has(code)) return;
-        seen.add(code);
-        rows.push(`  (${q(o.board)}, ${q(o.stage)}, ${q(g.code)}, ${q(code)}, ${q(kind)}, ${n++})`);
-      });
-      add(o.compulsory, "compulsory");
-      add(g.core, "core");
-      add(g.electives ?? [], "elective");
+      const uniq = (codes) => codes.filter((c) => !seen.has(c) && seen.add(c));
+      const compulsory = uniq(o.compulsory);
+      const core = uniq(g.core);
+      const electives = uniq(g.electives ?? []);
+      rows.push(`  (${q(o.board)}, ${q(o.stage)}, ${q(g.code)}, ${arr(compulsory)}, ${arr(core)}, ${arr(electives)})`);
     }
   }
   lines.push("DELETE FROM public.curriculum_group_subjects;");
-  lines.push("INSERT INTO public.curriculum_group_subjects (board, stage, group_code, subject_code, kind, sort_order) VALUES");
-  lines.push(rows.join(",\n") + ";");
+  lines.push("INSERT INTO public.curriculum_group_subjects (board, stage, group_code, subject_code, kind, sort_order)");
+  lines.push("SELECT g.board, g.stage, g.group_code, s.code, s.kind,");
+  lines.push("       (row_number() OVER (PARTITION BY g.board, g.stage, g.group_code ORDER BY s.kind_order, s.ord))::int - 1");
+  lines.push("FROM (VALUES");
+  lines.push(rows.join(",\n"));
+  lines.push(") AS g(board, stage, group_code, compulsory, core, electives)");
+  lines.push("CROSS JOIN LATERAL (");
+  lines.push("  SELECT c, 'compulsory', 1, o FROM unnest(g.compulsory) WITH ORDINALITY AS t(c, o)");
+  lines.push("  UNION ALL SELECT c, 'core', 2, o FROM unnest(g.core) WITH ORDINALITY AS t(c, o)");
+  lines.push("  UNION ALL SELECT c, 'elective', 3, o FROM unnest(g.electives) WITH ORDINALITY AS t(c, o)");
+  lines.push(") AS s(code, kind, kind_order, ord);");
   lines.push("-- END CURRICULUM SEED");
   return lines.join("\n");
 }

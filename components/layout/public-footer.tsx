@@ -45,10 +45,11 @@ export function PublicFooter() {
             <h4 className="text-sm font-semibold text-stone-900 mb-4 uppercase tracking-wider">Programs</h4>
             <ul className="space-y-2.5">
               {[
-                { label: "School Classes (Grades 1–8)", href: "/courses?board=sindh_board" },
-                { label: "Secondary & Intermediate", href: "/courses" },
-                { label: "O/A Levels", href: "/courses?board=cambridge_o" },
-                { label: "Board Exam Prep", href: "/courses?board=aku_eb" },
+                { label: "School Classes (Grades 1–8)", href: "/courses?stage=programs" },
+                { label: "Matric (Grades 9–10)", href: "/courses?stage=secondary&board=bsek" },
+                { label: "Intermediate (Grades 11–12)", href: "/courses?stage=higher_secondary&board=biek" },
+                { label: "O Level / IGCSE", href: "/courses?stage=secondary&board=cambridge" },
+                { label: "A Level", href: "/courses?stage=higher_secondary&board=cambridge" },
                 { label: "AI Programs", href: "/ai-learning-programs" },
               ].map((item) => (
                 <li key={item.label}>

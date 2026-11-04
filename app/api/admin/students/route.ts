@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isValidSelection } from "@/lib/curriculum";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 
 async function requireAdmin(supabase: any) {
@@ -69,7 +70,11 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { email, password, full_name, phone, roll_number, branch_id, batch_id, date_of_birth, gender, address, emergency_contact, grade, board } = body;
+  const { email, password, full_name, phone, roll_number, branch_id, batch_id, date_of_birth, gender, address, emergency_contact, grade, board, stage, group_code } = body;
+
+  if (!isValidSelection({ board, stage, group: group_code }) || (board && !stage)) {
+    return NextResponse.json({ error: "Choose a valid board, level and group" }, { status: 400 });
+  }
 
   if (!email || !password || !full_name) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -124,6 +129,8 @@ export async function POST(request: Request) {
       emergency_contact: emergency_contact || null,
       grade: grade || null,
       board: board || null,
+      stage: board ? stage : null,
+      group_code: board ? group_code || null : null,
       is_active: true,
     })
     .select()

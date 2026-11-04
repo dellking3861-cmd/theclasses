@@ -1,22 +1,43 @@
 "use client";
 
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { admissionSchema, type AdmissionInput } from "@/lib/validations";
+import { admissionSchema, type AdmissionInput, type EnquiryInput } from "@/lib/validations";
 import { submitEnquiry, honeypotValue } from "@/lib/enquiries";
-import { BOARD_LABELS, SUBJECT_LABELS } from "@/lib/constants";
+import { isValidSelection } from "@/lib/curriculum";
+import { CurriculumSelect, EMPTY_CURRICULUM, type CurriculumValue } from "@/components/forms/curriculum-select";
 import { CheckCircle } from "lucide-react";
 
-const boardOptions = Object.entries(BOARD_LABELS).map(([value, label]) => ({ value, label }));
-const subjectOptions = Object.entries(SUBJECT_LABELS).map(([value, label]) => ({ value, label }));
-
 export default function AdmissionsPage() {
+  return (
+    <Suspense>
+      <AdmissionsForm />
+    </Suspense>
+  );
+}
+
+/** Pre-fill from links like /admissions?stage=higher_secondary&board=fbise&group=bio */
+function curriculumFromParams(params: URLSearchParams): CurriculumValue {
+  const value = {
+    stage: params.get("stage") ?? "",
+    board: params.get("board") ?? "",
+    group: params.get("group") ?? "",
+    subject: params.get("subject") ?? "",
+  };
+  return isValidSelection(value) ? value : EMPTY_CURRICULUM;
+}
+
+function AdmissionsForm() {
+  const params = useSearchParams();
+  const [curriculum, setCurriculum] = useState<CurriculumValue>(() => curriculumFromParams(params));
+
   const {
     register,
     handleSubmit,
@@ -24,9 +45,6 @@ export default function AdmissionsPage() {
     formState: { errors, isSubmitting },
   } = useForm<AdmissionInput>({
     resolver: zodResolver(admissionSchema),
-    // Empty so the "Select …" placeholder shows instead of the browser
-    // silently picking the first board/subject.
-    defaultValues: { board: "", subject: "" },
   });
 
   async function onSubmit(data: AdmissionInput, event?: React.BaseSyntheticEvent) {
@@ -36,14 +54,17 @@ export default function AdmissionsPage() {
         name: data.name,
         email: data.email,
         phone: data.phone,
-        board: data.board,
+        stage: (curriculum.stage || undefined) as EnquiryInput["stage"],
+        board: curriculum.board || undefined,
+        group_code: (curriculum.group || undefined) as EnquiryInput["group_code"],
+        subject: curriculum.subject || undefined,
         grade: data.grade,
-        subject: data.subject,
         message: data.message,
         website: honeypotValue(event),
       });
       toast.success("Application submitted! We'll contact you within 24 hours.");
       reset();
+      setCurriculum(EMPTY_CURRICULUM);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     }
@@ -73,8 +94,7 @@ export default function AdmissionsPage() {
                 <Input label="Email *" type="email" placeholder="you@example.com" error={errors.email?.message} {...register("email")} />
                 <Input label="Phone" placeholder="+92 3XX XXXXXXX" {...register("phone")} />
               </div>
-              <Select label="Board" placeholder="Select board" options={boardOptions} {...register("board")} />
-              <Select label="Subject" placeholder="Select subject" options={subjectOptions} {...register("subject")} />
+              <CurriculumSelect value={curriculum} onChange={setCurriculum} showSubject subjectLabel="Subject of interest" idPrefix="admission" />
               <Input label="Current Grade/Class" placeholder="e.g., Class 10, A1" {...register("grade")} />
               <Textarea label="Additional Message" placeholder="Tell us about your goals..." error={errors.message?.message} {...register("message")} />
               <Button type="submit" className="w-full bg-amber-600 hover:bg-amber-700 btn-hover" size="lg" isLoading={isSubmitting}>

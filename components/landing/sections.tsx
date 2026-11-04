@@ -86,7 +86,7 @@ export function HeroSection() {
             </h1>
             <p className="mt-6 text-lg text-stone-500 leading-relaxed max-w-xl">
               Experience world-class education combining physical coaching centers,
-              online learning, and AI-powered tools. From AKU-EB to Cambridge, we prepare
+              online learning, and AI-powered tools. From Matric and Intermediate to O, IGCSE and A Levels, we prepare
               you for success.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
@@ -153,7 +153,7 @@ export function HeroSection() {
 // ─── Trust / Teaching Section ──────────────────────────────────────────────
 
 const trustFeatures = [
-  { icon: Shield, title: "Verified Faculty", desc: "Experienced teachers specializing in AKU-EB, Sindh Board, and Cambridge curricula." },
+  { icon: Shield, title: "Verified Faculty", desc: "Experienced teachers for BSEK, BIEK, AKU-EB, FBISE, Cambridge and Edexcel." },
   { icon: Brain, title: "AI-Powered Tools", desc: "Personal AI tutor, smart quiz generation, and intelligent homework checking." },
   { icon: Video, title: "Recorded Lectures", desc: "Access high-quality recorded lectures anytime, anywhere. Never miss a class." },
   { icon: BarChart3, title: "Performance Tracking", desc: "Detailed analytics, attendance reports, and exam performance insights." },
@@ -195,11 +195,11 @@ export function TrustSection() {
 // ─── Subjects Grid ─────────────────────────────────────────────────────────
 
 const subjects = [
-  { name: "Mathematics", icon: "∑", href: "/courses?subject=mathematics" },
-  { name: "Physics", icon: "⚛", href: "/courses?subject=physics" },
-  { name: "Chemistry", icon: "⬡", href: "/courses?subject=chemistry" },
-  { name: "Biology", icon: "❋", href: "/courses?subject=bio" },
-  { name: "Computer Science", icon: "</>", href: "/courses?subject=cs" },
+  { name: "Mathematics", icon: "∑", href: "/courses?stage=secondary&subject=mathematics" },
+  { name: "Physics", icon: "⚛", href: "/courses?stage=secondary&subject=physics" },
+  { name: "Chemistry", icon: "⬡", href: "/courses?stage=secondary&subject=chemistry" },
+  { name: "Biology", icon: "❋", href: "/courses?stage=higher_secondary&subject=biology" },
+  { name: "Computer Science", icon: "</>", href: "/courses?stage=higher_secondary&subject=computer_science" },
   { name: "Exam Prep", icon: "✦", href: "/courses" },
 ];
 
@@ -244,11 +244,11 @@ export function SubjectsSection() {
 // ─── Programs Grid ─────────────────────────────────────────────────────────
 
 const programs = [
-  { name: "School Classes", desc: "Foundation courses for Grades 1–8 with structured curriculum", href: "/courses" },
-  { name: "Secondary Level", desc: "Classes 9–10 preparation for Sindh Board & FBISE", href: "/courses" },
-  { name: "Intermediate", desc: "FUERS & HSSC prep across all subjects", href: "/courses" },
-  { name: "O / A Levels", desc: "Cambridge International curriculum coaching", href: "/courses?board=cambridge_o" },
-  { name: "Board Exam Prep", desc: "AKU-EB, BSEK, BIEK exam-focused preparation", href: "/courses?board=aku_eb" },
+  { name: "School Classes", desc: "Foundation courses for Grades 1–8 with structured curriculum", href: "/courses?stage=programs" },
+  { name: "Matric (Grades 9–10)", desc: "BSEK, AKU-EB & FBISE: Biology, Computer and Arts groups", href: "/courses?stage=secondary&board=bsek" },
+  { name: "Intermediate (Grades 11–12)", desc: "BIEK, AKU-EB & FBISE: Pre-Medical, Computer Science and Humanities", href: "/courses?stage=higher_secondary&board=biek" },
+  { name: "O Level & IGCSE", desc: "Cambridge O Level and Edexcel International GCSE", href: "/courses?stage=secondary&board=cambridge" },
+  { name: "A Level", desc: "Cambridge A Level and Edexcel International A Level", href: "/courses?stage=higher_secondary&board=cambridge" },
   { name: "International Curricula", desc: "Curated programs aligned with global standards", href: "/ai-learning-programs" },
 ];
 
@@ -385,7 +385,7 @@ export function ResultsSection() {
           Our Students&apos; Success Stories
         </h2>
         <p className="mt-4 text-lg text-stone-500 max-w-2xl mx-auto">
-          Consistent results across AKU-EB, Cambridge, and Sindh Board examinations.
+          Consistent results across BSEK, BIEK, AKU-EB, FBISE, Cambridge and Edexcel examinations.
         </p>
         <div className="mt-12 grid sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
           {[

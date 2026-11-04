@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Dialog, DialogHeader, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import { isValidSelection } from "@/lib/curriculum";
+import { CurriculumSelect, type CurriculumValue } from "@/components/forms/curriculum-select";
 
 const studentSchema = z.object({
   email: z.string().email("Invalid email"),
@@ -23,7 +25,14 @@ const studentSchema = z.object({
   address: z.string().optional(),
   emergency_contact: z.string().optional(),
   grade: z.string().optional(),
-  board: z.enum(["aku_eb", "sindh_board", "cambridge_o", "cambridge_a"]).optional().or(z.literal("")),
+  stage: z.string().optional(),
+  board: z.string().optional(),
+  group_code: z.string().optional(),
+}).superRefine((d, ctx) => {
+  if (d.board && !d.stage) ctx.addIssue({ code: "custom", path: ["stage"], message: "Choose a level" });
+  if (!isValidSelection({ board: d.board, stage: d.stage, group: d.group_code })) {
+    ctx.addIssue({ code: "custom", path: ["group_code"], message: "Choose a valid board, level and group" });
+  }
 });
 
 type StudentFormData = z.infer<typeof studentSchema>;
@@ -44,6 +53,8 @@ export function StudentForm({ open, onClose, onSuccess, initialData, branches = 
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<StudentFormData>({
     resolver: zodResolver(studentSchema),
@@ -60,9 +71,23 @@ export function StudentForm({ open, onClose, onSuccess, initialData, branches = 
       address: "",
       emergency_contact: "",
       grade: "",
-      board: undefined,
+      stage: "",
+      board: "",
+      group_code: "",
     },
   });
+
+  const curriculum: CurriculumValue = {
+    stage: watch("stage") ?? "",
+    board: watch("board") ?? "",
+    group: watch("group_code") ?? "",
+    subject: "",
+  };
+  function setCurriculum(v: CurriculumValue) {
+    setValue("stage", v.stage, { shouldDirty: true });
+    setValue("board", v.board, { shouldDirty: true });
+    setValue("group_code", v.group, { shouldDirty: true });
+  }
 
   const onSubmit = async (data: StudentFormData) => {
     setIsLoading(true);
@@ -115,15 +140,15 @@ export function StudentForm({ open, onClose, onSuccess, initialData, branches = 
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <Select label="Gender" placeholder="Select gender" error={errors.gender?.message} options={[{ value: "male", label: "Male" }, { value: "female", label: "Female" }, { value: "other", label: "Other" }]} {...register("gender")} />
-            <Select label="Board" placeholder="Select board" error={errors.board?.message} options={[
-              { value: "aku_eb", label: "AKU-EB" },
-              { value: "sindh_board", label: "Sindh Board" },
-              { value: "cambridge_o", label: "Cambridge O-Level" },
-              { value: "cambridge_a", label: "Cambridge A-Level" },
-            ]} {...register("board")} />
+            <Input label="Grade / Class" placeholder="e.g. Class 10, O Level 2, A1" error={errors.grade?.message} {...register("grade")} />
           </div>
+          <CurriculumSelect
+            value={curriculum}
+            onChange={setCurriculum}
+            idPrefix="student"
+            errors={{ stage: errors.stage?.message, board: errors.board?.message, group: errors.group_code?.message }}
+          />
           <div className="grid sm:grid-cols-2 gap-4">
-            <Input label="Grade" placeholder="Grade 10" error={errors.grade?.message} {...register("grade")} />
             <Input label="Emergency Contact" placeholder="+92 3XX XXXXXXX" error={errors.emergency_contact?.message} {...register("emergency_contact")} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">

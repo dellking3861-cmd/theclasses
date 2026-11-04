@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Brain, Sparkles } from "lucide-react";
-import { SUBJECT_LABELS } from "@/lib/constants";
+import { SUBJECTS } from "@/lib/curriculum";
 
-const subjectOptions = Object.entries(SUBJECT_LABELS).map(([value, label]) => ({ value, label }));
+const subjectOptions = Object.entries(SUBJECTS)
+  .map(([value, label]) => ({ value, label }))
+  .sort((a, b) => a.label.localeCompare(b.label));
 const difficultyOptions = [
   { value: "easy", label: "Easy" },
   { value: "medium", label: "Medium" },

@@ -2,7 +2,7 @@
 
 This roadmap turns every finding in [`AUDIT.md`](./AUDIT.md) into ordered work items. Each item lists the files, the change and how to check it is done (a **Done when** test). The IDs (C1, H3, M4…) match the audit.
 
-> **Status (2026-11-04):** Phase 0 ✅ and Phase 1 ✅ are done in code, in migrations `20261104150000_security_hardening.sql` and `20261104160000_onboarding.sql`. **Neither migration has been run on the live database yet.** `posts` (H4) already existed on the live project, and its definition is now checked in as `20261014205449_create_posts_table.sql`.
+> **Status (2026-11-04):** Phase 0 ✅ and Phase 1 ✅ are **live**. The code was deployed via PR #4, and migrations `20261104163533_security_hardening.sql` and `20261104163553_onboarding.sql` were applied to the live project and verified (a student role-escalation attempt is denied, the RLS-disabled advisory is cleared, an enquiry from the live site is stored, and the signup trigger was tested in a rolled-back transaction). Remaining Supabase advisories are in Phase 4: `get_user_role` mutable search_path, and turning on leaked-password protection.
 
 **Order matters.** Phase 0 closes the security holes and must ship before any real user is onboarded. A phase is finished only when every one of its **Done when** checks passes.
 

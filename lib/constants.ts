@@ -11,37 +11,7 @@ export const ROLES = {
 
 export type UserRole = (typeof ROLES)[keyof typeof ROLES];
 
-export const BOARDS = {
-  AKU_EB: "aku_eb",
-  SINDH_BOARD: "sindh_board",
-  CAMBRIDGE_O: "cambridge_o",
-  CAMBRIDGE_A: "cambridge_a",
-} as const;
-
-export const BOARD_LABELS: Record<string, string> = {
-  aku_eb: "AKU-EB",
-  sindh_board: "Sindh Board",
-  cambridge_o: "Cambridge O Level",
-  cambridge_a: "Cambridge A Level",
-};
-
-export const SUBJECTS = {
-  MATHEMATICS: "mathematics",
-  PHYSICS: "physics",
-  CHEMISTRY: "chemistry",
-  BIOLOGY: "biology",
-  COMPUTER_SCIENCE: "computer_science",
-  ENGLISH: "english",
-} as const;
-
-export const SUBJECT_LABELS: Record<string, string> = {
-  mathematics: "Mathematics",
-  physics: "Physics",
-  chemistry: "Chemistry",
-  biology: "Biology",
-  computer_science: "Computer Science",
-  english: "English",
-};
+// Boards, levels, groups and subjects live in lib/curriculum.ts.
 
 export const PROGRAMS = {
   AI_WEB_DEVELOPMENT: "ai_web_development",

@@ -6,7 +6,8 @@ import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/utils/format";
-import { BOARD_LABELS, SUBJECT_LABELS, PROGRAM_LABELS } from "@/lib/constants";
+import { PROGRAM_LABELS } from "@/lib/constants";
+import { describeSelection, subjectLabel } from "@/lib/curriculum";
 import { BookOpen, Plus } from "lucide-react";
 import { Dialog } from "@/components/ui/dialog";
 import { CourseForm } from "@/components/forms/course-form";
@@ -18,6 +19,8 @@ interface Course {
   description: string | null;
   course_type: string;
   board: string | null;
+  stage: string | null;
+  group_code: string | null;
   subject: string | null;
   program: string | null;
   teacher_id: string | null;
@@ -47,7 +50,7 @@ interface Course {
 
 function getCourseLabel(course: Course) {
   if (course.course_type === "board") {
-    return `${course.subject ? SUBJECT_LABELS[course.subject] : ""} — ${course.board ? BOARD_LABELS[course.board] : ""}`;
+    return [subjectLabel(course.subject), describeSelection(course.board, course.stage, course.group_code)].filter(Boolean).join(" — ");
   }
   return course.program ? PROGRAM_LABELS[course.program] : course.title;
 }
@@ -109,7 +112,7 @@ export default function AdminCoursesPage() {
 
   function getCourseLabel(course: Course) {
     if (course.course_type === "board") {
-      return `${course.subject ? SUBJECT_LABELS[course.subject] : ""} — ${course.board ? BOARD_LABELS[course.board] : ""}`;
+      return [subjectLabel(course.subject), describeSelection(course.board, course.stage, course.group_code)].filter(Boolean).join(" — ");
     }
     return course.program ? PROGRAM_LABELS[course.program] : course.title;
   }

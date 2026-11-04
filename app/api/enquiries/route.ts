@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { enquirySchema } from "@/lib/validations";
+import { isValidSelection } from "@/lib/curriculum";
 
 // Best-effort per-instance rate limit (serverless instances don't share memory).
 // Enough to stop casual spam; use a shared store (e.g. Upstash) for stronger limits.
@@ -37,6 +38,13 @@ export async function POST(request: Request) {
 
   const { website, ...enquiry } = parsed.data;
 
+  // Board/level/group/subject must be a real combination from the catalog.
+  // The Contact form sends no board, and its "subject" is free text.
+  const picked = enquiry.board || enquiry.stage || enquiry.group_code;
+  if (picked && !isValidSelection({ board: enquiry.board, stage: enquiry.stage, group: enquiry.group_code, subject: enquiry.board ? enquiry.subject : undefined })) {
+    return NextResponse.json({ error: "Please choose a valid level, board and group." }, { status: 400 });
+  }
+
   // Honeypot filled in: pretend success so bots don't retry, but store nothing.
   if (website) {
     return NextResponse.json({ ok: true });
@@ -52,6 +60,8 @@ export async function POST(request: Request) {
       subject: enquiry.subject || null,
       message: enquiry.message || "",
       board: enquiry.board || null,
+      stage: enquiry.stage || null,
+      group_code: enquiry.group_code || null,
       grade: enquiry.grade || null,
     });
 

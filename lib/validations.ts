@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { GROUP_CODES } from "@/lib/curriculum";
 
 export const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -30,7 +31,7 @@ export const studentSchema = z.object({
   // Board/level/group codes come from lib/curriculum.ts (validated with isValidSelection)
   board: z.string().optional(),
   stage: z.enum(["secondary", "higher_secondary"]).optional(),
-  group_code: z.enum(["bio", "comp", "arts"]).optional(),
+  group_code: z.enum(GROUP_CODES).optional(),
   grade: z.string().optional(),
   date_of_birth: z.string().optional(),
   gender: z.enum(["male", "female", "other"]).optional(),
@@ -58,7 +59,7 @@ export const courseSchema = z.object({
   course_type: z.enum(["board", "special_program"]),
   board: z.string().optional(),
   stage: z.enum(["secondary", "higher_secondary"]).optional(),
-  group_code: z.enum(["bio", "comp", "arts"]).optional(),
+  group_code: z.enum(GROUP_CODES).optional(),
   subject: z.string().optional(),
   program: z.enum([
     "ai_web_development", "spoken_english", "programming_fundamentals",
@@ -157,7 +158,7 @@ export const enquirySchema = z.object({
   message: z.string().trim().max(5000).optional(),
   board: z.string().trim().max(50).optional(),
   stage: z.enum(["secondary", "higher_secondary"]).optional(),
-  group_code: z.enum(["bio", "comp", "arts"]).optional(),
+  group_code: z.enum(GROUP_CODES).optional(),
   grade: z.string().trim().max(50).optional(),
   // Honeypot: hidden field real users never fill in
   website: z.string().max(200).optional(),

@@ -16,14 +16,16 @@ import {
   type GroupCode,
   type Stage,
 } from "@/lib/curriculum";
-import { ArrowRight, Microscope, Monitor, Palette, Clock, Info } from "lucide-react";
+import { ArrowRight, Microscope, Monitor, Palette, Clock, Info, Cog, Briefcase } from "lucide-react";
 
 type Tab = Stage | "programs";
 
-const GROUP_ICON: Record<GroupCode, typeof Microscope> = { bio: Microscope, comp: Monitor, arts: Palette };
+const GROUP_ICON: Record<GroupCode, typeof Microscope> = { bio: Microscope, eng: Cog, comp: Monitor, commerce: Briefcase, arts: Palette };
 const GROUP_ACCENT: Record<GroupCode, string> = {
   bio: "bg-emerald-50 text-emerald-700",
+  eng: "bg-indigo-50 text-indigo-700",
   comp: "bg-sky-50 text-sky-700",
+  commerce: "bg-teal-50 text-teal-700",
   arts: "bg-rose-50 text-rose-700",
 };
 
@@ -140,7 +142,7 @@ export function CoursesExplorer({ query }: { query: CoursesQuery }) {
         <div className="mb-8 sm:mb-10">
           <h1 className="text-3xl sm:text-4xl font-bold text-stone-900 font-display">Our Courses</h1>
           <p className="mt-3 text-base sm:text-lg text-stone-500">
-            Matric, O Level and IGCSE for Grades 9–10; Intermediate and A Level for Grades 11–12. Biology, Computer and Arts groups for every board.
+            Matric, O Level and IGCSE for Grades 9–10; Intermediate and A Level for Grades 11–12. Pre-Medical, Pre-Engineering, Computer, Commerce and Arts groups.
           </p>
         </div>
 

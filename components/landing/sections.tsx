@@ -246,7 +246,7 @@ export function SubjectsSection() {
 const programs = [
   { name: "School Classes", desc: "Foundation courses for Grades 1–8 with structured curriculum", href: "/courses?stage=programs" },
   { name: "Matric (Grades 9–10)", desc: "BSEK, AKU-EB & FBISE: Biology, Computer and Arts groups", href: "/courses?stage=secondary&board=bsek" },
-  { name: "Intermediate (Grades 11–12)", desc: "BIEK, AKU-EB & FBISE: Pre-Medical, Computer Science and Humanities", href: "/courses?stage=higher_secondary&board=biek" },
+  { name: "Intermediate (Grades 11–12)", desc: "BIEK, AKU-EB & FBISE: Pre-Medical, Pre-Engineering, Computer Science, Commerce and Humanities", href: "/courses?stage=higher_secondary&board=biek" },
   { name: "O Level & IGCSE", desc: "Cambridge O Level and Edexcel International GCSE", href: "/courses?stage=secondary&board=cambridge" },
   { name: "A Level", desc: "Cambridge A Level and Edexcel International A Level", href: "/courses?stage=higher_secondary&board=cambridge" },
   { name: "International Curricula", desc: "Curated programs aligned with global standards", href: "/ai-learning-programs" },

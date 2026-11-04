@@ -1,0 +1,127 @@
+/**
+ * Google Business Profile data via the Places API (New), server-side only.
+ *
+ * Uses GMB_API_KEY (a Google Maps Platform key with "Places API (New)"
+ * enabled). Responses are cached by Next.js for 6 hours, which keeps the
+ * site current while staying well inside Google's free monthly credit.
+ * Google's terms require showing reviews with author attribution and a
+ * "Google" credit, which the UI does.
+ */
+
+export const GOOGLE_PLACE_ID = "ChIJ0cltXEQ7sz4RfP0TVsb4el4";
+const REVALIDATE_SECONDS = 6 * 60 * 60;
+
+const FIELD_MASK = [
+  "displayName",
+  "rating",
+  "userRatingCount",
+  "reviews",
+  "regularOpeningHours",
+  "nationalPhoneNumber",
+  "internationalPhoneNumber",
+  "formattedAddress",
+  "googleMapsUri",
+  "websiteUri",
+  "businessStatus",
+].join(",");
+
+export interface GoogleReview {
+  author: string;
+  authorUri: string | null;
+  authorPhotoUri: string | null;
+  rating: number;
+  text: string;
+  relativeTime: string;
+  publishTime: string | null;
+  reviewUri: string | null;
+}
+
+export interface BusinessProfile {
+  name: string;
+  rating: number | null;
+  reviewCount: number;
+  reviews: GoogleReview[];
+  openingHours: string[];
+  openNow: boolean | null;
+  phone: string | null;
+  internationalPhone: string | null;
+  address: string | null;
+  mapsUri: string | null;
+  websiteUri: string | null;
+  businessStatus: string | null;
+}
+
+/* Shapes returned by the Places API (New); only the fields we request. */
+interface PlacesReview {
+  rating?: number;
+  text?: { text?: string };
+  originalText?: { text?: string };
+  relativePublishTimeDescription?: string;
+  publishTime?: string;
+  googleMapsUri?: string;
+  authorAttribution?: { displayName?: string; uri?: string; photoUri?: string };
+}
+interface PlacesResponse {
+  displayName?: { text?: string };
+  rating?: number;
+  userRatingCount?: number;
+  reviews?: PlacesReview[];
+  regularOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] };
+  nationalPhoneNumber?: string;
+  internationalPhoneNumber?: string;
+  formattedAddress?: string;
+  googleMapsUri?: string;
+  websiteUri?: string;
+  businessStatus?: string;
+}
+
+export function reviewsPageUrl(): string {
+  return `https://search.google.com/local/reviews?placeid=${GOOGLE_PLACE_ID}`;
+}
+
+/** Returns null when the key is missing or Google is unreachable; callers fall back. */
+export async function getBusinessProfile(): Promise<BusinessProfile | null> {
+  const key = process.env.GMB_API_KEY;
+  if (!key) return null;
+
+  try {
+    const res = await fetch(`https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}`, {
+      headers: { "X-Goog-Api-Key": key, "X-Goog-FieldMask": FIELD_MASK },
+      next: { revalidate: REVALIDATE_SECONDS },
+    });
+    if (!res.ok) {
+      console.error("[google-business] Places API error", res.status);
+      return null;
+    }
+    const d = (await res.json()) as PlacesResponse;
+
+    return {
+      name: d.displayName?.text ?? "The Classes",
+      rating: typeof d.rating === "number" ? d.rating : null,
+      reviewCount: d.userRatingCount ?? 0,
+      reviews: (d.reviews ?? [])
+        .map((r) => ({
+          author: r.authorAttribution?.displayName ?? "Google user",
+          authorUri: r.authorAttribution?.uri ?? null,
+          authorPhotoUri: r.authorAttribution?.photoUri ?? null,
+          rating: r.rating ?? 0,
+          text: (r.originalText?.text ?? r.text?.text ?? "").trim(),
+          relativeTime: r.relativePublishTimeDescription ?? "",
+          publishTime: r.publishTime ?? null,
+          reviewUri: r.googleMapsUri ?? null,
+        }))
+        .filter((r) => r.text.length > 0),
+      openingHours: d.regularOpeningHours?.weekdayDescriptions ?? [],
+      openNow: d.regularOpeningHours?.openNow ?? null,
+      phone: d.nationalPhoneNumber ?? null,
+      internationalPhone: d.internationalPhoneNumber ?? null,
+      address: d.formattedAddress ?? null,
+      mapsUri: d.googleMapsUri ?? null,
+      websiteUri: d.websiteUri ?? null,
+      businessStatus: d.businessStatus ?? null,
+    };
+  } catch (err) {
+    console.error("[google-business] fetch failed", err);
+    return null;
+  }
+}

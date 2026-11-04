@@ -1,42 +1,34 @@
 import { NextResponse } from "next/server";
+import { getBusinessProfile } from "@/lib/google-business";
 
-const PLACE_ID = "ChIJ0cltXEQ7sz4RfP0TVsb4el4";
-
+/** Public Google Business Profile summary (rating, reviews, hours, contact). */
 export async function GET() {
-  const apiKey = process.env.GMB_API_KEY;
+  const profile = await getBusinessProfile();
 
-  if (!apiKey) {
+  if (!profile) {
     return NextResponse.json(
-      { error: "GMB API key not configured", reviews: [], rating: 0, totalReviews: 0 },
+      { error: "Google Business Profile unavailable", reviews: [], rating: 0, totalReviews: 0 },
       { status: 503 }
     );
   }
 
-  try {
-    const res = await fetch(
-      `https://places.googleapis.com/v1/places/${PLACE_ID}?fields=displayName,rating,userRatingCount&key=${apiKey}`,
-      {
-        headers: { "X-Goog-Api-Key": apiKey },
-        next: { revalidate: 3600 },
-      }
-    );
-
-    const data = await res.json();
-
-    if (data.error) {
-      return NextResponse.json(
-        { error: data.error.message, reviews: [], rating: 0, totalReviews: 0 },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json({
-      name: data.displayName?.text ?? "The Classes",
-      rating: data.rating ?? 0,
-      totalReviews: data.userRatingCount ?? 0,
-      reviews: [],
-    });
-  } catch {
-    return NextResponse.json({ error: "Failed to fetch reviews", reviews: [], rating: 0, totalReviews: 0 }, { status: 500 });
-  }
+  return NextResponse.json(
+    {
+      // Kept for existing callers
+      name: profile.name,
+      rating: profile.rating ?? 0,
+      totalReviews: profile.reviewCount,
+      reviews: profile.reviews,
+      // Additional profile details
+      openingHours: profile.openingHours,
+      openNow: profile.openNow,
+      phone: profile.phone,
+      internationalPhone: profile.internationalPhone,
+      address: profile.address,
+      mapsUri: profile.mapsUri,
+      websiteUri: profile.websiteUri,
+      businessStatus: profile.businessStatus,
+    },
+    { headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=21600" } }
+  );
 }

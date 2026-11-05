@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
+import { FOUNDED_YEAR } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Target, Heart, Lightbulb, Users } from "lucide-react";
 
@@ -25,7 +26,7 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:px-8">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-4 py-1.5 text-sm font-medium text-brand-800 mb-6">
-              Est. 2017 &middot; Karachi, Pakistan
+              Est. {FOUNDED_YEAR} &middot; Karachi, Pakistan
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-stone-900 font-display leading-tight">
               About <span className="gradient-text">The Classes</span>

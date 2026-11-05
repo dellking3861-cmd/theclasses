@@ -86,7 +86,7 @@ export default function FounderPage() {
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-stone-600">
               A mechanical engineer from NED University who has taught Mathematics and Physics since 2017. Sir Wasi
-              founded The Classes in Malir 15, Karachi, and still teaches its Mathematics and Physics batches. He has
+              founded The Classes in Malir 15, Karachi, in 2019, and still teaches its Mathematics and Physics batches. He has
               prepared students for BSEK, BIEK, AKU-EB, FBISE and Cambridge exams, and for university entry tests.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">

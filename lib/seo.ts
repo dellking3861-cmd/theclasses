@@ -1,4 +1,4 @@
-import { CONTACT, SERVICE_AREAS, SITE_URL } from "@/lib/constants";
+import { CONTACT, FOUNDED_YEAR, SERVICE_AREAS, SITE_URL } from "@/lib/constants";
 
 /** Absolute URL on this site. */
 export const absoluteUrl = (path = "/") => `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
@@ -28,6 +28,7 @@ export function organizationJsonLd() {
     "@id": ORG_ID,
     name: "The Classes",
     alternateName: "The Classes Education System",
+    foundingDate: String(FOUNDED_YEAR),
     description:
       "Coaching centre in Malir 15, Karachi for Matric, Intermediate, O Level, IGCSE and A Level (BSEK, BIEK, AKU-EB, FBISE, Cambridge, Edexcel).",
     url: absoluteUrl("/home"),

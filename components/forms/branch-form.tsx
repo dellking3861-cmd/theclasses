@@ -79,11 +79,11 @@ export function BranchForm({ open, onClose, onSuccess, initialData }: BranchForm
     <Dialog open={open} onOpenChange={onClose} title={isEditing ? "Edit Branch" : "Add Branch"} description={isEditing ? "Update branch information" : "Add a new branch to the system"}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent className="space-y-4">
-          <Input label="Branch Name" placeholder="The Classes - Gulshan Campus" error={errors.name?.message} {...register("name")} />
-          <Input label="Address" placeholder="Plot 45, Block 7, Gulshan-e-Iqbal" error={errors.address?.message} {...register("address")} />
+          <Input label="Branch Name" placeholder="The Classes - Malir Campus" error={errors.name?.message} {...register("name")} />
+          <Input label="Address" placeholder="R-156 Salman Garden, Malir 15" error={errors.address?.message} {...register("address")} />
           <Input label="City" placeholder="Karachi" error={errors.city?.message} {...register("city")} />
-          <Input label="Phone" placeholder="+92-21-34876543" error={errors.phone?.message} {...register("phone")} />
-          <Input label="Email" type="email" placeholder="gulshan@theclasses.pk" error={errors.email?.message} {...register("email")} />
+          <Input label="Phone" placeholder="+92 3XX XXXXXXX" error={errors.phone?.message} {...register("phone")} />
+          <Input label="Email" type="email" placeholder="campus@example.com" error={errors.email?.message} {...register("email")} />
           <div className="flex items-center gap-2">
             <input type="checkbox" id="is_active" {...register("is_active")} className="h-4 w-4 rounded border-slate-300 text-indigo-600" />
             <label htmlFor="is_active" className="text-sm text-slate-700">Active</label>

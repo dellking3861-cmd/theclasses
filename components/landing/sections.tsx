@@ -249,6 +249,35 @@ export function TeachingSection() {
   );
 }
 
+// ─── Photos (from Google Business Profile) ───────────────────────────────
+
+export function PhotosSection({ profile }: { profile: BusinessProfile | null }) {
+  const photos = profile?.photos.slice(0, 8) ?? [];
+  if (photos.length < 3) return null;
+  return (
+    <section className="bg-white py-20 lg:py-24">
+      <div className={container}>
+        <SectionHeading eyebrow="Our campus" title="Inside The Classes" intro="Photos from our Google listing in Malir 15, Karachi." />
+        <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          {photos.map((p, i) => (
+            <li key={p.name} className={`overflow-hidden rounded-2xl bg-stone-100 ${i === 0 ? "col-span-2 row-span-2" : ""}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={p.src}
+                alt={`The Classes campus photo ${i + 1}`}
+                loading="lazy"
+                decoding="async"
+                className="aspect-[4/3] h-full w-full object-cover"
+              />
+            </li>
+          ))}
+        </ul>
+        <p className="mt-4 text-xs text-stone-500">Photos via Google</p>
+      </div>
+    </section>
+  );
+}
+
 // ─── Reviews (live from Google Business Profile) ─────────────────────
 
 function Stars({ rating, size = "h-4 w-4" }: { rating: number; size?: string }) {
@@ -297,7 +326,11 @@ export function ReviewsSection({ profile }: { profile: BusinessProfile | null })
               <li key={i} className="flex flex-col rounded-2xl border border-stone-200 p-6">
                 <Stars rating={r.rating} />
                 <blockquote className="mt-4 line-clamp-6 flex-1 leading-relaxed text-stone-700">&ldquo;{r.text}&rdquo;</blockquote>
-                <p className="mt-5 text-sm text-stone-500">
+                <p className="mt-5 flex items-center gap-2 text-sm text-stone-500">
+                  {r.authorPhotoUri && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={r.authorPhotoUri} alt="" width={28} height={28} loading="lazy" referrerPolicy="no-referrer" className="h-7 w-7 rounded-full" />
+                  )}
                   {r.authorUri ? (
                     <a href={r.authorUri} target="_blank" rel="noopener noreferrer" className="font-medium text-stone-800 hover:underline">{r.author}</a>
                   ) : (

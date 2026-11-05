@@ -4,6 +4,7 @@ import {
   PathwaysSection,
   TeachingSection,
   ReviewsSection,
+  PhotosSection,
   AdmissionSection,
 } from "@/components/landing/sections";
 import { getBusinessProfile } from "@/lib/google-business";
@@ -19,6 +20,7 @@ export default async function HomePage() {
       <BoardsStrip />
       <PathwaysSection />
       <TeachingSection />
+      <PhotosSection profile={profile} />
       <ReviewsSection profile={profile} />
       <AdmissionSection />
     </>

@@ -125,9 +125,11 @@ async function getPlacesProfile(): Promise<BusinessProfile | null> {
   if (!key) return null;
 
   try {
-    // languageCode/regionCode also make the URL (the cache key) change with the field mask
-    const res = await fetch(`https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}?languageCode=en&regionCode=PK`, {
-      headers: { "X-Goog-Api-Key": key, "X-Goog-FieldMask": FIELD_MASK },
+    // The field mask goes in the URL (not a header) so Next's fetch cache,
+    // which is keyed by URL, can never serve a response for a different mask.
+    const query = new URLSearchParams({ fields: FIELD_MASK, languageCode: "en", regionCode: "PK" });
+    const res = await fetch(`https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}?${query}`, {
+      headers: { "X-Goog-Api-Key": key },
       next: { revalidate: REVALIDATE_SECONDS },
     });
     if (!res.ok) {

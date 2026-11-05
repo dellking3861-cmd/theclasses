@@ -119,7 +119,8 @@ export async function getBusinessProfile(): Promise<BusinessProfile | null> {
   if (!key) return null;
 
   try {
-    const res = await fetch(`https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}`, {
+    // languageCode/regionCode also make the URL (the cache key) change with the field mask
+    const res = await fetch(`https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}?languageCode=en&regionCode=PK&v=2`, {
       headers: { "X-Goog-Api-Key": key, "X-Goog-FieldMask": FIELD_MASK },
       next: { revalidate: REVALIDATE_SECONDS },
     });

@@ -12,6 +12,7 @@ const adminNav = [
   { href: "/dashboard/admin/attendance", label: "Attendance", icon: "ClipboardCheck" },
   { href: "/dashboard/admin/payments", label: "Payments", icon: "CreditCard" },
   { href: "/dashboard/admin/analytics", label: "Analytics", icon: "BarChart3" },
+  { href: "/dashboard/admin/resources", label: "Study Materials", icon: "Upload" },
   { href: "/dashboard/admin/exams", label: "Exams", icon: "FileText" },
   { href: "/dashboard/admin/assignments", label: "Assignments", icon: "FileText" },
   { href: "/dashboard/admin/announcements", label: "Announcements", icon: "Megaphone" },

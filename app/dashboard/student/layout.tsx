@@ -6,7 +6,7 @@ const studentNav = [
   { href: "/dashboard/student", label: "Overview", icon: "LayoutDashboard" },
   { href: "/dashboard/student/courses", label: "My Courses", icon: "BookOpen" },
   { href: "/dashboard/student/lectures", label: "Lectures", icon: "Video" },
-  { href: "/dashboard/student/notes", label: "Notes", icon: "Download" },
+  { href: "/dashboard/student/notes", label: "Notes & Past Papers", icon: "Download" },
   { href: "/dashboard/student/assignments", label: "Assignments", icon: "PenTool" },
   { href: "/dashboard/student/attendance", label: "Attendance", icon: "ClipboardCheck" },
   { href: "/dashboard/student/exams", label: "Exams", icon: "FileText" },

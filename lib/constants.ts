@@ -2,6 +2,10 @@ export const APP_NAME = "The Classes";
 export const APP_DESCRIPTION =
   "Coaching centre in Malir 15, Karachi for Matric, Intermediate, O Level, IGCSE and A Level. BSEK, BIEK, AKU-EB, FBISE, Cambridge and Edexcel, with small batches, regular tests and recorded lectures.";
 
+/** The Classes was founded in 2019; Sir Wasi has taught since 2017. */
+export const FOUNDED_YEAR = 2019;
+export const TEACHING_SINCE = 2017;
+
 /** Canonical site address used for metadata, sitemap and structured data. */
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://theclasses.vercel.app").replace(/\/$/, "");
 

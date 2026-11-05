@@ -17,7 +17,7 @@ import {
   Clock,
   Navigation,
 } from "lucide-react";
-import { CONTACT, SERVICE_AREAS } from "@/lib/constants";
+import { CONTACT, FOUNDED_YEAR, SERVICE_AREAS, TEACHING_SINCE } from "@/lib/constants";
 import { JsonLd } from "@/components/seo/json-ld";
 import { compactHours, type BusinessProfile } from "@/lib/google-business";
 import { BOARDS, getOffering } from "@/lib/curriculum";
@@ -41,7 +41,7 @@ function SectionHeading({ eyebrow, title, intro, center = false }: { eyebrow: st
 
 export function HeroSection({ profile }: { profile: BusinessProfile | null }) {
   const heroFacts: { value: string; label: string; href?: string }[] = [
-    { value: "7+", label: "years of teaching" },
+    { value: `${new Date().getFullYear() - TEACHING_SINCE}+`, label: "years of teaching" },
     { value: "500+", label: "students taught" },
   ];
   if (profile?.rating) {
@@ -357,7 +357,7 @@ const faqs = [
   },
   {
     q: "Who teaches at The Classes?",
-    a: "The Classes was founded by Sir Wasi, a mechanical engineer from NED University who has taught Mathematics and Physics since 2017. He leads the Mathematics and Physics batches himself.",
+    a: `The Classes was founded in ${FOUNDED_YEAR} by Sir Wasi, a mechanical engineer from NED University who has taught Mathematics and Physics since ${TEACHING_SINCE}. He leads the Mathematics and Physics batches himself.`,
   },
   {
     q: "How do I get admission?",

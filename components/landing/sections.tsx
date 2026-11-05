@@ -1,451 +1,208 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
-  BookOpen,
-  Brain,
-  Users,
-  BarChart3,
-  Video,
-  Shield,
   ArrowRight,
-  GraduationCap,
-  Globe,
-  Award,
-  Sparkles,
-  FlaskConical,
-  Atom,
-  Dna,
+  BarChart3,
   CheckCircle2,
-  Play,
+  ClipboardCheck,
+  GraduationCap,
+  MapPin,
+  MessageSquareText,
+  Phone,
+  PlayCircle,
+  Sparkles,
+  Star,
+  Users,
+  UserRoundCheck,
+  CalendarCheck,
 } from "lucide-react";
+import { CONTACT } from "@/lib/constants";
+import type { BusinessProfile } from "@/lib/google-business";
+import { BOARDS, getOffering } from "@/lib/curriculum";
+import { CourseFinder } from "@/components/landing/course-finder";
+import { WhatsAppIcon } from "@/components/layout/whatsapp-icon";
 
-// ─── Hero Section ───────────────────────────────────────────────────────────
+const container = "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8";
 
-const heroCards = [
-  { icon: GraduationCap, title: "Live Classes", desc: "Interactive sessions daily" },
-  { icon: Brain, title: "AI Tutor", desc: "24/7 personalized help" },
-  { icon: Globe, title: "Global Standards", desc: "Cambridge & Board aligned" },
-];
+function SectionHeading({ eyebrow, title, intro, center = false }: { eyebrow: string; title: string; intro?: string; center?: boolean }) {
+  return (
+    <div className={center ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
+      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-800">{eyebrow}</p>
+      <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">{title}</h2>
+      {intro && <p className="mt-4 text-lg leading-relaxed text-stone-600">{intro}</p>}
+    </div>
+  );
+}
 
-const heroStats = [
-  { value: "7+", label: "Years of Teaching" },
-  { value: "500+", label: "Students Taught" },
-  { value: "4.7★", label: "Google Rating" },
-  { value: "7", label: "Subject Areas" },
-];
+// ─── Hero ────────────────────────────────────────────────────────────────
 
-export function HeroSection() {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
-    setTilt({ x, y });
+export function HeroSection({ profile }: { profile: BusinessProfile | null }) {
+  const heroFacts: { value: string; label: string; href?: string }[] = [
+    { value: "7+", label: "years of teaching" },
+    { value: "500+", label: "students taught" },
+  ];
+  if (profile?.rating) {
+    heroFacts.push({
+      value: `${profile.rating.toFixed(1)}★`,
+      label: `${profile.reviewCount} Google reviews`,
+      href: profile.mapsUri ?? CONTACT.reviewsHref,
+    });
   }
-
   return (
-    <section className="relative overflow-hidden bg-stone-50">
-      {/* Decorative floating icons */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[FlaskConical, Atom, Dna, GraduationCap].map((Icon, i) => (
-          <div
-            key={i}
-            className="absolute text-amber-300 opacity-[0.08]"
-            style={{
-              top: `${15 + i * 20}%`,
-              right: `${5 + i * 8}%`,
-              fontSize: `${48 + i * 12}px`,
-              animation: `float ${3 + i * 0.5}s ease-in-out infinite`,
-              animationDelay: `${i * 0.3}s`,
-            }}
-          >
-            <Icon />
-          </div>
-        ))}
-      </div>
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left copy */}
-          <div className="animate-fade-in">
-            <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-1.5 text-sm font-medium text-amber-700 mb-6">
-              <Sparkles className="h-4 w-4" />
-              Pakistan&apos;s #1 Hybrid Education Platform
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-stone-900 leading-[1.1] tracking-tight font-display">
-              The Future of
-              <br />
-              <span className="gradient-text animate-shimmer">Learning Starts</span>
-              <br />
-              Here
-            </h1>
-            <p className="mt-6 text-lg text-stone-500 leading-relaxed max-w-xl">
-              Experience world-class education combining physical coaching centers,
-              online learning, and AI-powered tools. From Matric and Intermediate to O, IGCSE and A Levels, we prepare
-              you for success.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Link href="/admissions">
-                <Button size="lg" className="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 text-white btn-hover font-display">
-                  Start Your Journey
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              </Link>
-              <Link href="/courses">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto border-stone-300 text-stone-700 hover:bg-stone-100 hover:border-stone-400 font-display">
-                  Explore Subjects
-                </Button>
-              </Link>
-            </div>
-            <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6">
-              {heroStats.map((stat) => (
-                <div key={stat.label}>
-                  <p className="text-2xl font-bold text-stone-900 font-display">{stat.value}</p>
-                  <p className="text-sm text-stone-500 mt-1">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right interactive card */}
-          <div
-            className="relative hidden lg:block"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={() => setTilt({ x: 0, y: 0 })}
-          >
-            <div
-              className="relative rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 p-8 shadow-2xl shadow-amber-400/20"
-              style={{
-                transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-                transition: "transform 0.1s ease-out",
-              }}
-            >
-              <div className="space-y-4">
-                {heroCards.map((card, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-3 bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20"
-                  >
-                    <div className="rounded-lg bg-white/20 p-2.5">
-                      <card.icon className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white font-semibold">{card.title}</p>
-                      <p className="text-amber-100 text-sm">{card.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="absolute -inset-4 bg-amber-300/20 rounded-3xl blur-2xl -z-10" />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Trust / Teaching Section ──────────────────────────────────────────────
-
-const trustFeatures = [
-  { icon: Shield, title: "Verified Faculty", desc: "Experienced teachers for BSEK, BIEK, AKU-EB, FBISE, Cambridge and Edexcel." },
-  { icon: Brain, title: "AI-Powered Tools", desc: "Personal AI tutor, smart quiz generation, and intelligent homework checking." },
-  { icon: Video, title: "Recorded Lectures", desc: "Access high-quality recorded lectures anytime, anywhere. Never miss a class." },
-  { icon: BarChart3, title: "Performance Tracking", desc: "Detailed analytics, attendance reports, and exam performance insights." },
-  { icon: Users, title: "Parent Dashboard", desc: "Real-time attendance, grades, and progress tracking for parents." },
-  { icon: BookOpen, title: "Hybrid Learning", desc: "Seamlessly blend physical classroom sessions with online resources." },
-];
-
-export function TrustSection() {
-  return (
-    <section className="py-24 bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 font-display">
-            Trusted by Students & Parents Across Karachi
-          </h2>
-          <p className="mt-4 text-lg text-stone-500">
-            A comprehensive platform designed for modern education in Pakistan.
+    <section className="relative overflow-hidden bg-[#fbfaf6]">
+      <div className="pointer-events-none absolute -right-40 -top-40 h-[480px] w-[480px] rounded-full bg-brand-200/40 blur-3xl" aria-hidden="true" />
+      <div className={`${container} relative grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:py-24`}>
+        <div>
+          <p className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-3.5 py-1.5 text-sm font-medium text-stone-700">
+            <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+            Admissions open · {CONTACT.addressShort}
           </p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {trustFeatures.map((feature, i) => (
-            <div
-              key={feature.title}
-              className="group rounded-2xl bg-stone-50 p-8 border border-stone-100 hover:border-amber-200 hover:bg-amber-50/30 transition-all duration-300"
-            >
-              <div className="inline-flex items-center justify-center rounded-xl bg-amber-100 p-3 mb-5 group-hover:bg-amber-200 transition-colors">
-                <feature.icon className="h-6 w-6 text-amber-700" />
-              </div>
-              <h3 className="text-lg font-semibold text-stone-900 mb-2 font-display">{feature.title}</h3>
-              <p className="text-stone-500 leading-relaxed text-sm">{(feature as { desc: string; description?: string }).description ?? (feature as { desc: string }).desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Subjects Grid ─────────────────────────────────────────────────────────
-
-const subjects = [
-  { name: "Mathematics", icon: "∑", href: "/courses?stage=secondary&subject=mathematics" },
-  { name: "Physics", icon: "⚛", href: "/courses?stage=secondary&subject=physics" },
-  { name: "Chemistry", icon: "⬡", href: "/courses?stage=secondary&subject=chemistry" },
-  { name: "Biology", icon: "❋", href: "/courses?stage=higher_secondary&subject=biology" },
-  { name: "Computer Science", icon: "</>", href: "/courses?stage=higher_secondary&subject=computer_science" },
-  { name: "Exam Prep", icon: "✦", href: "/courses" },
-];
-
-export function SubjectsSection() {
-  return (
-    <section className="py-24 bg-stone-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <Badge variant="info" className="mb-4 text-xs uppercase tracking-wider">Our Subjects</Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 font-display">
-            Subjects We Cover
-          </h2>
-          <p className="mt-4 text-lg text-stone-500">
-            Comprehensive programs across all major boards and exam systems.
+          <h1 className="mt-6 font-display text-4xl font-bold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-[3.6rem]">
+            Board exam coaching that builds{" "}
+            <span className="relative whitespace-nowrap">
+              <span className="relative z-10">real understanding</span>
+              <span className="absolute inset-x-0 bottom-1 -z-0 h-3 rounded bg-brand-300/70 sm:h-4" aria-hidden="true" />
+            </span>
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-stone-600">
+            Matric, Intermediate, O Level, IGCSE and A Level for BSEK, BIEK, AKU-EB, FBISE, Cambridge and Edexcel.
+            Small batches and regular tests on campus, with recorded lectures and progress reports online.
           </p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {subjects.map((subject, i) => (
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              key={subject.name}
-              href={subject.href}
-              className="group relative overflow-hidden rounded-2xl bg-white p-8 border border-stone-100 hover:border-amber-300 hover:shadow-lg hover:shadow-amber-100/50 transition-all duration-300"
+              href="/admissions"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 font-semibold text-ink shadow-sm transition-colors hover:bg-brand-400"
             >
-              <div className="flex items-start justify-between mb-4">
-                <span className="text-4xl font-display text-amber-500 group-hover:text-amber-600 transition-colors">
-                  {subject.icon}
-                </span>
-                <ArrowRight className="h-5 w-5 text-stone-300 group-hover:text-amber-500 group-hover:translate-x-1 transition-all" />
-              </div>
-              <h3 className="text-lg font-semibold text-stone-900 font-display group-hover:text-amber-700 transition-colors">
-                {subject.name}
-              </h3>
-              <p className="text-sm text-stone-400 mt-1">All boards • Available now</p>
+              Apply for admission <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Programs Grid ─────────────────────────────────────────────────────────
-
-const programs = [
-  { name: "School Classes", desc: "Foundation courses for Grades 1–8 with structured curriculum", href: "/courses?stage=programs" },
-  { name: "Matric (Grades 9–10)", desc: "BSEK, AKU-EB & FBISE: Biology, Computer and Arts groups", href: "/courses?stage=secondary&board=bsek" },
-  { name: "Intermediate (Grades 11–12)", desc: "BIEK, AKU-EB & FBISE: Pre-Medical, Pre-Engineering, Computer Science, Commerce and Humanities", href: "/courses?stage=higher_secondary&board=biek" },
-  { name: "O Level & IGCSE", desc: "Cambridge O Level and Edexcel International GCSE", href: "/courses?stage=secondary&board=cambridge" },
-  { name: "A Level", desc: "Cambridge A Level and Edexcel International A Level", href: "/courses?stage=higher_secondary&board=cambridge" },
-  { name: "International Curricula", desc: "Curated programs aligned with global standards", href: "/ai-learning-programs" },
-];
-
-export function ProgramsSection() {
-  return (
-    <section className="py-24 bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <Badge variant="info" className="mb-4 text-xs uppercase tracking-wider">Programs</Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 font-display">
-            Programs for Every Stage
-          </h2>
-          <p className="mt-4 text-lg text-stone-500">
-            From primary foundation to international certification.
-          </p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {programs.map((program, i) => (
-            <Link
-              key={program.name}
-              href={program.href}
-              className="group rounded-2xl bg-stone-50 p-8 border border-stone-100 hover:border-amber-200 hover:bg-amber-50/40 transition-all duration-300"
+            <a
+              href={CONTACT.whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white px-6 font-semibold text-stone-800 transition-colors hover:bg-stone-50"
             >
-              <div className="flex items-start justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold text-stone-900 font-display group-hover:text-amber-700 transition-colors">
-                    {program.name}
-                  </h3>
-                  <p className="text-sm text-stone-500 mt-2 leading-relaxed">{program.desc}</p>
-                </div>
-                <ArrowRight className="h-5 w-5 text-stone-300 group-hover:text-amber-500 group-hover:translate-x-1 transition-all shrink-0 mt-1" />
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Why Choose Us ─────────────────────────────────────────────────────────
-
-const reasons = [
-  { title: "Proven Track Record", desc: "7+ years of teaching experience with consistent results across all boards." },
-  { title: "Hybrid Flexibility", desc: "Attend physically at our Malir campus or access resources online anytime." },
-  { title: "AI-Enhanced Learning", desc: "Modern AI tools for personalized study plans and instant doubt clearing." },
-  { title: "Small Batch Sizes", desc: "Focused attention with limited seats per class for better outcomes." },
-];
-
-export function WhyChooseUsSection() {
-  return (
-    <section className="py-24 bg-stone-900 text-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <Badge className="bg-amber-500/20 text-amber-300 border-amber-500/30 mb-6 text-xs uppercase tracking-wider">Why Choose Us</Badge>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display leading-tight">
-              Why Students & Parents
-              <br />
-              <span className="text-amber-400">Trust The Classes</span>
-            </h2>
-            <p className="mt-6 text-lg text-stone-400 leading-relaxed">
-              We combine traditional coaching excellence with modern technology
-              to deliver an unmatched educational experience.
-            </p>
-            <Link href="/about" className="inline-block mt-8">
-              <Button variant="outline" className="border-stone-600 text-white hover:bg-stone-800 hover:border-stone-500 font-display">
-                Learn More About Us
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
-            </Link>
+              <WhatsAppIcon className="h-5 w-5 text-[#1fa855]" /> Ask on WhatsApp
+            </a>
           </div>
-          <div className="grid sm:grid-cols-2 gap-6">
-            {reasons.map((reason) => (
-              <div key={reason.title} className="rounded-xl bg-stone-800/60 p-6 border border-stone-700/50">
-                <CheckCircle2 className="h-5 w-5 text-amber-400 mb-3" />
-                <h3 className="font-semibold text-white font-display mb-1">{reason.title}</h3>
-                <p className="text-sm text-stone-400 leading-relaxed">{reason.desc}</p>
+          <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-stone-200 pt-6">
+            {heroFacts.map((f) => (
+              <div key={f.label}>
+                <dt className="sr-only">{f.label}</dt>
+                <dd className="font-display text-2xl font-bold text-ink sm:text-3xl">
+                  {f.href ? (
+                    <a href={f.href} target="_blank" rel="noopener noreferrer" className="hover:underline">{f.value}</a>
+                  ) : f.value}
+                </dd>
+                <dd className="mt-1 text-sm text-stone-500">{f.label}</dd>
               </div>
             ))}
-          </div>
+          </dl>
         </div>
+        <CourseFinder />
       </div>
     </section>
   );
 }
 
-// ─── AI / Modern Learning Section ──────────────────────────────────────────
+// ─── Boards strip ────────────────────────────────────────────────────────
 
-const aiFeatures = [
-  { icon: Brain, title: "AI-Powered Tutor", desc: "Get instant help with homework, concepts, and practice problems." },
-  { icon: BarChart3, title: "Smart Analytics", desc: "Track progress, identify weak areas, and improve with data-driven insights." },
-  { icon: Video, title: "Recorded Sessions", desc: "Missed a class? Catch up anytime with our complete lecture archive." },
-  { icon: Globe, title: "Global Resources", desc: "Access curated materials from top institutions worldwide." },
+export function BoardsStrip() {
+  return (
+    <section aria-label="Boards we teach" className="border-y border-stone-200 bg-white">
+      <div className={`${container} flex flex-col items-center gap-4 py-6 sm:flex-row sm:justify-between`}>
+        <p className="text-sm font-medium text-stone-500">Exam preparation for</p>
+        <ul className="flex flex-wrap justify-center gap-x-8 gap-y-2">
+          {BOARDS.map((b) => (
+            <li key={b.code} className="font-display text-lg font-semibold tracking-tight text-stone-700" title={b.name}>
+              {b.shortName}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+// ─── Pathways ────────────────────────────────────────────────────────────
+
+const pathways = [
+  {
+    stage: "secondary" as const,
+    title: "Grades 9–10",
+    subtitle: "Matric · O Level · IGCSE",
+    boardCodes: ["bsek", "aku_eb", "fbise", "cambridge", "edexcel"],
+    exampleBoard: "bsek",
+  },
+  {
+    stage: "higher_secondary" as const,
+    title: "Grades 11–12",
+    subtitle: "Intermediate · A Level",
+    boardCodes: ["biek", "aku_eb", "fbise", "cambridge", "edexcel"],
+    exampleBoard: "biek",
+  },
 ];
 
-export function AISection() {
+const programs = [
+  { title: "School classes", text: "Grades 1–8 across all core subjects.", href: "/courses?stage=programs" },
+  { title: "Entry test preparation", text: "Medical and engineering university entry tests.", href: "/courses?stage=programs" },
+  { title: "Skills programs", text: "Web development, programming and spoken English.", href: "/ai-learning-programs" },
+];
+
+export function PathwaysSection() {
   return (
-    <section className="py-24 bg-stone-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <Badge variant="info" className="mb-4 text-xs uppercase tracking-wider">Modern Learning</Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 font-display">
-            AI-Enhanced Education
-          </h2>
-          <p className="mt-4 text-lg text-stone-500">
-            Leveraging technology to make learning more personal, effective, and accessible.
-          </p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {aiFeatures.map((feature) => (
-            <div key={feature.title} className="rounded-2xl bg-white p-8 border border-stone-100 hover:border-amber-200 hover:shadow-md hover:shadow-amber-50 transition-all duration-300 text-center">
-              <div className="inline-flex items-center justify-center rounded-xl bg-amber-100 p-3 mb-5">
-                <feature.icon className="h-6 w-6 text-amber-700" />
-              </div>
-              <h3 className="text-base font-semibold text-stone-900 font-display mb-2">{feature.title}</h3>
-              <p className="text-sm text-stone-500 leading-relaxed">{feature.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Results Section (placeholder per reference) ───────────────────────────
-
-export function ResultsSection() {
-  return (
-    <section className="py-24 bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-        <Badge variant="info" className="mb-4 text-xs uppercase tracking-wider">Results</Badge>
-        <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 font-display">
-          Our Students&apos; Success Stories
-        </h2>
-        <p className="mt-4 text-lg text-stone-500 max-w-2xl mx-auto">
-          Consistent results across BSEK, BIEK, AKU-EB, FBISE, Cambridge and Edexcel examinations.
-        </p>
-        <div className="mt-12 grid sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
-          {[
-            { value: "95%+", label: "Pass Rate" },
-            { value: "A* Grade", label: "Top Scorer" },
-            { value: "100+", label: "Distinctions" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="text-4xl font-bold text-amber-600 font-display">{stat.value}</p>
-              <p className="text-sm text-stone-500 mt-2 uppercase tracking-wider">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Testimonials Section ──────────────────────────────────────────────────
-
-export function TestimonialsSection() {
-  const reviews = [
-    { rating: 5, text: "Very good coaching institute. Sir Wasi explains concepts clearly and students get good results.", date: "2025" },
-    { rating: 5, text: "My son's grades improved significantly after joining. Highly recommended for O Level students.", date: "2025" },
-    { rating: 4, text: "Best coaching for mathematics in the area. Regular tests and doubt clearing sessions.", date: "2024" },
-  ];
-
-  return (
-    <section className="py-24 bg-stone-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <Badge variant="info" className="mb-4 text-xs uppercase tracking-wider">Testimonials</Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 font-display">
-            What Our Community Says
-          </h2>
-          <p className="mt-4 text-lg text-stone-500">
-            Google reviews from real students and parents.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {reviews.map((review, i) => (
-            <div key={i} className="rounded-2xl bg-white p-8 border border-stone-100 hover:border-amber-200 transition-colors">
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: 5 }).map((_, j) => (
-                  <Award
-                    key={j}
-                    className={`h-4 w-4 ${j < review.rating ? "text-amber-400 fill-amber-400" : "text-stone-200"}`}
-                  />
-                ))}
-              </div>
-              <p className="text-stone-600 leading-relaxed text-sm mb-6">&ldquo;{review.text}&rdquo;</p>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-xs">G</div>
-                <div>
-                  <p className="font-semibold text-stone-900 text-sm">Google Review</p>
-                  <p className="text-xs text-stone-400">{review.date}</p>
+    <section className="bg-white py-20 lg:py-24">
+      <div className={container}>
+        <SectionHeading
+          eyebrow="Courses"
+          title="A clear path for every grade and board"
+          intro="Choose your level and board to see the exact subjects for your group."
+        />
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          {pathways.map((p) => {
+            const groups = getOffering(p.exampleBoard, p.stage)?.groups ?? [];
+            return (
+              <Link
+                key={p.stage}
+                href={`/courses?stage=${p.stage}&board=${p.exampleBoard}`}
+                className="group flex flex-col rounded-2xl border border-stone-200 bg-[#fbfaf6] p-6 transition-colors hover:border-brand-400 sm:p-8"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="font-display text-2xl font-bold text-ink">{p.title}</h3>
+                    <p className="mt-1 text-stone-600">{p.subtitle}</p>
+                  </div>
+                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink ring-1 ring-stone-200 transition-colors group-hover:bg-brand-500 group-hover:ring-brand-500">
+                    <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                  </span>
                 </div>
-              </div>
-            </div>
+                <div className="mt-6">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">Groups</p>
+                  <ul className="mt-2 flex flex-wrap gap-2">
+                    {groups.map((g) => (
+                      <li key={g.code} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-sm text-stone-700">
+                        {g.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-5">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">Boards</p>
+                  <p className="mt-2 text-sm text-stone-700">
+                    {p.boardCodes.map((c) => BOARDS.find((b) => b.code === c)?.shortName).join(" · ")}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          {programs.map((p) => (
+            <Link key={p.title} href={p.href} className="group rounded-2xl border border-stone-200 p-5 transition-colors hover:border-brand-400">
+              <h3 className="flex items-center justify-between font-display text-lg font-semibold text-ink">
+                {p.title}
+                <ArrowRight className="h-4 w-4 text-stone-400 transition-transform group-hover:translate-x-0.5 group-hover:text-ink" aria-hidden="true" />
+              </h3>
+              <p className="mt-1 text-sm text-stone-600">{p.text}</p>
+            </Link>
           ))}
         </div>
       </div>
@@ -453,41 +210,200 @@ export function TestimonialsSection() {
   );
 }
 
-// ─── Admissions CTA ────────────────────────────────────────────────────────
+// ─── How we teach ────────────────────────────────────────────────────────
 
-export function CTASection() {
+const teaching = [
+  { icon: Users, title: "Small batches", text: "Limited seats per class, so every student gets attention and can ask questions." },
+  { icon: UserRoundCheck, title: "Board-specialist teachers", text: "Teachers who know the BSEK, BIEK, AKU-EB, FBISE, Cambridge and Edexcel papers." },
+  { icon: ClipboardCheck, title: "Regular tests", text: "Frequent tests in exam format, with feedback and doubt-clearing sessions." },
+  { icon: PlayCircle, title: "Recorded lectures", text: "Missed a class or need a revision? Watch the lecture again online." },
+  { icon: BarChart3, title: "Progress for parents", text: "Parents can follow attendance, test results and fees in their own portal." },
+  { icon: Sparkles, title: "AI study tools", text: "Practice questions and study plans powered by AI.", badge: "Coming soon" },
+];
+
+export function TeachingSection() {
   return (
-    <section className="py-24 bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-stone-900 px-8 py-16 sm:px-16 sm:py-20 text-center">
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-600/10 to-transparent" />
-          <div className="relative">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white font-display">
-              Ready to Begin Your Journey?
-            </h2>
-            <p className="mt-4 text-lg text-stone-400 max-w-2xl mx-auto">
-              Admissions are now open for the new session. Secure your spot today.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/admissions">
-                <Button size="lg" className="bg-amber-600 hover:bg-amber-700 text-white btn-hover font-display">
-                  Apply for Admission
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button size="lg" variant="outline" className="border-stone-600 text-white hover:bg-stone-800 hover:border-stone-500 font-display">
-                  Contact Us
-                </Button>
-              </Link>
-            </div>
-          </div>
+    <section className="bg-[#fbfaf6] py-20 lg:py-24">
+      <div className={container}>
+        <SectionHeading
+          eyebrow="How we teach"
+          title="Classroom teaching, backed by online support"
+          intro="Students learn on campus with teachers who know their board, then revise and track progress online."
+        />
+        <ul className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-stone-200 bg-stone-200 sm:grid-cols-2 lg:grid-cols-3">
+          {teaching.map((t) => (
+            <li key={t.title} className="bg-white p-6 sm:p-7">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand-100 text-brand-800">
+                <t.icon className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <h3 className="mt-4 flex flex-wrap items-center gap-2 font-display text-lg font-semibold text-ink">
+                {t.title}
+                {t.badge && <span className="rounded-full bg-stone-100 px-2 py-0.5 text-xs font-medium text-stone-600">{t.badge}</span>}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-stone-600">{t.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+// ─── Reviews (live from Google Business Profile) ─────────────────────
+
+function Stars({ rating, size = "h-4 w-4" }: { rating: number; size?: string }) {
+  return (
+    <span className="flex" role="img" aria-label={`${rating} out of 5 stars`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star key={i} className={`${size} ${i < Math.round(rating) ? "fill-brand-500 text-brand-500" : "fill-stone-200 text-stone-200"}`} aria-hidden="true" />
+      ))}
+    </span>
+  );
+}
+
+export function ReviewsSection({ profile }: { profile: BusinessProfile | null }) {
+  const reviewsLink = profile?.mapsUri ?? CONTACT.reviewsHref;
+  const written = profile?.reviews.filter((r) => r.text) ?? [];
+  const starOnly = profile?.reviews.filter((r) => !r.text) ?? [];
+
+  return (
+    <section className="bg-white py-20 lg:py-24">
+      <div className={container}>
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <SectionHeading eyebrow="Reviews" title="What students and parents say" />
+          <a
+            href={reviewsLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 self-start rounded-xl border border-stone-200 px-4 py-3 hover:border-stone-300 md:self-auto"
+          >
+            {profile?.rating ? (
+              <>
+                <span className="font-display text-2xl font-bold text-ink">{profile.rating.toFixed(1)}</span>
+                <span className="flex flex-col">
+                  <Stars rating={profile.rating} />
+                  <span className="text-xs text-stone-500">{profile.reviewCount} reviews on Google</span>
+                </span>
+              </>
+            ) : (
+              <span className="text-sm font-medium text-stone-700">Read our reviews on Google</span>
+            )}
+          </a>
+        </div>
+
+        {written.length > 0 && (
+          <ul className="mt-10 grid gap-6 md:grid-cols-3">
+            {written.slice(0, 3).map((r, i) => (
+              <li key={i} className="flex flex-col rounded-2xl border border-stone-200 p-6">
+                <Stars rating={r.rating} />
+                <blockquote className="mt-4 line-clamp-6 flex-1 leading-relaxed text-stone-700">&ldquo;{r.text}&rdquo;</blockquote>
+                <p className="mt-5 text-sm text-stone-500">
+                  {r.authorUri ? (
+                    <a href={r.authorUri} target="_blank" rel="noopener noreferrer" className="font-medium text-stone-800 hover:underline">{r.author}</a>
+                  ) : (
+                    <span className="font-medium text-stone-800">{r.author}</span>
+                  )}
+                  {r.relativeTime && <> · {r.relativeTime}</>}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {written.length === 0 && starOnly.length > 0 && (
+          <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {starOnly.slice(0, 6).map((r, i) => (
+              <li key={i} className="flex items-center justify-between gap-3 rounded-xl border border-stone-200 px-4 py-3">
+                <span className="min-w-0">
+                  <span className="block truncate font-medium text-stone-800">{r.author}</span>
+                  {r.relativeTime && <span className="block text-xs text-stone-500">{r.relativeTime}</span>}
+                </span>
+                <Stars rating={r.rating} />
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <div className="mt-8 flex flex-col gap-4 rounded-2xl bg-[#fbfaf6] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+          <p className="flex items-start gap-2 text-sm text-stone-600">
+            <MessageSquareText className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>
+              Ratings from Google.{" "}
+              <a href={reviewsLink} target="_blank" rel="noopener noreferrer" className="font-medium text-brand-800 hover:underline">
+                Read all reviews on Google Maps
+              </a>
+              . Studied with us? We&apos;d love to hear from you.
+            </span>
+          </p>
+          <a
+            href={CONTACT.writeReviewHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white px-5 text-sm font-semibold text-stone-800 hover:bg-stone-50"
+          >
+            <Star className="h-4 w-4 fill-brand-500 text-brand-500" aria-hidden="true" /> Write a review
+          </a>
         </div>
       </div>
     </section>
   );
 }
 
-// ─── Legacy exports (keep for backwards compat until all imports update) ──
-export const FeaturesSection = TrustSection;
-export const CourseCategoriesSection = SubjectsSection;
+// ─── Admission steps + final call to action ──────────────────────────────
+
+const steps = [
+  { icon: MessageSquareText, title: "Send an enquiry", text: "Fill in the short form or message us on WhatsApp." },
+  { icon: CalendarCheck, title: "Free counselling", text: "We help you pick the right group, board and batch." },
+  { icon: GraduationCap, title: "Join your batch", text: "Start classes on campus with online access from day one." },
+];
+
+export function AdmissionSection() {
+  return (
+    <section className="bg-[#fbfaf6] py-20 lg:py-24">
+      <div className={container}>
+        <SectionHeading eyebrow="Admissions" title="Joining takes three simple steps" center />
+        <ol className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
+          {steps.map((s, i) => (
+            <li key={s.title} className="relative rounded-2xl border border-stone-200 bg-white p-6 text-center">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-ink px-2.5 py-0.5 text-xs font-semibold text-white">
+                Step {i + 1}
+              </span>
+              <span className="mx-auto mt-2 inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-100 text-brand-800">
+                <s.icon className="h-6 w-6" aria-hidden="true" />
+              </span>
+              <h3 className="mt-4 font-display text-lg font-semibold text-ink">{s.title}</h3>
+              <p className="mt-2 text-sm text-stone-600">{s.text}</p>
+            </li>
+          ))}
+        </ol>
+
+        <div className="mt-16 overflow-hidden rounded-3xl bg-ink px-6 py-12 text-center sm:px-12 lg:py-16">
+          <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            Admissions are open for the new session
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-stone-300">
+            Talk to us about your board, group and timings. We usually reply within a day.
+          </p>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link href="/admissions" className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 font-semibold text-ink hover:bg-brand-400">
+              Apply for admission <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+            <a href={CONTACT.phoneHref} className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/20 px-6 font-semibold text-white hover:bg-white/10">
+              <Phone className="h-4 w-4" aria-hidden="true" /> {CONTACT.phoneDisplay}
+            </a>
+          </div>
+          <p className="mt-6 flex items-center justify-center gap-2 text-sm text-stone-400">
+            <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" /> {CONTACT.address}
+          </p>
+          <ul className="mx-auto mt-8 flex max-w-2xl flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-stone-300">
+            {["Free counselling session", "Flexible payment plans", "Scholarship opportunities"].map((b) => (
+              <li key={b} className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-brand-500" aria-hidden="true" /> {b}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}

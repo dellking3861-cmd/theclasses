@@ -1,93 +1,107 @@
 import Link from "next/link";
-import { APP_NAME } from "@/lib/constants";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { APP_NAME, CONTACT } from "@/lib/constants";
+import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
+import { WhatsAppIcon } from "@/components/layout/whatsapp-icon";
+
+const columns = [
+  {
+    title: "Courses",
+    links: [
+      { label: "Matric (Grades 9–10)", href: "/courses?stage=secondary&board=bsek" },
+      { label: "Intermediate (Grades 11–12)", href: "/courses?stage=higher_secondary&board=biek" },
+      { label: "O Level & IGCSE", href: "/courses?stage=secondary&board=cambridge" },
+      { label: "A Level", href: "/courses?stage=higher_secondary&board=cambridge" },
+      { label: "School Classes (Grades 1–8)", href: "/courses?stage=programs" },
+    ],
+  },
+  {
+    title: "The Classes",
+    links: [
+      { label: "About us", href: "/about" },
+      { label: "Admissions", href: "/admissions" },
+      { label: "Skills programs", href: "/ai-learning-programs" },
+      { label: "Blog", href: "/blog" },
+      { label: "Student & parent login", href: "/login" },
+      { label: "Review us on Google", href: CONTACT.writeReviewHref },
+    ],
+  },
+];
 
 export function PublicFooter() {
   return (
-    <footer className="border-t border-stone-200 bg-stone-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+    <footer className="bg-ink text-stone-300">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
           <div className="space-y-4">
-            <Link href="/home" className="flex items-center gap-2.5">
-              <img src="/logo.png" alt={APP_NAME} className="h-8 w-auto" />
-              <span className="text-lg font-bold text-stone-900 font-display">{APP_NAME}</span>
+            <Link href="/home" className="inline-block">
+              <span className="block font-display text-2xl font-bold tracking-tight text-white">
+                THE <span className="text-brand-500">CLASSES</span>
+              </span>
+              <span className="block text-[11px] font-medium uppercase tracking-[0.3em] text-stone-400">Education System</span>
             </Link>
-            <p className="text-sm text-stone-500 leading-relaxed">
-              Pakistan&apos;s premier hybrid education platform combining physical coaching
-              centers with online learning, AI-powered tools, and comprehensive student management.
+            <p className="max-w-xs text-sm leading-relaxed text-stone-400">
+              Board-focused coaching in Karachi for Matric, Intermediate, O Level, IGCSE and A Level, with recorded
+              lectures and progress reports online.
             </p>
           </div>
 
-          <div>
-            <h4 className="text-sm font-semibold text-stone-900 mb-4 uppercase tracking-wider">Navigation</h4>
-            <ul className="space-y-2.5">
-              {["Home", "Subjects", "Programs", "About", "Blog", "Contact"].map((label) => (
-                <li key={label}>
-                  <Link
-                    href={
-                      label === "Home" ? "/home"
-                      : label === "Subjects" ? "/courses"
-                      : label === "Programs" ? "/ai-learning-programs"
-                      : label === "About" ? "/about"
-                      : label === "Blog" ? "/blog"
-                      : "/contact"
-                    }
-                    className="text-sm text-stone-500 hover:text-amber-700 transition-colors"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {columns.map((col) => (
+            <div key={col.title}>
+              <h2 className="mb-4 text-sm font-semibold text-white">{col.title}</h2>
+              <ul className="space-y-1">
+                {col.links.map((item) => (
+                  <li key={item.label}>
+                    {item.href.startsWith("http") ? (
+                      <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-9 items-center text-sm text-stone-400 transition-colors hover:text-brand-400">
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link href={item.href} className="inline-flex min-h-9 items-center text-sm text-stone-400 transition-colors hover:text-brand-400">
+                        {item.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
           <div>
-            <h4 className="text-sm font-semibold text-stone-900 mb-4 uppercase tracking-wider">Programs</h4>
-            <ul className="space-y-2.5">
-              {[
-                { label: "School Classes (Grades 1–8)", href: "/courses?stage=programs" },
-                { label: "Matric (Grades 9–10)", href: "/courses?stage=secondary&board=bsek" },
-                { label: "Intermediate (Grades 11–12)", href: "/courses?stage=higher_secondary&board=biek" },
-                { label: "O Level / IGCSE", href: "/courses?stage=secondary&board=cambridge" },
-                { label: "A Level", href: "/courses?stage=higher_secondary&board=cambridge" },
-                { label: "AI Programs", href: "/ai-learning-programs" },
-              ].map((item) => (
-                <li key={item.label}>
-                  <Link href={item.href} className="text-sm text-stone-500 hover:text-amber-700 transition-colors">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-semibold text-stone-900 mb-4 uppercase tracking-wider">Contact</h4>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2.5 text-sm text-stone-500">
-                <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0 text-amber-600" />
-                R-156 Salman Garden, Near Jamia Millia Road, Malir 15, Karachi
+            <h2 className="mb-4 text-sm font-semibold text-white">Visit or contact us</h2>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <a href={CONTACT.mapsHref} target="_blank" rel="noopener noreferrer" className="group flex items-start gap-3 text-stone-400 hover:text-white">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" aria-hidden="true" />
+                  <span>
+                    {CONTACT.address}
+                    <ArrowUpRight className="ml-1 inline h-3.5 w-3.5 opacity-60 group-hover:opacity-100" aria-label="opens Google Maps" />
+                  </span>
+                </a>
               </li>
-              <li className="flex items-center gap-2.5 text-sm text-stone-500">
-                <Phone className="h-4 w-4 flex-shrink-0 text-amber-600" />
-                +92 336 3861205
+              <li>
+                <a href={CONTACT.phoneHref} className="flex items-center gap-3 text-stone-400 hover:text-white">
+                  <Phone className="h-4 w-4 shrink-0 text-brand-500" aria-hidden="true" />
+                  {CONTACT.phoneDisplay}
+                </a>
               </li>
-              <li className="flex items-center gap-2.5 text-sm text-stone-500">
-                <Mail className="h-4 w-4 flex-shrink-0 text-amber-600" />
-                wasikherro@gmail.com
+              <li>
+                <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-stone-400 hover:text-white">
+                  <WhatsAppIcon className="h-4 w-4 shrink-0 text-brand-500" />
+                  WhatsApp us
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-3 break-all text-stone-400 hover:text-white">
+                  <Mail className="h-4 w-4 shrink-0 text-brand-500" aria-hidden="true" />
+                  {CONTACT.email}
+                </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-stone-400">
-            &copy; {new Date().getFullYear()} {APP_NAME}. All rights reserved.
-          </p>
-          <div className="flex gap-6">
-            <Link href="/privacy" className="text-sm text-stone-400 hover:text-amber-700 transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="text-sm text-stone-400 hover:text-amber-700 transition-colors">Terms of Service</Link>
-          </div>
+        <div className="mt-12 border-t border-white/10 pt-6 text-sm text-stone-500">
+          &copy; {new Date().getFullYear()} {APP_NAME} Education System. All rights reserved.
         </div>
       </div>
     </footer>

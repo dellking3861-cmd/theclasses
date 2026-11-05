@@ -1,4 +1,5 @@
 import { requireAuth } from "@/lib/auth";
+import { ReviewPrompt } from "@/components/review-prompt";
 import { ParentService } from "@/services";
 import { PageHeader, StatCard, Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -47,6 +48,7 @@ export default async function ParentDashboardPage() {
           )}
         </CardContent>
       </Card>
+      <ReviewPrompt audience="parent" />
     </div>
   );
 }

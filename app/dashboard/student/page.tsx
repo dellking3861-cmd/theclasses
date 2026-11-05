@@ -1,4 +1,5 @@
 import { requireAuth } from "@/lib/auth";
+import { ReviewPrompt } from "@/components/review-prompt";
 import { StudentService } from "@/services";
 import { PageHeader, StatCard, Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -76,6 +77,7 @@ export default async function StudentDashboardPage() {
           </CardContent>
         </Card>
       </div>
+      <ReviewPrompt audience="student" />
     </div>
   );
 }

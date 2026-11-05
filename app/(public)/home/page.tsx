@@ -1,27 +1,26 @@
 import {
   HeroSection,
-  TrustSection,
-  SubjectsSection,
-  ProgramsSection,
-  WhyChooseUsSection,
-  AISection,
-  ResultsSection,
-  TestimonialsSection,
-  CTASection,
+  BoardsStrip,
+  PathwaysSection,
+  TeachingSection,
+  ReviewsSection,
+  AdmissionSection,
 } from "@/components/landing/sections";
+import { getBusinessProfile } from "@/lib/google-business";
 
-export default function HomePage() {
+// Google Business Profile data (rating, reviews) refreshes every 6 hours
+export const revalidate = 21600;
+
+export default async function HomePage() {
+  const profile = await getBusinessProfile();
   return (
     <>
-      <HeroSection />
-      <TrustSection />
-      <SubjectsSection />
-      <ProgramsSection />
-      <WhyChooseUsSection />
-      <AISection />
-      <ResultsSection />
-      <TestimonialsSection />
-      <CTASection />
+      <HeroSection profile={profile} />
+      <BoardsStrip />
+      <PathwaysSection />
+      <TeachingSection />
+      <ReviewsSection profile={profile} />
+      <AdmissionSection />
     </>
   );
 }

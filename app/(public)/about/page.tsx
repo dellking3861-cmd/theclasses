@@ -21,7 +21,7 @@ export default function AboutPage() {
       <section className="py-24 bg-stone-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-1.5 text-sm font-medium text-amber-700 mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-4 py-1.5 text-sm font-medium text-brand-800 mb-6">
               Est. 2017 &middot; Karachi, Pakistan
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-stone-900 font-display leading-tight">
@@ -47,8 +47,8 @@ export default function AboutPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value) => (
               <div key={value.title} className="text-center">
-                <div className="mx-auto inline-flex items-center justify-center rounded-xl bg-amber-100 p-4 mb-4">
-                  <value.icon className="h-6 w-6 text-amber-700" />
+                <div className="mx-auto inline-flex items-center justify-center rounded-xl bg-brand-100 p-4 mb-4">
+                  <value.icon className="h-6 w-6 text-brand-800" />
                 </div>
                 <h3 className="font-semibold text-stone-900 mb-2 font-display">{value.title}</h3>
                 <p className="text-sm text-stone-500 leading-relaxed">{value.description}</p>
@@ -69,13 +69,13 @@ export default function AboutPage() {
                   "School classes for Grades 1–12 with structured curriculum",
                   "Cambridge O Level and A Level preparation",
                   "Karachi Board (BSEK/BIEK), FBISE, and AKU-EB exam prep",
-                  "AI-powered learning tools and resources",
+                  "AI study tools (coming soon)",
                   "Web Basics and Programming fundamentals",
                   "Small-group and classroom-focused learning",
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-3">
-                    <div className="rounded-full bg-amber-100 p-1 mt-0.5 shrink-0">
-                      <svg className="h-3 w-3 text-amber-700" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                    <div className="rounded-full bg-brand-100 p-1 mt-0.5 shrink-0">
+                      <svg className="h-3 w-3 text-brand-800" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                     </div>
                     <span className="text-stone-600">{item}</span>
                   </div>
@@ -86,7 +86,7 @@ export default function AboutPage() {
               <p className="text-2xl font-bold leading-snug font-display">
                 &ldquo;We prepare students for the way exams actually work — through understanding, not memorization.&rdquo;
               </p>
-              <p className="mt-4 text-amber-400 font-medium">— Sir Wasi, Founder</p>
+              <p className="mt-4 text-brand-500 font-medium">— Sir Wasi, Founder</p>
             </div>
           </div>
         </div>
@@ -100,7 +100,7 @@ export default function AboutPage() {
             Whether you&apos;re a student, parent, or educator, there&apos;s a place for you at The Classes.
           </p>
           <Link href="/admissions">
-            <Button size="lg" className="bg-amber-600 hover:bg-amber-700 text-white btn-hover font-display">
+            <Button size="lg" className="bg-brand-500 hover:bg-brand-400 font-display text-ink">
               Apply Now <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </Link>

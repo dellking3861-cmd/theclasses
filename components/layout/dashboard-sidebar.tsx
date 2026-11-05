@@ -32,6 +32,7 @@ import {
   Brain,
   Calendar,
   Download,
+  Star,
 } from "lucide-react";
 
 export interface NavItem {
@@ -61,6 +62,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Calendar,
   Download,
   Bell,
+  Star,
 };
 
 interface DashboardSidebarProps {

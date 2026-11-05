@@ -17,9 +17,29 @@ import { CheckCircle } from "lucide-react";
 
 export default function AdmissionsPage() {
   return (
-    <Suspense>
+    // The fallback is what search engines see in the server HTML (the form needs the URL query)
+    <Suspense
+      fallback={
+        <section className="py-16 bg-stone-50 min-h-screen">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <AdmissionsHeading />
+          </div>
+        </section>
+      }
+    >
       <AdmissionsForm />
     </Suspense>
+  );
+}
+
+function AdmissionsHeading() {
+  return (
+    <div className="text-center mb-10">
+      <h1 className="text-4xl font-bold text-stone-900 font-display">Apply for Admission</h1>
+      <p className="mt-3 text-lg text-stone-500">
+        Start your journey with The Classes in Malir 15, Karachi. Fill out the form below and our team will get in touch.
+      </p>
+    </div>
   );
 }
 
@@ -73,12 +93,7 @@ function AdmissionsForm() {
   return (
     <section className="py-16 bg-stone-50 min-h-screen">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-stone-900 font-display">Apply for Admission</h1>
-          <p className="mt-3 text-lg text-stone-500">
-            Start your journey with The Classes. Fill out the form below and our team will get in touch.
-          </p>
-        </div>
+        <AdmissionsHeading />
 
         <Card className="border-stone-100 shadow-sm">
           <CardHeader>

@@ -19,6 +19,7 @@ const columns = [
     title: "The Classes",
     links: [
       { label: "About us", href: "/about" },
+      { label: "Meet Sir Wasi, our founder", href: "/about/sir-wasi" },
       { label: "Admissions", href: "/admissions" },
       { label: "Skills programs", href: "/ai-learning-programs" },
       { label: "Blog", href: "/blog" },

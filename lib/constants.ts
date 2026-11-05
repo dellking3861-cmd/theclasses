@@ -1,6 +1,21 @@
 export const APP_NAME = "The Classes";
 export const APP_DESCRIPTION =
-  "Pakistan's premier hybrid education platform combining physical coaching centers with online learning, AI-powered tools, and comprehensive student management.";
+  "Coaching centre in Malir 15, Karachi for Matric, Intermediate, O Level, IGCSE and A Level. BSEK, BIEK, AKU-EB, FBISE, Cambridge and Edexcel, with small batches, regular tests and recorded lectures.";
+
+/** Canonical site address used for metadata, sitemap and structured data. */
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://theclasses.vercel.app").replace(/\/$/, "");
+
+/** Neighbourhoods served from the Malir 15 campus (used in copy and structured data). */
+export const SERVICE_AREAS = [
+  "Malir 15",
+  "Malir City",
+  "Saudabad",
+  "Kalaboard",
+  "Jaffar-e-Tayyar",
+  "Model Colony",
+  "Malir Cantt",
+  "Shah Faisal Colony",
+] as const;
 
 export const CONTACT = {
   phoneDisplay: "+92 336 3861205",

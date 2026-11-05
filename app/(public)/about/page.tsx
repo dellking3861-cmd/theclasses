@@ -1,11 +1,14 @@
 import Link from "next/link";
+import { pageMetadata } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Target, Heart, Lightbulb, Users } from "lucide-react";
 
-export const metadata = {
-  title: "About Us",
-  description: "Learn about The Classes — Pakistan's premier hybrid education platform.",
-};
+export const metadata = pageMetadata({
+  title: "About The Classes, Coaching Centre in Malir, Karachi",
+  description:
+    "The Classes is a coaching centre in Malir 15, Karachi founded by Sir Wasi (NED mechanical engineer). Matric, Intermediate, O Level and A Level for all major boards.",
+  path: "/about",
+});
 
 const values = [
   { icon: Target, title: "Excellence", description: "Highest standards in education delivery and student outcomes." },
@@ -28,7 +31,8 @@ export default function AboutPage() {
               About <span className="gradient-text">The Classes</span>
             </h1>
             <p className="mt-6 text-lg text-stone-500 leading-relaxed">
-              The Classes Education System was founded by <strong className="text-stone-900">Sir Wasi</strong>,
+              The Classes Education System was founded by{" "}
+              <Link href="/about/sir-wasi" className="font-semibold text-stone-900 underline decoration-brand-400 underline-offset-4 hover:decoration-brand-600">Sir Wasi</Link>,
               a Mechanical Engineer from NED University who has been teaching since 2017. Our approach combines strong conceptual
               foundations with exam-oriented preparation — we teach students to understand, not just memorize.
             </p>
@@ -99,7 +103,16 @@ export default function AboutPage() {
               <p className="text-2xl font-bold leading-snug font-display">
                 &ldquo;We prepare students for the way exams actually work — through understanding, not memorization.&rdquo;
               </p>
-              <p className="mt-4 text-brand-500 font-medium">— Sir Wasi, Founder</p>
+              <div className="mt-6 flex items-center gap-4">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/sir-wasi.webp" alt="" width={56} height={84} loading="lazy" className="h-14 w-14 rounded-full object-cover object-top" />
+                <div>
+                  <p className="text-brand-500 font-medium">Sir Wasi, Founder</p>
+                  <Link href="/about/sir-wasi" className="mt-1 inline-flex items-center gap-1 text-sm text-stone-300 hover:text-white hover:underline">
+                    Read his story <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -14,6 +14,8 @@ const PUBLIC_ROUTES = [
   "/register",
   "/forgot-password",
   "/api",
+  "/robots.txt",
+  "/sitemap.xml",
 ];
 
 const AUTH_ROUTES = ["/login", "/register", "/forgot-password"];
@@ -68,7 +70,8 @@ export async function middleware(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
 
   if (pathname === "/") {
-    return NextResponse.redirect(new URL("/home", request.url));
+    // Permanent, so search engines treat /home as the home page
+    return NextResponse.redirect(new URL("/home", request.url), 308);
   }
 
   if (isAuthRoute(pathname) && user) {

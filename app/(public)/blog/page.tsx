@@ -3,11 +3,15 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { formatDate } from "@/utils/format";
 import { createClient } from "@/lib/supabase/server";
+import { pageMetadata } from "@/lib/seo";
 import { ArrowRight } from "lucide-react";
 
 export const metadata = {
-  title: "Blog | The Classes",
-  description: "Insights, tips, and updates from The Classes Education System.",
+  ...pageMetadata({
+    title: "Blog: Study Tips and Exam Guidance",
+    description: "Study tips, board exam guidance and updates from The Classes, a coaching centre in Malir, Karachi.",
+    path: "/blog",
+  }),
 };
 
 export default async function BlogPage() {

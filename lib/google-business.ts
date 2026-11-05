@@ -23,6 +23,9 @@ const FIELD_MASK = [
   "googleMapsUri",
   "websiteUri",
   "businessStatus",
+  "photos",
+  "editorialSummary",
+  "primaryTypeDisplayName",
 ].join(",");
 
 export interface GoogleReview {
@@ -34,6 +37,17 @@ export interface GoogleReview {
   relativeTime: string;
   publishTime: string | null;
   reviewUri: string | null;
+}
+
+export interface GooglePhoto {
+  /** Places photo resource name, e.g. places/<id>/photos/<ref> */
+  name: string;
+  width: number;
+  height: number;
+  /** Same-origin URL served by /api/google-photo (keeps the API key server-side) */
+  src: string;
+  author: string | null;
+  authorUri: string | null;
 }
 
 export interface BusinessProfile {
@@ -49,6 +63,9 @@ export interface BusinessProfile {
   mapsUri: string | null;
   websiteUri: string | null;
   businessStatus: string | null;
+  photos: GooglePhoto[];
+  description: string | null;
+  category: string | null;
 }
 
 /* Shapes returned by the Places API (New); only the fields we request. */
@@ -73,6 +90,23 @@ interface PlacesResponse {
   googleMapsUri?: string;
   websiteUri?: string;
   businessStatus?: string;
+  photos?: {
+    name?: string;
+    widthPx?: number;
+    heightPx?: number;
+    authorAttributions?: { displayName?: string; uri?: string }[];
+  }[];
+  editorialSummary?: { text?: string };
+  primaryTypeDisplayName?: { text?: string };
+}
+
+/** Only photo names belonging to our own listing may be proxied. */
+export function isOwnPhotoName(name: string): boolean {
+  return name.startsWith(`places/${GOOGLE_PLACE_ID}/photos/`) && /^[A-Za-z0-9_\-/]+$/.test(name) && name.length < 1000;
+}
+
+export function photoSrc(name: string, width = 1200): string {
+  return `/api/google-photo?name=${encodeURIComponent(name)}&w=${width}`;
 }
 
 export function reviewsPageUrl(): string {
@@ -120,6 +154,18 @@ export async function getBusinessProfile(): Promise<BusinessProfile | null> {
       mapsUri: d.googleMapsUri ?? null,
       websiteUri: d.websiteUri ?? null,
       businessStatus: d.businessStatus ?? null,
+      photos: (d.photos ?? [])
+        .filter((p): p is typeof p & { name: string } => typeof p.name === "string" && isOwnPhotoName(p.name))
+        .map((p) => ({
+          name: p.name,
+          width: p.widthPx ?? 0,
+          height: p.heightPx ?? 0,
+          src: photoSrc(p.name),
+          author: p.authorAttributions?.[0]?.displayName ?? null,
+          authorUri: p.authorAttributions?.[0]?.uri ?? null,
+        })),
+      description: d.editorialSummary?.text ?? null,
+      category: d.primaryTypeDisplayName?.text ?? null,
     };
   } catch (err) {
     console.error("[google-business] fetch failed", err);

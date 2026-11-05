@@ -31,9 +31,12 @@ export const metadata: Metadata = {
     "education", "Pakistan", "coaching center", "online learning",
     "AKU-EB", "Cambridge", "Sindh Board", "AI learning",
   ],
-  other: {
-    "twitter:card": "summary_large_image",
+  openGraph: {
+    type: "website",
+    siteName: APP_NAME,
+    images: [{ url: "/images/og-campus.jpg", width: 1200, height: 630, alt: "The Classes campus, Malir 15, Karachi" }],
   },
+  twitter: { card: "summary_large_image", images: ["/images/og-campus.jpg"] },
 };
 
 export default function RootLayout({

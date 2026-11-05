@@ -14,12 +14,15 @@ import {
   Users,
   UserRoundCheck,
   CalendarCheck,
+  Clock,
+  Navigation,
 } from "lucide-react";
 import { CONTACT } from "@/lib/constants";
-import type { BusinessProfile } from "@/lib/google-business";
+import { compactHours, type BusinessProfile } from "@/lib/google-business";
 import { BOARDS, getOffering } from "@/lib/curriculum";
 import { CourseFinder } from "@/components/landing/course-finder";
 import { WhatsAppIcon } from "@/components/layout/whatsapp-icon";
+import { SocialLinks } from "@/components/layout/social-icons";
 
 const container = "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8";
 
@@ -249,133 +252,85 @@ export function TeachingSection() {
   );
 }
 
-// ─── Photos (from Google Business Profile) ───────────────────────────────
+// ─── Visit us: campus photo, map, hours ───────────────────────────────────
 
-export function PhotosSection({ profile }: { profile: BusinessProfile | null }) {
-  const photos = profile?.photos.slice(0, 8) ?? [];
-  if (photos.length < 3) return null;
+export function VisitSection({ profile }: { profile: BusinessProfile | null }) {
+  const hours = profile?.openingHours.length ? compactHours(profile.openingHours) : [...CONTACT.hoursFallback];
   return (
     <section className="bg-white py-20 lg:py-24">
       <div className={container}>
-        <SectionHeading eyebrow="Our campus" title="Inside The Classes" intro="Photos from our Google listing in Malir 15, Karachi." />
-        <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-          {photos.map((p, i) => (
-            <li key={p.name} className={`overflow-hidden rounded-2xl bg-stone-100 ${i === 0 ? "col-span-2 row-span-2" : ""}`}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={p.src}
-                alt={`The Classes campus photo ${i + 1}`}
+        <SectionHeading
+          eyebrow="Visit us"
+          title="Our campus in Malir 15"
+          intro="Drop in for a free counselling session. Meet the teachers, see the classrooms and pick the right batch."
+        />
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
+          <figure className="overflow-hidden rounded-3xl bg-stone-100">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/campus-front-800.webp"
+              srcSet="/images/campus-front-800.webp 800w, /images/campus-front-1440.webp 1440w"
+              sizes="(min-width: 1024px) 680px, 100vw"
+              width={1440}
+              height={1084}
+              alt="Front of The Classes campus at R-156 Salman Garden, Malir 15, Karachi, with the sign reading The Classes, Coaching for Excellence"
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          </figure>
+          <div className="flex flex-col gap-4">
+            <div className="min-h-64 flex-1 overflow-hidden rounded-3xl border border-stone-200">
+              <iframe
+                src={CONTACT.mapEmbedSrc}
+                className="h-full min-h-64 w-full"
+                style={{ border: 0 }}
                 loading="lazy"
-                decoding="async"
-                className="aspect-[4/3] h-full w-full object-cover"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Map showing The Classes campus in Malir 15, Karachi"
               />
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4 text-xs text-stone-500">Photos via Google</p>
-      </div>
-    </section>
-  );
-}
-
-// ─── Reviews (live from Google Business Profile) ─────────────────────
-
-function Stars({ rating, size = "h-4 w-4" }: { rating: number; size?: string }) {
-  return (
-    <span className="flex" role="img" aria-label={`${rating} out of 5 stars`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} className={`${size} ${i < Math.round(rating) ? "fill-brand-500 text-brand-500" : "fill-stone-200 text-stone-200"}`} aria-hidden="true" />
-      ))}
-    </span>
-  );
-}
-
-export function ReviewsSection({ profile }: { profile: BusinessProfile | null }) {
-  const reviewsLink = profile?.mapsUri ?? CONTACT.reviewsHref;
-  const written = profile?.reviews.filter((r) => r.text) ?? [];
-  const starOnly = profile?.reviews.filter((r) => !r.text) ?? [];
-
-  return (
-    <section className="bg-white py-20 lg:py-24">
-      <div className={container}>
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHeading eyebrow="Reviews" title="What students and parents say" />
-          <a
-            href={reviewsLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 self-start rounded-xl border border-stone-200 px-4 py-3 hover:border-stone-300 md:self-auto"
-          >
-            {profile?.rating ? (
-              <>
-                <span className="font-display text-2xl font-bold text-ink">{profile.rating.toFixed(1)}</span>
-                <span className="flex flex-col">
-                  <Stars rating={profile.rating} />
-                  <span className="text-xs text-stone-500">{profile.reviewCount} reviews on Google</span>
-                </span>
-              </>
-            ) : (
-              <span className="text-sm font-medium text-stone-700">Read our reviews on Google</span>
-            )}
-          </a>
-        </div>
-
-        {written.length > 0 && (
-          <ul className="mt-10 grid gap-6 md:grid-cols-3">
-            {written.slice(0, 3).map((r, i) => (
-              <li key={i} className="flex flex-col rounded-2xl border border-stone-200 p-6">
-                <Stars rating={r.rating} />
-                <blockquote className="mt-4 line-clamp-6 flex-1 leading-relaxed text-stone-700">&ldquo;{r.text}&rdquo;</blockquote>
-                <p className="mt-5 flex items-center gap-2 text-sm text-stone-500">
-                  {r.authorPhotoUri && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={r.authorPhotoUri} alt="" width={28} height={28} loading="lazy" referrerPolicy="no-referrer" className="h-7 w-7 rounded-full" />
-                  )}
-                  {r.authorUri ? (
-                    <a href={r.authorUri} target="_blank" rel="noopener noreferrer" className="font-medium text-stone-800 hover:underline">{r.author}</a>
-                  ) : (
-                    <span className="font-medium text-stone-800">{r.author}</span>
-                  )}
-                  {r.relativeTime && <> · {r.relativeTime}</>}
-                </p>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {written.length === 0 && starOnly.length > 0 && (
-          <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {starOnly.slice(0, 6).map((r, i) => (
-              <li key={i} className="flex items-center justify-between gap-3 rounded-xl border border-stone-200 px-4 py-3">
-                <span className="min-w-0">
-                  <span className="block truncate font-medium text-stone-800">{r.author}</span>
-                  {r.relativeTime && <span className="block text-xs text-stone-500">{r.relativeTime}</span>}
-                </span>
-                <Stars rating={r.rating} />
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <div className="mt-8 flex flex-col gap-4 rounded-2xl bg-[#fbfaf6] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-          <p className="flex items-start gap-2 text-sm text-stone-600">
-            <MessageSquareText className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-            <span>
-              Ratings from Google.{" "}
-              <a href={reviewsLink} target="_blank" rel="noopener noreferrer" className="font-medium text-brand-800 hover:underline">
-                Read all reviews on Google Maps
-              </a>
-              . Studied with us? We&apos;d love to hear from you.
-            </span>
-          </p>
-          <a
-            href={CONTACT.writeReviewHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white px-5 text-sm font-semibold text-stone-800 hover:bg-stone-50"
-          >
-            <Star className="h-4 w-4 fill-brand-500 text-brand-500" aria-hidden="true" /> Write a review
-          </a>
+            </div>
+            <div className="rounded-3xl bg-[#fbfaf6] p-5 sm:p-6">
+              <p className="flex items-start gap-3 text-stone-800">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-800" aria-hidden="true" />
+                <span className="font-medium">{CONTACT.address}</span>
+              </p>
+              <div className="mt-3 flex items-start gap-3 text-sm text-stone-600">
+                <Clock className="mt-0.5 h-5 w-5 shrink-0 text-brand-800" aria-hidden="true" />
+                <ul>
+                  {hours.map((h) => <li key={h}>{h}</li>)}
+                </ul>
+              </div>
+              <div className="mt-5 grid gap-2 sm:grid-cols-2">
+                <a
+                  href={CONTACT.mapsHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-ink px-4 text-sm font-semibold text-white hover:bg-ink/90"
+                >
+                  <Navigation className="h-4 w-4" aria-hidden="true" /> Get directions
+                </a>
+                <a
+                  href={CONTACT.phoneHref}
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white px-4 text-sm font-semibold text-stone-800 hover:bg-stone-50"
+                >
+                  <Phone className="h-4 w-4" aria-hidden="true" /> {CONTACT.phoneDisplay}
+                </a>
+              </div>
+              <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-stone-200 pt-4">
+                <a
+                  href={CONTACT.writeReviewHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-stone-700 hover:text-ink hover:underline"
+                >
+                  <Star className="h-4 w-4 fill-brand-500 text-brand-500" aria-hidden="true" />
+                  {profile?.rating ? `Rated ${profile.rating.toFixed(1)} on Google · Write a review` : "Review us on Google"}
+                </a>
+                <SocialLinks buttonClassName="inline-flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-700 transition-colors hover:border-brand-500 hover:text-ink" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

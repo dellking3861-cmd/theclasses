@@ -11,6 +11,7 @@ import { contactSchema, type ContactInput } from "@/lib/validations";
 import { submitEnquiry, honeypotValue } from "@/lib/enquiries";
 import { Mail, Phone, MapPin, Clock, MessageSquare, Navigation } from "lucide-react";
 import { CONTACT } from "@/lib/constants";
+import { SocialLinks } from "@/components/layout/social-icons";
 import { WhatsAppIcon } from "@/components/layout/whatsapp-icon";
 
 export function ContactClient({ hours }: { hours: string[] }) {
@@ -90,7 +91,7 @@ export function ContactClient({ hours }: { hours: string[] }) {
 
             <div className="overflow-hidden rounded-2xl border border-stone-200">
               <iframe
-                src={`https://www.google.com/maps?q=${encodeURIComponent(CONTACT.address)}&output=embed`}
+                src={CONTACT.mapEmbedSrc}
                 width="100%"
                 height="280"
                 style={{ border: 0 }}
@@ -140,6 +141,11 @@ export function ContactClient({ hours }: { hours: string[] }) {
               <a href={CONTACT.mapsHref} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white text-sm font-semibold text-stone-800 hover:bg-stone-50">
                 <Navigation className="h-4 w-4" aria-hidden="true" /> Directions
               </a>
+            </div>
+
+            <div className="flex items-center justify-between gap-4 rounded-xl border border-stone-200 bg-white px-4 py-3">
+              <p className="text-sm text-stone-600">Follow us for updates and results</p>
+              <SocialLinks buttonClassName="inline-flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 text-stone-700 transition-colors hover:border-brand-500 hover:bg-brand-50 hover:text-ink" />
             </div>
           </div>
         </div>

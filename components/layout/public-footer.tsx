@@ -2,6 +2,7 @@ import Link from "next/link";
 import { APP_NAME, CONTACT } from "@/lib/constants";
 import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
 import { WhatsAppIcon } from "@/components/layout/whatsapp-icon";
+import { SocialLinks } from "@/components/layout/social-icons";
 
 const columns = [
   {
@@ -43,6 +44,7 @@ export function PublicFooter() {
               Board-focused coaching in Karachi for Matric, Intermediate, O Level, IGCSE and A Level, with recorded
               lectures and progress reports online.
             </p>
+            <SocialLinks buttonClassName="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-stone-200 transition-colors hover:bg-brand-500 hover:text-ink" />
           </div>
 
           {columns.map((col) => (

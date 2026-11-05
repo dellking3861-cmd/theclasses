@@ -19,8 +19,8 @@ export default function AboutPage() {
     <>
       {/* Hero */}
       <section className="py-24 bg-stone-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:px-8">
+          <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-4 py-1.5 text-sm font-medium text-brand-800 mb-6">
               Est. 2017 &middot; Karachi, Pakistan
             </div>
@@ -37,6 +37,19 @@ export default function AboutPage() {
               Cambridge O/A Levels, and all major Pakistani examination boards including BSEK, FBISE, and AKU-EB.
             </p>
           </div>
+          <figure className="overflow-hidden rounded-3xl bg-stone-100 shadow-sm">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/campus-front-800.webp"
+              srcSet="/images/campus-front-800.webp 800w, /images/campus-front-1440.webp 1440w"
+              sizes="(min-width: 1024px) 560px, 100vw"
+              width={1440}
+              height={1084}
+              alt="Front of The Classes campus in Salman Garden, Malir 15, Karachi"
+              fetchPriority="high"
+              className="h-full w-full object-cover"
+            />
+          </figure>
         </div>
       </section>
 

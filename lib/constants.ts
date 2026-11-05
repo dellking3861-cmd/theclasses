@@ -9,7 +9,12 @@ export const CONTACT = {
   email: "wasikherro@gmail.com",
   address: "R-156 Salman Garden, Near Jamia Millia Road, Malir 15, Karachi",
   addressShort: "Malir 15, Karachi",
-  mapsHref: "https://www.google.com/maps/search/?api=1&query=The+Classes+R-156+Salman+Garden+Malir+15+Karachi",
+  /** Opens our exact Google Maps listing (directions, photos, reviews) */
+  mapsHref: "https://www.google.com/maps/search/?api=1&query=The+Classes+Malir+15+Karachi&query_place_id=ChIJ0cltXEQ7sz4RfP0TVsb4el4",
+  /** Keyless Google Maps embed */
+  mapEmbedSrc: "https://maps.google.com/maps?q=The%20Classes%2C%20R-156%20Salman%20Garden%2C%20Malir%2015%2C%20Karachi&z=16&output=embed",
+  facebookHref: "https://www.facebook.com/theclassesedu/",
+  instagramHref: "https://www.instagram.com/theclasses.edu.pk/",
   reviewsHref: "https://search.google.com/local/reviews?placeid=ChIJ0cltXEQ7sz4RfP0TVsb4el4",
   /** Opens Google's "write a review" box for the profile directly */
   writeReviewHref: "https://search.google.com/local/writereview?placeid=ChIJ0cltXEQ7sz4RfP0TVsb4el4",

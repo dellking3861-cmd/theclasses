@@ -88,8 +88,10 @@ export async function POST(request: Request) {
     email,
     password,
     email_confirm: true,
-    user_metadata: { full_name, role: "student" },
-    // Tells the on_auth_user_created trigger to skip: this route creates the profile itself.
+    // provisioned_by tells the on_auth_user_created trigger to skip: this route creates the
+    // profile itself. It must be in user_metadata too, because GoTrue writes app_metadata
+    // only after the auth.users row (and so the trigger) has already been inserted.
+    user_metadata: { full_name, role: "student", provisioned_by: "admin" },
     app_metadata: { provisioned_by: "admin" },
   });
 
@@ -100,7 +102,7 @@ export async function POST(request: Request) {
   const userId = authData.user.id;
 
   // Create user profile
-  const { error: profileError } = await adminSupabase.from("users").insert({
+  const { error: profileError } = await adminSupabase.from("users").upsert({
     id: userId,
     email,
     full_name,
@@ -112,34 +114,39 @@ export async function POST(request: Request) {
 
   if (profileError) {
     await adminSupabase.auth.admin.deleteUser(userId);
-    return NextResponse.json({ error: "Failed to create profile" }, { status: 500 });
+    console.error("[admin] create profile failed", profileError);
+    return NextResponse.json({ error: `Failed to create profile: ${profileError.message}` }, { status: 500 });
   }
 
   // Create student record
   const { data: student, error: studentError } = await adminSupabase
     .from("students")
-    .insert({
-      user_id: userId,
-      roll_number: roll_number || null,
-      branch_id: branch_id || null,
-      batch_id: batch_id || null,
-      date_of_birth: date_of_birth || null,
-      gender: gender || null,
-      address: address || null,
-      emergency_contact: emergency_contact || null,
-      grade: grade || null,
-      board: board || null,
-      stage: board ? stage : null,
-      group_code: board ? group_code || null : null,
-      is_active: true,
-    })
+    .upsert(
+      {
+        user_id: userId,
+        roll_number: roll_number || null,
+        branch_id: branch_id || null,
+        batch_id: batch_id || null,
+        date_of_birth: date_of_birth || null,
+        gender: gender || null,
+        address: address || null,
+        emergency_contact: emergency_contact || null,
+        grade: grade || null,
+        board: board || null,
+        stage: board ? stage : null,
+        group_code: board ? group_code || null : null,
+        is_active: true,
+      },
+      { onConflict: "user_id" }
+    )
     .select()
     .single();
 
   if (studentError) {
     await adminSupabase.auth.admin.deleteUser(userId);
     await adminSupabase.from("users").delete().eq("id", userId);
-    return NextResponse.json({ error: "Failed to create student record" }, { status: 500 });
+    console.error("[admin] create student record failed", studentError);
+    return NextResponse.json({ error: `Failed to create student record: ${studentError.message}` }, { status: 500 });
   }
 
   return NextResponse.json({

@@ -31,6 +31,7 @@ export async function GET() {
       businessStatus: profile.businessStatus,
       description: profile.description,
       category: profile.category,
+      diagnostics: profile.diagnostics ?? null,
       photos: profile.photos.map(({ src, width, height, author, authorUri }) => ({ src, width, height, author, authorUri })),
     },
     { headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=21600" } }

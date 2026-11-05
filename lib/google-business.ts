@@ -14,6 +14,7 @@ export const GOOGLE_PLACE_ID = "ChIJ0cltXEQ7sz4RfP0TVsb4el4";
 const REVALIDATE_SECONDS = 6 * 60 * 60;
 
 const FIELD_MASK = [
+  "id",
   "displayName",
   "rating",
   "userRatingCount",
@@ -68,6 +69,8 @@ export interface BusinessProfile {
   photos: GooglePhoto[];
   description: string | null;
   category: string | null;
+  /** Diagnostics: the place id Google returned and raw counts before filtering */
+  diagnostics?: { placeId: string | null; rawPhotos: number; rawReviews: number; samplePhotoName: string | null };
 }
 
 /* Shapes returned by the Places API (New); only the fields we request. */
@@ -81,6 +84,7 @@ interface PlacesReview {
   authorAttribution?: { displayName?: string; uri?: string; photoUri?: string };
 }
 interface PlacesResponse {
+  id?: string;
   displayName?: { text?: string };
   rating?: number;
   userRatingCount?: number;
@@ -121,9 +125,11 @@ async function getPlacesProfile(): Promise<BusinessProfile | null> {
   if (!key) return null;
 
   try {
-    // languageCode/regionCode also make the URL (the cache key) change with the field mask
-    const res = await fetch(`https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}?languageCode=en&regionCode=PK`, {
-      headers: { "X-Goog-Api-Key": key, "X-Goog-FieldMask": FIELD_MASK },
+    // The field mask goes in the URL (not a header) so Next's fetch cache,
+    // which is keyed by URL, can never serve a response for a different mask.
+    const query = new URLSearchParams({ fields: FIELD_MASK, languageCode: "en", regionCode: "PK" });
+    const res = await fetch(`https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}?${query}`, {
+      headers: { "X-Goog-Api-Key": key },
       next: { revalidate: REVALIDATE_SECONDS },
     });
     if (!res.ok) {
@@ -167,6 +173,12 @@ async function getPlacesProfile(): Promise<BusinessProfile | null> {
           author: p.authorAttributions?.[0]?.displayName ?? null,
           authorUri: p.authorAttributions?.[0]?.uri ?? null,
         })),
+      diagnostics: {
+        placeId: d.id ?? null,
+        rawPhotos: d.photos?.length ?? 0,
+        rawReviews: d.reviews?.length ?? 0,
+        samplePhotoName: d.photos?.[0]?.name?.split("/photos/")[0] ?? null,
+      },
       description: d.editorialSummary?.text ?? null,
       category: d.primaryTypeDisplayName?.text ?? null,
     };

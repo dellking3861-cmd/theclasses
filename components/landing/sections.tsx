@@ -17,7 +17,8 @@ import {
   Clock,
   Navigation,
 } from "lucide-react";
-import { CONTACT } from "@/lib/constants";
+import { CONTACT, SERVICE_AREAS } from "@/lib/constants";
+import { JsonLd } from "@/components/seo/json-ld";
 import { compactHours, type BusinessProfile } from "@/lib/google-business";
 import { BOARDS, getOffering } from "@/lib/curriculum";
 import { CourseFinder } from "@/components/landing/course-finder";
@@ -331,6 +332,69 @@ export function VisitSection({ profile }: { profile: BusinessProfile | null }) {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Local FAQ (also published as FAQPage structured data) ──────────────
+
+const nearby = SERVICE_AREAS.slice(1).join(", ");
+
+const faqs = [
+  {
+    q: "Where is The Classes located?",
+    a: `Our campus is at ${CONTACT.address}, a short walk from Jamia Millia Road. Students come from Malir 15 and nearby areas such as ${nearby}.`,
+  },
+  {
+    q: "What are the class timings?",
+    a: "Classes run Monday to Saturday from 4:00 to 8:30 PM, so students can attend after school or college. We are closed on Sunday.",
+  },
+  {
+    q: "Which boards and classes do you teach?",
+    a: "Matric (Grades 9–10) and Intermediate (Grades 11–12) for BSEK, BIEK, AKU-EB and FBISE, plus Cambridge O Level and A Level and Edexcel IGCSE and International A Level. Groups include Pre-Medical, Pre-Engineering, Computer Science, Commerce and Humanities.",
+  },
+  {
+    q: "Who teaches at The Classes?",
+    a: "The Classes was founded by Sir Wasi, a mechanical engineer from NED University who has taught Mathematics and Physics since 2017. He leads the Mathematics and Physics batches himself.",
+  },
+  {
+    q: "How do I get admission?",
+    a: `Send an enquiry through the admissions page, message us on WhatsApp or call ${CONTACT.phoneDisplay}. We start with a free counselling session to choose the right board, group and batch.`,
+  },
+];
+
+export function FaqSection() {
+  return (
+    <section className="bg-white py-20 lg:py-24">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+        }}
+      />
+      <div className={`${container} grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16`}>
+        <SectionHeading eyebrow="Questions" title="Coaching in Malir 15, Karachi" intro="Answers to what parents and students ask us most." />
+        <div className="divide-y divide-stone-200 rounded-2xl border border-stone-200">
+          {faqs.map((f, i) => (
+            <details key={f.q} className="group p-5 sm:p-6" open={i === 0}>
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg font-semibold text-ink [&::-webkit-details-marker]:hidden">
+                {f.q}
+                <span className="text-2xl leading-none text-stone-400 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+              </summary>
+              <p className="mt-3 leading-relaxed text-stone-600">
+                {f.a}
+                {i === 3 && (
+                  <>
+                    {" "}
+                    <Link href="/about/sir-wasi" className="font-medium text-brand-800 hover:underline">Meet Sir Wasi</Link>
+                  </>
+                )}
+              </p>
+            </details>
+          ))}
         </div>
       </div>
     </section>

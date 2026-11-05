@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/utils/format";
@@ -31,10 +32,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   if (!post) return { title: "Post not found" };
 
-  return {
-    title: `${post.title} | The Classes Blog`,
-    description: post.excerpt || "Read the latest insights from The Classes Education System.",
-  };
+  return pageMetadata({
+    title: post.title,
+    description: post.excerpt || "Study tips and exam guidance from The Classes, Malir, Karachi.",
+    path: `/blog/${post.slug}`,
+    type: "article",
+  });
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<Params> }) {

@@ -324,13 +324,26 @@ export function ReviewsSection({ profile }: { profile: BusinessProfile | null })
           </ul>
         )}
 
-        <p className="mt-6 flex items-center gap-2 text-sm text-stone-500">
-          <MessageSquareText className="h-4 w-4" aria-hidden="true" />
-          Reviews and ratings from Google.{" "}
-          <a href={reviewsLink} target="_blank" rel="noopener noreferrer" className="font-medium text-brand-800 hover:underline">
-            See all on Google Maps
+        <div className="mt-8 flex flex-col gap-4 rounded-2xl bg-[#fbfaf6] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+          <p className="flex items-start gap-2 text-sm text-stone-600">
+            <MessageSquareText className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>
+              Ratings from Google.{" "}
+              <a href={reviewsLink} target="_blank" rel="noopener noreferrer" className="font-medium text-brand-800 hover:underline">
+                Read all reviews on Google Maps
+              </a>
+              . Studied with us? We&apos;d love to hear from you.
+            </span>
+          </p>
+          <a
+            href={CONTACT.writeReviewHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white px-5 text-sm font-semibold text-stone-800 hover:bg-stone-50"
+          >
+            <Star className="h-4 w-4 fill-brand-500 text-brand-500" aria-hidden="true" /> Write a review
           </a>
-        </p>
+        </div>
       </div>
     </section>
   );

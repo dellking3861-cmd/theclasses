@@ -22,6 +22,7 @@ const columns = [
       { label: "Skills programs", href: "/ai-learning-programs" },
       { label: "Blog", href: "/blog" },
       { label: "Student & parent login", href: "/login" },
+      { label: "Review us on Google", href: CONTACT.writeReviewHref },
     ],
   },
 ];
@@ -50,9 +51,15 @@ export function PublicFooter() {
               <ul className="space-y-1">
                 {col.links.map((item) => (
                   <li key={item.label}>
-                    <Link href={item.href} className="inline-flex min-h-9 items-center text-sm text-stone-400 transition-colors hover:text-brand-400">
-                      {item.label}
-                    </Link>
+                    {item.href.startsWith("http") ? (
+                      <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-9 items-center text-sm text-stone-400 transition-colors hover:text-brand-400">
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link href={item.href} className="inline-flex min-h-9 items-center text-sm text-stone-400 transition-colors hover:text-brand-400">
+                        {item.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

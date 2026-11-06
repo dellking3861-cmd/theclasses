@@ -1,16 +1,7 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient, createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/auth";
 
-async function requireAdmin(supabase: any) {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return null;
-  const { data: profile } = await supabase
-    .from("users")
-    .select("role")
-    .eq("id", user.id)
-    .single();
-  return profile?.role === "admin" ? user : null;
-}
 
 export async function GET(
   request: Request,
@@ -54,7 +45,6 @@ export async function PUT(
   const { data, error } = await supabase
     .from("teachers")
     .update({
-      phone,
       employee_id,
       branch_id: branch_id || null,
       specialization: specialization || [],
@@ -72,6 +62,12 @@ export async function PUT(
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // phone lives on users, not on the teachers table
+  if (phone !== undefined) {
+    const { error: phoneError } = await supabase.from("users").update({ phone: phone || null }).eq("id", data.user_id);
+    if (phoneError) return NextResponse.json({ error: phoneError.message }, { status: 500 });
   }
 
   return NextResponse.json({ message: "Teacher updated successfully", teacher: data });
@@ -96,9 +92,10 @@ export async function DELETE(
     .single();
 
   if (teacher) {
-    await supabase.from("teachers").delete().eq("id", id);
-    await supabase.from("users").delete().eq("id", teacher.user_id);
-    await supabase.auth.admin.deleteUser(teacher.user_id);
+    // Deleting the login cascades to users, teachers and parent links
+    const adminSupabase = await createAdminClient();
+    const { error } = await adminSupabase.auth.admin.deleteUser(teacher.user_id);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
   return NextResponse.json({ message: "Teacher deleted successfully" });

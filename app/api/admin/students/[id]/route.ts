@@ -1,17 +1,8 @@
 import { NextResponse } from "next/server";
 import { isValidSelection } from "@/lib/curriculum";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient, createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/auth";
 
-async function requireAdmin(supabase: any) {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return null;
-  const { data: profile } = await supabase
-    .from("users")
-    .select("role")
-    .eq("id", user.id)
-    .single();
-  return profile?.role === "admin" ? user : null;
-}
 
 export async function GET(
   request: Request,
@@ -59,7 +50,6 @@ export async function PUT(
   const { data, error } = await supabase
     .from("students")
     .update({
-      phone,
       roll_number,
       branch_id: branch_id || null,
       batch_id: batch_id || null,
@@ -80,6 +70,12 @@ export async function PUT(
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // phone lives on users, not on the students table
+  if (phone !== undefined) {
+    const { error: phoneError } = await supabase.from("users").update({ phone: phone || null }).eq("id", data.user_id);
+    if (phoneError) return NextResponse.json({ error: phoneError.message }, { status: 500 });
   }
 
   return NextResponse.json({ message: "Student updated successfully", student: data });
@@ -104,9 +100,10 @@ export async function DELETE(
     .single();
 
   if (student) {
-    await supabase.from("students").delete().eq("id", id);
-    await supabase.from("users").delete().eq("id", student.user_id);
-    await supabase.auth.admin.deleteUser(student.user_id);
+    // Deleting the login cascades to users, students and parent links
+    const adminSupabase = await createAdminClient();
+    const { error } = await adminSupabase.auth.admin.deleteUser(student.user_id);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
   return NextResponse.json({ message: "Student deleted successfully" });

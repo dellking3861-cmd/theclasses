@@ -37,6 +37,8 @@ export async function POST(request: Request) {
   }
 
   if (!profile.is_active) {
+    // signIn already set the session cookie; clear it so the account really stays locked out
+    await supabase.auth.signOut();
     return NextResponse.json(
       { error: "Account has been deactivated" },
       { status: 403 }

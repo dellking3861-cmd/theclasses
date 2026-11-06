@@ -1,61 +1,77 @@
-"use client";
-
+import { createClient } from "@/lib/supabase/server";
 import { PageHeader, StatCard } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SimpleBarChart from "@/components/charts/SimpleBarChart";
-import { Users, CreditCard, ClipboardCheck, TrendingUp } from "lucide-react";
+import { boardLabel } from "@/lib/curriculum";
+import { Users, CreditCard, ClipboardCheck, UserPlus } from "lucide-react";
 
-const enrollmentData = [
-  { month: "Jan", students: 120 }, { month: "Feb", students: 145 },
-  { month: "Mar", students: 180 }, { month: "Apr", students: 210 },
-  { month: "May", students: 250 }, { month: "Jun", students: 290 },
-];
+export const metadata = { title: "Analytics" };
 
-const revenueData = [
-  { month: "Jan", revenue: 450000 }, { month: "Feb", revenue: 520000 },
-  { month: "Mar", revenue: 680000 }, { month: "Apr", revenue: 750000 },
-  { month: "May", revenue: 890000 }, { month: "Jun", revenue: 950000 },
-];
+// Months are counted in Karachi time, so a payment at 00:30 on the 1st lands in the right month
+const monthKey = (d: string | Date) =>
+  new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Karachi", year: "numeric", month: "2-digit" }).format(new Date(d)).slice(0, 7);
 
-const boardDistribution = [
-  { name: "AKU-EB", value: 35, color: "#4f46e5" },
-  { name: "Sindh Board", value: 25, color: "#10b981" },
-  { name: "Cambridge O", value: 22, color: "#8b5cf6" },
-  { name: "Cambridge A", value: 18, color: "#f59e0b" },
-];
+function lastMonths(n: number): { key: string; label: string }[] {
+  const [y, m] = monthKey(new Date()).split("-").map(Number);
+  return Array.from({ length: n }, (_, i) => {
+    const d = new Date(Date.UTC(y, m - 1 - (n - 1 - i), 15));
+    return { key: d.toISOString().slice(0, 7), label: d.toLocaleString("en", { month: "short", timeZone: "UTC" }) };
+  });
+}
 
-export default function AdminAnalyticsPage() {
+export default async function AdminAnalyticsPage() {
+  const supabase = await createClient();
+  const months = lastMonths(6);
+  const since = `${months[0].key}-01`;
+
+  // shortcut: loads every student row and 6 months of payments/attendance; fine for one campus, move to SQL aggregates past ~10k rows
+  const [{ data: students }, { data: payments }, { data: attendance }] = await Promise.all([
+    supabase.from("students").select("board, created_at, is_active"),
+    supabase.from("payments").select("paid_amount, paid_at").not("paid_at", "is", null).gte("paid_at", since),
+    supabase.from("attendance").select("status").gte("date", since),
+  ]);
+
+  const newByMonth = new Map<string, number>();
+  for (const s of students ?? []) newByMonth.set(monthKey(s.created_at), (newByMonth.get(monthKey(s.created_at)) ?? 0) + 1);
+  const feesByMonth = new Map<string, number>();
+  for (const p of payments ?? []) feesByMonth.set(monthKey(p.paid_at!), (feesByMonth.get(monthKey(p.paid_at!)) ?? 0) + Number(p.paid_amount ?? 0));
+  const byBoard = new Map<string, number>();
+  for (const s of students ?? []) if (s.is_active) byBoard.set(boardLabel(s.board) || "No board", (byBoard.get(boardLabel(s.board) || "No board") ?? 0) + 1);
+
+  const thisMonth = months[months.length - 1].key;
+  const marked = attendance?.length ?? 0;
+  const present = attendance?.filter((a) => a.status === "present" || a.status === "late").length ?? 0;
+
   return (
     <div>
-      <PageHeader title="Analytics Dashboard" description="Platform performance insights" />
+      <PageHeader title="Analytics Dashboard" description="Live figures from your records (last 6 months)" />
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <StatCard title="Monthly Enrollments" value="290" icon={Users} change="+15.6%" changeType="positive" />
-        <StatCard title="Monthly Revenue" value="PKR 950K" icon={CreditCard} change="+8.2%" changeType="positive" />
-        <StatCard title="Avg. Attendance" value="87.5%" icon={ClipboardCheck} change="+2.1%" changeType="positive" />
-        <StatCard title="Retention Rate" value="94.2%" icon={TrendingUp} change="+1.3%" changeType="positive" />
+        <StatCard title="Active Students" value={(students ?? []).filter((s) => s.is_active).length} icon={Users} />
+        <StatCard title="New This Month" value={newByMonth.get(thisMonth) ?? 0} icon={UserPlus} />
+        <StatCard title="Fees Collected This Month" value={`PKR ${(feesByMonth.get(thisMonth) ?? 0).toLocaleString("en-PK")}`} icon={CreditCard} />
+        <StatCard title="Attendance Rate" value={marked ? `${Math.round((present / marked) * 100)}%` : "—"} icon={ClipboardCheck} />
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6 mb-6">
         <Card>
-          <CardHeader><CardTitle>Enrollment Trend</CardTitle></CardHeader>
+          <CardHeader><CardTitle>New Students per Month</CardTitle></CardHeader>
           <CardContent>
-            <SimpleBarChart data={enrollmentData.map(item => ({ label: item.month, value: item.students }))} />
+            <SimpleBarChart data={months.map((m) => ({ label: m.label, value: newByMonth.get(m.key) ?? 0 }))} />
           </CardContent>
         </Card>
-
         <Card>
-          <CardHeader><CardTitle>Revenue Trend</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Fees Collected per Month (PKR)</CardTitle></CardHeader>
           <CardContent>
-            <SimpleBarChart data={revenueData.map(item => ({ label: item.month, value: item.revenue / 10000 }))} />
+            <SimpleBarChart data={months.map((m) => ({ label: m.label, value: Math.round(feesByMonth.get(m.key) ?? 0) }))} />
           </CardContent>
         </Card>
       </div>
 
       <Card>
-        <CardHeader><CardTitle>Students by Board</CardTitle></CardHeader>
+        <CardHeader><CardTitle>Active Students by Board</CardTitle></CardHeader>
         <CardContent>
-          <SimpleBarChart data={boardDistribution.map(item => ({ label: item.name, value: item.value }))} />
+          <SimpleBarChart data={[...byBoard].sort((a, b) => b[1] - a[1]).map(([label, value]) => ({ label, value }))} />
         </CardContent>
       </Card>
     </div>

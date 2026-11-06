@@ -57,3 +57,9 @@ export async function signOut() {
   await supabase.auth.signOut();
   redirect("/login");
 }
+
+/** API guard: true only for an active admin (the database's is_admin() also checks is_active). */
+export async function requireAdmin(supabase: Awaited<ReturnType<typeof createClient>>): Promise<boolean> {
+  const { data } = await supabase.rpc("is_admin");
+  return data === true;
+}

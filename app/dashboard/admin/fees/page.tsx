@@ -21,7 +21,7 @@ export default function AdminFeesPage() {
     const fetchAll = async () => {
       try {
         const [feesData, studentsData] = await Promise.all([
-          adminApi.getFees(),
+          adminApi.getPayments(),
           adminApi.getStudents(),
         ]);
         setFees(feesData);

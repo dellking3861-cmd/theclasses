@@ -23,7 +23,8 @@ import { compactHours, type BusinessProfile } from "@/lib/google-business";
 import { BOARDS, getOffering } from "@/lib/curriculum";
 import { CourseFinder } from "@/components/landing/course-finder";
 import { WhatsAppIcon } from "@/components/layout/whatsapp-icon";
-import { SocialLinks } from "@/components/layout/social-icons";
+import { SocialLinks, InstagramIcon } from "@/components/layout/social-icons";
+import { FOUNDER } from "@/lib/seo";
 
 const container = "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8";
 
@@ -253,6 +254,44 @@ export function TeachingSection() {
   );
 }
 
+// ─── Free lessons (where students already are) ───────────────────────────
+
+export function FreeLessonsBand() {
+  return (
+    <section className="bg-white pb-4">
+      <div className={container}>
+        <div className="grid gap-4 overflow-hidden rounded-3xl bg-ink p-6 text-white sm:p-8 md:grid-cols-[1.4fr_1fr] md:items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-400">Try before you join</p>
+            <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl">Free lessons from Sir Wasi on YouTube</h2>
+            <p className="mt-2 max-w-xl text-stone-300">
+              Watch real classes, including Sindh Board Maths for Class 9 and 10, and see if the teaching style clicks for you.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
+            <a
+              href={FOUNDER.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#cc0029] px-5 font-semibold text-white transition hover:bg-[#b00024]"
+            >
+              <PlayCircle className="h-5 w-5" aria-hidden="true" /> Watch on YouTube
+            </a>
+            <a
+              href={CONTACT.instagramHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/20 px-5 font-semibold text-white transition hover:bg-white/10"
+            >
+              <InstagramIcon className="h-5 w-5" /> Follow on Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Visit us: campus photo, map, hours ───────────────────────────────────
 
 export function VisitSection({ profile }: { profile: BusinessProfile | null }) {
@@ -323,7 +362,7 @@ export function VisitSection({ profile }: { profile: BusinessProfile | null }) {
                   href={CONTACT.writeReviewHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-stone-700 hover:text-ink hover:underline"
+                  className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-stone-700 hover:text-ink hover:underline"
                 >
                   <Star className="h-4 w-4 fill-brand-500 text-brand-500" aria-hidden="true" />
                   {profile?.rating ? `Rated ${profile.rating.toFixed(1)} on Google · Write a review` : "Review us on Google"}

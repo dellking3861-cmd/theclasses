@@ -95,8 +95,7 @@ export function DashboardSidebar({ navItems, user, onSignOut }: DashboardSidebar
         <div className={cn("flex items-center h-16 px-4 border-b border-yellow-50", isCollapsed ? "justify-center" : "justify-between")}>
           {!isCollapsed && (
             <Link href="/home" className="flex items-center gap-2">
-              <img src="/logo.png" alt={APP_NAME} className="h-7 w-auto" />
-              <span className="font-bold text-slate-900 text-sm">{APP_NAME}</span>
+              <img src="/logo-wordmark.png" alt={APP_NAME} className="h-10 w-auto" />
             </Link>
           )}
           {isCollapsed && (
@@ -112,7 +111,8 @@ export function DashboardSidebar({ navItems, user, onSignOut }: DashboardSidebar
 
         <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
           {navItems.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            const isRoot = item.href.split("/").length === 3; // e.g. /dashboard/admin
+            const isActive = pathname === item.href || (!isRoot && pathname.startsWith(`${item.href}/`));
             const Icon = iconMap[item.icon];
             return (
               <Link
@@ -171,17 +171,14 @@ export function DashboardSidebar({ navItems, user, onSignOut }: DashboardSidebar
 
 interface DashboardHeaderProps {
   title?: string;
-  notificationCount?: number;
 }
 
-export function DashboardHeader({ title, notificationCount = 0 }: DashboardHeaderProps) {
+export function DashboardHeader({ title }: DashboardHeaderProps) {
   const { toggle, isCollapsed } = useSidebarStore();
 
   return (
     <header className={cn(
       "sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-yellow-100 bg-[#fffbeb]/80 backdrop-blur-xl px-4 lg:px-6",
-      "transition-all duration-300",
-      isCollapsed ? "lg:ml-[72px]" : "lg:ml-64"
     )}>
       <button
         onClick={toggle}
@@ -191,16 +188,6 @@ export function DashboardHeader({ title, notificationCount = 0 }: DashboardHeade
         <Menu className="h-5 w-5" />
       </button>
       {title && <h1 className="text-lg font-semibold text-slate-900">{title}</h1>}
-      <div className="ml-auto flex items-center gap-3">
-        <button className="relative p-2 rounded-lg hover:bg-yellow-50 text-slate-600">
-          <Bell className="h-5 w-5" />
-          {notificationCount > 0 && (
-            <span className="absolute top-1 right-1 h-4 w-4 rounded-full bg-yellow-500 text-[10px] font-bold text-white flex items-center justify-center">
-              {notificationCount > 9 ? "9+" : notificationCount}
-            </span>
-          )}
-        </button>
-      </div>
     </header>
   );
 }

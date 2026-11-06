@@ -82,19 +82,19 @@ export function PublicFooter() {
                 </a>
               </li>
               <li>
-                <a href={CONTACT.phoneHref} className="flex items-center gap-3 text-stone-400 hover:text-white">
+                <a href={CONTACT.phoneHref} className="flex min-h-11 items-center gap-3 text-stone-400 hover:text-white">
                   <Phone className="h-4 w-4 shrink-0 text-brand-500" aria-hidden="true" />
                   {CONTACT.phoneDisplay}
                 </a>
               </li>
               <li>
-                <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-stone-400 hover:text-white">
+                <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer" className="flex min-h-11 items-center gap-3 text-stone-400 hover:text-white">
                   <WhatsAppIcon className="h-4 w-4 shrink-0 text-brand-500" />
                   WhatsApp us
                 </a>
               </li>
               <li>
-                <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-3 break-all text-stone-400 hover:text-white">
+                <a href={`mailto:${CONTACT.email}`} className="flex min-h-11 items-center gap-3 break-all text-stone-400 hover:text-white">
                   <Mail className="h-4 w-4 shrink-0 text-brand-500" aria-hidden="true" />
                   {CONTACT.email}
                 </a>

@@ -13,7 +13,8 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get("page") || "1");
   const pageSize = parseInt(searchParams.get("pageSize") || "20");
-  const search = searchParams.get("search") || "";
+  // , ( ) would split or break the PostgREST or() filter below
+  const search = (searchParams.get("search") || "").replace(/[,()\s]+/g, " ").trim();
 
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;

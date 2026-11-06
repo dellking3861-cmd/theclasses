@@ -3,6 +3,7 @@ import {
   BoardsStrip,
   PathwaysSection,
   TeachingSection,
+  FreeLessonsBand,
   VisitSection,
   FaqSection,
   AdmissionSection,
@@ -28,6 +29,7 @@ export default async function HomePage() {
       <BoardsStrip />
       <PathwaysSection />
       <TeachingSection />
+      <FreeLessonsBand />
       <VisitSection profile={profile} />
       <FaqSection />
       <AdmissionSection />

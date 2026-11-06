@@ -75,9 +75,16 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/home", request.url), 308);
   }
 
-  if (isAuthRoute(pathname) && user) {
-    const dashboardPath = ROLE_DASHBOARD_PATHS["admin" as UserRole] || "/dashboard/admin";
-    return NextResponse.redirect(new URL(dashboardPath, request.url));
+  // Role and status, only where a redirect depends on them
+  const { data: profile } =
+    user && (isAuthRoute(pathname) || isDashboardRoute(pathname))
+      ? await supabase.from("users").select("role, is_active").eq("id", user.id).single()
+      : { data: null };
+
+  // Signed-in, active users skip login/register and go straight to their own dashboard.
+  // Inactive ones stay, otherwise /login and the dashboard would redirect to each other forever.
+  if (isAuthRoute(pathname) && profile?.is_active) {
+    return NextResponse.redirect(new URL(ROLE_DASHBOARD_PATHS[profile.role as UserRole] || "/home", request.url));
   }
 
   if (isDashboardRoute(pathname)) {
@@ -87,19 +94,13 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
-    // Get profile role
-    const { data: profile } = await supabase
-      .from("users")
-      .select("role, is_active")
-      .eq("id", user.id)
-      .single();
-
     if (!profile?.is_active) {
       return NextResponse.redirect(new URL("/login?error=inactive", request.url));
     }
 
     const requiredRole = getRequiredRole(pathname);
-    if (requiredRole && profile.role !== requiredRole) {
+    // Also sends a bare /dashboard to the user's own dashboard
+    if (profile.role !== requiredRole) {
       const correctDashboard = ROLE_DASHBOARD_PATHS[profile.role as UserRole] || "/home";
       return NextResponse.redirect(new URL(correctDashboard, request.url));
     }

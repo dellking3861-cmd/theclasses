@@ -48,16 +48,16 @@ export function StatCard({ title, value, change, changeType = "neutral", icon: I
   };
 
   return (
-    <Card className={cn("p-6", className)}>
+    <Card className={cn("p-4 sm:p-6", className)}>
       <div className="flex items-start justify-between">
         <div className="space-y-2">
           <p className="text-sm font-medium text-slate-500">{title}</p>
-          <p className="text-2xl font-bold text-slate-900">{value}</p>
+          <p className="text-xl font-bold text-slate-900 sm:text-2xl">{value}</p>
           {change && (
             <p className={cn("text-xs font-medium", changeColors[changeType])}>{change}</p>
           )}
         </div>
-        <div className="rounded-lg bg-yellow-25 p-3">
+        <div className="hidden rounded-lg bg-yellow-25 p-3 sm:block">
           <Icon className="h-5 w-5 text-yellow-500" />
         </div>
       </div>

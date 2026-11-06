@@ -168,15 +168,6 @@ export const adminApi = {
   deleteBranch: (id: string) => fetchApi(`/branches/${id}`, { method: 'DELETE' }),
 
   // Fees (Payments)
-  getFees: (params?: { page?: number; pageSize?: number; search?: string; studentId?: string; status?: string }) => {
-    const searchParams = new URLSearchParams();
-    if (params?.page) searchParams.append('page', params.page.toString());
-    if (params?.pageSize) searchParams.append('pageSize', params.pageSize.toString());
-    if (params?.search) searchParams.append('search', params.search);
-    if (params?.studentId) searchParams.append('studentId', params.studentId);
-    if (params?.status) searchParams.append('status', params.status);
-    return fetchApi<{ data: any[]; total: number; page: number; pageSize: number }>(`/fees?${searchParams.toString()}`);
-  },
 
   createFee: (data: any) => fetchApi('/fees', { method: 'POST', body: JSON.stringify(data) }),
   updateFee: (id: string, data: any) => fetchApi(`/fees/${id}`, { method: 'PUT', body: JSON.stringify(data) }),

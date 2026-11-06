@@ -4,11 +4,5 @@
   "framework": "nextjs",
   "regions": [
     "iad1"
-  ],
-  "crons": [
-    {
-      "path": "/api/cron/google-sync",
-      "schedule": "17 2 * * *"
-    }
   ]
 }

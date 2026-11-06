@@ -11,7 +11,6 @@ const studentNav = [
   { href: "/dashboard/student/attendance", label: "Attendance", icon: "ClipboardCheck" },
   { href: "/dashboard/student/exams", label: "Exams", icon: "FileText" },
   { href: "/dashboard/student/fees", label: "Fees", icon: "CreditCard" },
-  { href: "/dashboard/student/ai-tutor", label: "AI Tutor", icon: "Brain" },
   { href: "/dashboard/student/progress", label: "Progress", icon: "BarChart3" },
 ];
 

@@ -13,6 +13,7 @@ const PUBLIC_ROUTES = [
   "/login",
   "/register",
   "/forgot-password",
+  "/reset-password",
   "/api",
   "/robots.txt",
   "/sitemap.xml",

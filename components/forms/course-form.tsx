@@ -50,9 +50,10 @@ interface CourseFormProps {
   onSuccess: () => void;
   initialData?: CourseFormData & { id: string } | null;
   branches?: { id: string; name: string }[];
+  batches?: { id: string; name: string }[];
 }
 
-export function CourseForm({ open, onClose, onSuccess, initialData, branches = [] }: CourseFormProps) {
+export function CourseForm({ open, onClose, onSuccess, initialData, branches = [], batches = [] }: CourseFormProps) {
   const isEditing = !!initialData;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -172,7 +173,7 @@ export function CourseForm({ open, onClose, onSuccess, initialData, branches = [
             <Select label="Branch" placeholder="Select branch" error={errors.branch_id?.message} options={branches.map(b => ({ value: b.id, label: b.name }))} {...register("branch_id")} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Select label="Batch" placeholder="Select batch" error={errors.batch_id?.message} options={[]} {...register("batch_id")} />
+            <Select label="Batch" placeholder="Select batch" error={errors.batch_id?.message} options={batches.map(b => ({ value: b.id, label: b.name }))} {...register("batch_id")} />
             <Input label="Fee Amount" type="number" min={0} error={errors.fee_amount?.message} {...register("fee_amount", { valueAsNumber: true })} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">

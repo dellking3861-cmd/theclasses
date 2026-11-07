@@ -103,7 +103,7 @@ export function PublicFooter() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-6 text-sm text-stone-500">
+        <div className="mt-12 border-t border-white/10 pt-6 text-sm text-stone-400">
           &copy; {new Date().getFullYear()} {APP_NAME} Education System. All rights reserved.
         </div>
       </div>

@@ -142,7 +142,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: `Failed to create student record: ${studentError.message}` }, { status: 500 });
   }
 
-  const linkError = await setLinks(adminSupabase, "enrollments", "student_id", student.id, "course_id", course_ids);
+  const linkError = await setLinks(adminSupabase, "enrollments", "student_id", student.id, "course_id", course_ids, { status: "active" });
   if (linkError) return NextResponse.json({ error: `Student created, but enrolling in courses failed: ${linkError}` }, { status: 500 });
 
   return NextResponse.json({

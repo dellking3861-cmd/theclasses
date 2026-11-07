@@ -5,7 +5,8 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 /**
  * Makes a link table hold exactly `ids` for one owner (a student's courses, a
  * parent's children): deletes links no longer listed, adds new ones.
- * `ids === undefined` leaves the links alone. Returns an error message or null.
+ * `ids === undefined` leaves the links alone. `extra` columns go on new links.
+ * Returns an error message or null.
  */
 export async function setLinks(
   db: SupabaseClient,
@@ -13,7 +14,8 @@ export async function setLinks(
   ownerCol: "student_id" | "parent_id",
   ownerId: string,
   otherCol: "course_id" | "student_id",
-  ids: unknown
+  ids: unknown,
+  extra: Record<string, unknown> = {}
 ): Promise<string | null> {
   if (ids === undefined) return null;
   if (!Array.isArray(ids) || !ids.every((id) => typeof id === "string" && UUID.test(id))) return "Invalid selection";
@@ -27,6 +29,6 @@ export async function setLinks(
   if (!keep.length) return null;
   const { error } = await db
     .from(table)
-    .upsert(keep.map((id) => ({ [ownerCol]: ownerId, [otherCol]: id })), { onConflict: `${ownerCol},${otherCol}`, ignoreDuplicates: true });
+    .upsert(keep.map((id) => ({ [ownerCol]: ownerId, [otherCol]: id, ...extra })), { onConflict: `${ownerCol},${otherCol}`, ignoreDuplicates: true });
   return error?.message ?? null;
 }

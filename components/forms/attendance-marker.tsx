@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
-import { adminApi, ALL } from "@/lib/api";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -17,8 +16,11 @@ const selectClass =
 // Today in Karachi, as YYYY-MM-DD
 const today = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Karachi" }).format(new Date());
 
-/** Pick a course and a date, set each enrolled student's status, save. Re-saving a day updates it. */
-export function AttendanceMarker() {
+/**
+ * Pick a course and a date, set each enrolled student's status, save. Re-saving a day updates it.
+ * Pass teacherId to limit the course list to that teacher's courses.
+ */
+export function AttendanceMarker({ teacherId }: { teacherId?: string }) {
   const supabase = useMemo(() => createClient(), []);
   const router = useRouter();
   const [courses, setCourses] = useState<{ id: string; title: string }[]>([]);
@@ -30,24 +32,22 @@ export function AttendanceMarker() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    adminApi.getCourses(ALL).then((r) => setCourses(r.data || [])).catch(() => toast.error("Could not load courses"));
-  }, []);
+    let q = supabase.from("courses").select("id, title").order("title");
+    if (teacherId) q = q.eq("teacher_id", teacherId);
+    q.then(({ data, error }) => (error ? toast.error("Could not load courses") : setCourses(data ?? [])));
+  }, [supabase, teacherId]);
 
   useEffect(() => {
     if (!courseId || !date) return;
     let active = true;
     Promise.all([
-      supabase.from("enrollments").select("student_id, student:students(user:users(full_name))").eq("course_id", courseId).eq("status", "active"),
+      supabase.rpc("course_roster", { p_course_id: courseId }),
       supabase.from("attendance").select("student_id, status").eq("course_id", courseId).eq("date", date),
     ]).then(([enr, att]) => {
       if (!active) return;
       setLoading(false);
       if (enr.error || att.error) return toast.error((enr.error ?? att.error)!.message);
-      const list = (enr.data ?? []).map((e) => {
-        const student = e.student as unknown as { user?: { full_name?: string } } | null;
-        return { id: e.student_id as string, name: student?.user?.full_name || "Unnamed student" };
-      });
-      list.sort((a, b) => a.name.localeCompare(b.name));
+      const list = ((enr.data ?? []) as { student_id: string; full_name: string }[]).map((r) => ({ id: r.student_id, name: r.full_name || "Unnamed student" }));
       setStudents(list);
       const saved = Object.fromEntries((att.data ?? []).map((a) => [a.student_id, a.status as Status]));
       setMarks(Object.fromEntries(list.map((s) => [s.id, saved[s.id] ?? "present"])));
@@ -91,7 +91,7 @@ export function AttendanceMarker() {
         </div>
 
         {courseId && !loading && students.length === 0 && (
-          <p className="text-sm text-slate-500">No students are enrolled in this course. Enrol them from the Students page (edit a student, tick the course).</p>
+          <p className="text-sm text-slate-500">No students are enrolled in this course. An admin enrols them from the Students page (edit a student, tick the course).</p>
         )}
 
         {students.length > 0 && (

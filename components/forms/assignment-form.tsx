@@ -95,7 +95,7 @@ export function AssignmentForm({ open, onClose, onSuccess, initialData, courses 
           <Textarea label="Description" placeholder="Assignment description" error={errors.description?.message} {...register("description")} />
           <Textarea label="Instructions" placeholder="Submission instructions" error={errors.instructions?.message} {...register("instructions")} />
           <div className="grid sm:grid-cols-2 gap-4">
-            <Input label="Max Marks" type="number" min={1} error={errors.max_marks?.message} {...register("max_marks")} />
+            <Input label="Max Marks" type="number" min={1} error={errors.max_marks?.message} {...register("max_marks", { valueAsNumber: true })} />
             <Select label="Status" error={errors.status?.message} options={[
               { value: "draft", label: "Draft" },
               { value: "published", label: "Published" },

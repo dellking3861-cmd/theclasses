@@ -135,7 +135,7 @@ export function StudentForm({ open, onClose, onSuccess, initialData, branches = 
             <Select label="Branch" placeholder="Select branch" error={errors.branch_id?.message} options={branches.map(b => ({ value: b.id, label: b.name }))} {...register("branch_id")} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Select label="Batch" placeholder="Select batch" error={errors.batch_id?.message} options={branches.map(b => ({ value: b.id, label: b.name }))} {...register("batch_id")} />
+            <Select label="Batch" placeholder="Select batch" error={errors.batch_id?.message} options={batches.map(b => ({ value: b.id, label: b.name }))} {...register("batch_id")} />
             <Input label="Date of Birth" type="date" error={errors.date_of_birth?.message} {...register("date_of_birth")} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">

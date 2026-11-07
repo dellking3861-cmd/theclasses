@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient, createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/auth";
+import { setAccountActive } from "@/lib/account-status";
 
 
 export async function GET(
@@ -99,4 +100,8 @@ export async function DELETE(
   }
 
   return NextResponse.json({ message: "Teacher deleted successfully" });
+}
+/** Activate or deactivate the account; only the status changes. */
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  return setAccountActive(request, "teachers", (await params).id);
 }

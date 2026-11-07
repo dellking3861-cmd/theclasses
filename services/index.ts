@@ -14,7 +14,6 @@ import type {
   Batch,
   StudentProgress,
   Notification,
-  Parent,
 } from "@/types";
 import { createSuccessResponse, createErrorResponse, handleApiError } from "./api";
 
@@ -300,63 +299,6 @@ export class TeacherService {
       .select("*, student:students(*, user:users(*))")
       .eq("course_id", courseId)
       .eq("status", "active");
-    if (error) throw error;
-    return data;
-  }
-}
-
-export class ParentService {
-  static async getProfile(userId: string) {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("parents")
-      .select("*, user:users(*)")
-      .eq("user_id", userId)
-      .single();
-    if (error) throw error;
-    return data as Parent;
-  }
-
-  static async getLinkedStudents(parentId: string) {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("parent_students")
-      .select("*, student:students(*, user:users(*), branch:branches(*))")
-      .eq("parent_id", parentId);
-    if (error) throw error;
-    return data;
-  }
-
-  static async getStudentAttendance(studentId: string) {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("attendance")
-      .select("*, course:courses(*)")
-      .eq("student_id", studentId)
-      .order("date", { ascending: false })
-      .limit(30);
-    if (error) throw error;
-    return data as Attendance[];
-  }
-
-  static async getStudentPayments(studentId: string) {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("payments")
-      .select("*, course:courses(*)")
-      .eq("student_id", studentId)
-      .order("due_date", { ascending: false });
-    if (error) throw error;
-    return data as Payment[];
-  }
-
-  static async getStudentExamResults(studentId: string) {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("exam_results")
-      .select("*, exam:exams(*, course:courses(*))")
-      .eq("student_id", studentId)
-      .order("created_at", { ascending: false });
     if (error) throw error;
     return data;
   }

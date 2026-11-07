@@ -46,7 +46,8 @@ Tell each person their email and starting password. They can change it with "For
 | Enrol a student in a course | **Students → Edit** | Tick or untick courses, then **Update** |
 | Link a parent to a child | **Parents → Edit** | Tick the children, then **Update** |
 | Change someone's name or phone | Students, Teachers or Parents **→ Edit** | Email can't be changed here |
-| Deactivate or delete someone | *Not on the website yet* | Ask your developer. Deleting is permanent and removes all their records |
+| Stop someone signing in | Students, Teachers or Parents **→ Deactivate** | Their records stay. **Reactivate** lets them back in |
+| Delete someone | **→ Delete** | **Permanent:** removes their login and all their records (attendance, fees, results). Prefer Deactivate |
 | Record a fee | **Fee Management → Add Fee Record** | Student, amount, paid amount, status, due date |
 | Mark attendance | **Attendance** | Pick course and date, set each student Present/Absent/Late/Excused, **Save**. Saving the same day again updates it |
 | Add a YouTube lecture | **Study Materials → Add lecture** | Paste the YouTube link (Public or Unlisted; the title fills in), choose level/board/subject |
@@ -98,8 +99,10 @@ Free lessons are also on Sir Wasi's YouTube channel (link on the home page).
 
 | Page | What you see |
 |---|---|
-| **Overview** | Your linked children |
-| Attendance, Academic Reports, Fee Status, Teacher Feedback, Exam Results, Notifications | *Coming soon* |
+| **Overview** | Your children, their attendance rate, fees due and number of results |
+| **Attendance** | Each child's classes, newest first, with present/absent/late |
+| **Fees** | Each fee record, amount paid and what is outstanding. Pay at the office or by bank transfer, JazzCash or EasyPaisa |
+| **Exam Results** | Marks, percentage, grade and pass/fail as teachers publish them |
 
 If your child is missing, ask the office to link them to your account.
 

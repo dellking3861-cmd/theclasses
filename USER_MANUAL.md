@@ -47,20 +47,21 @@ Tell each person their email and starting password. They can change it with "For
 | Link a parent to a child | **Parents → Edit** | Tick the children, then **Update** |
 | Change someone's name or phone | Students, Teachers or Parents **→ Edit** | Email can't be changed here |
 | Stop someone signing in | Students, Teachers or Parents **→ Deactivate** | Their records stay. **Reactivate** lets them back in |
-| Delete someone | **→ Delete** | **Permanent:** removes their login and all their records (attendance, fees, results). Prefer Deactivate |
-| Record a fee | **Fee Management → Add Fee Record** | Student, amount, paid amount, status, due date |
+| Delete someone | **→ Delete** | **Permanent:** removes their login and all their records (attendance, fees, results). Prefer Deactivate. Before deleting a teacher, delete their lectures and PDFs in **Study Materials**: they are not removed automatically |
+| Record a fee | **Fee Management → Add Fee Record** | Student, amount, paid amount, status, due date. Paid can't be more than the fee, and fees can't be negative |
 | Mark attendance | **Attendance** | Pick course and date, set each student Present/Absent/Late/Excused, **Save**. Saving the same day again updates it |
 | Add a YouTube lecture | **Study Materials → Add lecture** | Paste the YouTube link (Public or Unlisted; the title fills in), choose level/board/subject |
 | Upload notes or a past paper | **Study Materials → Upload PDF** | PDF up to 25 MB, type, level/board/subject, year |
 | Hide material without deleting | **Study Materials** | Tap the eye icon |
 | See the numbers | **Analytics** | Active students, new this month, fees collected, attendance rate, students by board |
 | Post news | **Announcements** or **Blog Portal** | Create, then publish |
-| Schedule exams and assignments | **Exams**, **Assignments** | Create for a course and teacher |
+| Schedule exams and assignments | **Exams**, **Assignments** | Create for a course and teacher. Students only see an assignment once its status is **Published** (Draft stays hidden) |
 
 **Tips**
 - Only students ticked into a course appear on its attendance list.
 - "Students only" materials need a signed-in student. "Public" ones are visible to anyone.
 - Payment *methods* are recorded by you. There is no online payment on the website.
+- Exam marks can't be entered on the website yet, so exam results and student progress stay empty for now.
 
 ---
 
@@ -86,7 +87,7 @@ If a course or student is missing, ask the office: the course must have you as i
 | **My Courses** | Courses you're enrolled in |
 | **Lectures** | Recorded lessons for your class. Tap one to play it here |
 | **Notes & Past Papers** | PDFs for your class. **View** opens them, **Download** saves them |
-| **Assignments** | What's set for your courses and due dates (submit work to your teacher in class; online submission is coming soon) |
+| **Assignments** | Published assignments for your courses and their due dates (submit work to your teacher in class; online submission is coming soon) |
 | **Attendance**, **Exams**, **Fees**, **Progress** | Your records and results as the office enters them |
 
 Lectures and notes first show **My class** (your board and group). Tap **Everything** to see all subjects.
@@ -102,7 +103,7 @@ Free lessons are also on Sir Wasi's YouTube channel (link on the home page).
 | **Overview** | Your children, their attendance rate, fees due and number of results |
 | **Attendance** | Each child's classes, newest first, with present/absent/late |
 | **Fees** | Each fee record, amount paid and what is outstanding. Pay at the office or by bank transfer, JazzCash or EasyPaisa |
-| **Exam Results** | Marks, percentage, grade and pass/fail as teachers publish them |
+| **Exam Results** | Marks, percentage, grade and pass/fail. Entering marks on the website is coming soon, so this is empty for now |
 
 If your child is missing, ask the office to link them to your account.
 

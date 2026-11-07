@@ -31,11 +31,15 @@ flowchart TD
     D2["PR 20-21: tests, removed Google OAuth sync,<br/>AI tutor stub, fees copy, unused deps"]
     D3["PR 22: password reset page"]
     D4["PR 23: search fix, login redirects,<br/>dashboard UI fixes, YouTube band"]
+    D5["PR 25-29: batch/teacher dropdowns, enrolments,<br/>parent links, admin + teacher attendance"]
+    D6["PR 30-33: security audit, docs,<br/>parent pages, deactivate/delete"]
+    D7["PR 34-35: live QA fixes: number fields in forms,<br/>assignment + exam-result RLS, fee checks, deactivate"]
   end
   subgraph Todo["Open"]
-    O1["Verify admin pages while signed in"]
+    O1["No UI to enter exam marks (exam_results)"]
     O2["Supabase Pro: storage beyond 1 GB + backups"]
-    O3["58 old no-explicit-any lint errors"]
+    O3["Deleting a teacher leaves their PDFs in storage"]
+    O4["Leaked-password protection: user turns on in Supabase"]
   end
   V -->|serves| MW
   MW --> PUB
@@ -50,9 +54,9 @@ flowchart TD
   SB --- T5
   PUB -->|cached 6h| G
   DASH -->|embed| YT
-  Done -.->|npm test: 10 pass| App
+  Done -.->|npm test: 16 pass| App
   classDef todo fill:#fff4e5,stroke:#d97706
-  class O1,O2,O3 todo
+  class O1,O2,O3,O4 todo
 ```
 
 ## Facts that are easy to get wrong
@@ -64,3 +68,7 @@ flowchart TD
 - Admin-created users set `provisioned_by: "admin"` in user metadata so the sign-up
   trigger skips them.
 - Deleting a login cascades to users, role rows and parent links.
+- `users` UPDATE is column-granted (name, phone, avatar, last login only), even for admins;
+  changing `is_active` or `role` needs the service client.
+- Enrollments default to `pending`; readers filter on `active`, so admin enrolments set `active`.
+- Number inputs in react-hook-form need `valueAsNumber: true`, or zod rejects them as strings.

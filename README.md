@@ -55,7 +55,7 @@ Never commit `.env.local`.
 npm test
 ```
 
-- `tests/db/`: database tests on an in-memory Postgres (PGlite). They apply every migration in order and check the access rules: who can see and change people, enrollments, attendance and study materials.
+- `tests/db/`: database tests on an in-memory Postgres (PGlite). They apply every migration in order and check the access rules: who can see and change people, enrollments, attendance, assignments, exam results, fees and study materials.
 - `tests/*.test.ts`: unit tests (YouTube link parsing, class matching, rate limiter).
 
 Also run before merging:
@@ -76,7 +76,7 @@ npm run build
 2. Add or extend a test in `tests/db/` and run `npm test`. It applies all migrations from scratch.
 3. Apply it to the live project. Supabase records its own version number, so rename the file to that version so the repo and the database match.
 
-Access rules live in the database (RLS), not only in the app. Helper functions: `is_admin()`, `is_staff()` (active admin or teacher), `is_active_member()`, and `course_roster(course)` (names a course's teacher or an admin may see).
+Access rules live in the database (RLS), not only in the app. Logged-in roles, admins included, can update only `full_name`, `phone`, `avatar_url` and `last_login_at` on `users`; admin routes that change `is_active` or `role` must use the service client after `requireAdmin`. Helper functions: `is_admin()`, `is_staff()` (active admin or teacher), `is_active_member()`, and `course_roster(course)` (names a course's teacher or an admin may see).
 
 ## How access works
 

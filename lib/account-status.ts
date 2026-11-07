@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient, createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/auth";
 
 /**
@@ -17,7 +17,8 @@ export async function setAccountActive(request: Request, table: "students" | "te
   const { data: row } = await supabase.from(table).select("user_id").eq("id", id).maybeSingle();
   if (!row) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  const { error } = await supabase.from("users").update({ is_active: body.is_active }).eq("id", row.user_id);
+  // users.is_active is column-locked for logged-in roles (security_hardening), so write it with the service client
+  const { error } = await (await createAdminClient()).from("users").update({ is_active: body.is_active }).eq("id", row.user_id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   // students and teachers also keep their own flag, which list pages and filters read
   if (table !== "parents") await supabase.from(table).update({ is_active: body.is_active }).eq("id", id);

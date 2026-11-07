@@ -35,3 +35,24 @@ test("students and parents can read their own links but not write", async () => 
   await assert.rejects(as(db, S, "INSERT INTO attendance (student_id, course_id, date) VALUES ($1, $2, '2026-11-08')", [sid, cid]));
   await assert.rejects(as(db, P, "INSERT INTO parent_students (parent_id, student_id) VALUES ($1, $2)", [pid, sid]));
 });
+
+test("teachers see the roster and mark attendance only for their own course", async () => {
+  const { db, sid, cid } = await setup();
+  const T = "00000000-0000-0000-0000-00000000000b", T2 = "00000000-0000-0000-0000-00000000000e", TX = "00000000-0000-0000-0000-00000000000f";
+  await seedUsers(db, [{ id: T, role: "teacher" }, { id: T2, role: "teacher" }, { id: TX, role: "teacher", active: false }]);
+  const tid = (await db.query("INSERT INTO teachers (user_id) VALUES ($1) RETURNING id", [T])).rows[0].id;
+  const txid = (await db.query("INSERT INTO teachers (user_id) VALUES ($1) RETURNING id", [TX])).rows[0].id;
+  await db.query("UPDATE courses SET teacher_id = $1 WHERE id = $2", [tid, cid]);
+  const other = (await db.query("INSERT INTO courses (title, slug, course_type, teacher_id) VALUES ('Old', 'old', 'board', $1) RETURNING id", [txid])).rows[0].id;
+  await as(db, A, "INSERT INTO enrollments (student_id, course_id, status) VALUES ($1, $2, 'active'), ($1, $3, 'active')", [sid, cid, other]);
+
+  assert.equal((await as(db, T, "SELECT * FROM public.course_roster($1)", [cid])).length, 1); // own course: sees the student
+  assert.equal((await as(db, T2, "SELECT * FROM public.course_roster($1)", [cid])).length, 0); // not their course
+  assert.equal((await as(db, S, "SELECT * FROM public.course_roster($1)", [cid])).length, 0); // students get nothing
+  assert.equal((await as(db, TX, "SELECT * FROM public.course_roster($1)", [other])).length, 0); // deactivated teacher
+  assert.equal((await as(db, A, "SELECT * FROM public.course_roster($1)", [cid])).length, 1); // admin
+
+  assert.equal((await as(db, T, "INSERT INTO attendance (student_id, course_id, date) VALUES ($1, $2, '2026-11-07') RETURNING id", [sid, cid])).length, 1);
+  await assert.rejects(as(db, T2, "INSERT INTO attendance (student_id, course_id, date) VALUES ($1, $2, '2026-11-08')", [sid, cid]));
+  await assert.rejects(as(db, TX, "INSERT INTO attendance (student_id, course_id, date) VALUES ($1, $2, '2026-11-08')", [sid, other]));
+});

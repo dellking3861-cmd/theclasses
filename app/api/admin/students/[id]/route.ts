@@ -79,7 +79,7 @@ export async function PUT(
     if (phoneError) return NextResponse.json({ error: phoneError.message }, { status: 500 });
   }
 
-  const linkError = await setLinks(supabase, "enrollments", "student_id", id, "course_id", course_ids);
+  const linkError = await setLinks(supabase, "enrollments", "student_id", id, "course_id", course_ids, { status: "active" });
   if (linkError) return NextResponse.json({ error: `Saved, but updating courses failed: ${linkError}` }, { status: 500 });
 
   return NextResponse.json({ message: "Student updated successfully", student: data });

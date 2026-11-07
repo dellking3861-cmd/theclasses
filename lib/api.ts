@@ -1,3 +1,6 @@
+// shortcut: dropdowns load up to 1000 rows in one page; switch to a searchable picker past that
+export const ALL = { pageSize: 1000 };
+
 const API_BASE = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
 async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {

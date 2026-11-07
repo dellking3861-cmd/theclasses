@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { adminApi } from "@/lib/api";
+import { adminApi, ALL } from "@/lib/api";
 import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -76,13 +76,15 @@ export default function AdminCoursesPage() {
   const [editingCourse, setEditingCourse] = useState<typeof courses.data[0] | null>(null);
   const [branches, setBranches] = useState<{ id: string; name: string }[]>([]);
   const [batches, setBatches] = useState<{ id: string; name: string }[]>([]);
+  const [teachers, setTeachers] = useState<{ id: string; user?: { full_name: string } }[]>([]);
 
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const [data, batchData] = await Promise.all([adminApi.getBranches(), adminApi.getBatches()]);
+        const [data, batchData, teacherData] = await Promise.all([adminApi.getBranches(), adminApi.getBatches(), adminApi.getTeachers(ALL)]);
         setBranches(data.data || []);
         setBatches(batchData.data || []);
+        setTeachers(teacherData.data || []);
         setBranchesLoaded(true);
       } catch {}
     };
@@ -151,6 +153,7 @@ export default function AdminCoursesPage() {
           onSuccess={() => window.location.reload()}
           branches={branches}
           batches={batches}
+          teachers={teachers}
         />
     </div>
   );

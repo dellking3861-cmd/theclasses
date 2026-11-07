@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { adminApi } from "@/lib/api";
+import { adminApi, ALL } from "@/lib/api";
 import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -35,8 +35,8 @@ export default function AdminExamsPage() {
     const fetchAll = async () => {
       try {
         const [coursesData, teachersData] = await Promise.all([
-          adminApi.getCourses(),
-          adminApi.getTeachers(),
+          adminApi.getCourses(ALL),
+          adminApi.getTeachers(ALL),
         ]);
         setCourses(coursesData.data || []);
         setTeachers(teachersData.data || []);

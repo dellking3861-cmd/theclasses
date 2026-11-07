@@ -90,7 +90,7 @@ export function PaymentForm({ open, onClose, onSuccess, initialData, students = 
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogHeader title={isEditing ? "Edit Payment" : "Add Payment"} description={isEditing ? "Update payment information" : "Add a new payment record"} />
         <DialogContent className="space-y-4">
-          <Select label="Student" placeholder="Select student" error={errors.student_id?.message} options={[]} {...register("student_id")} />
+          <Select label="Student" placeholder="Select student" error={errors.student_id?.message} options={students.map(s => ({ value: s.id, label: s.full_name }))} {...register("student_id")} />
           <div className="grid sm:grid-cols-2 gap-4">
             <Input label="Amount" type="number" min="0.01" step="0.01" error={errors.amount?.message} {...register("amount")} />
             <Input label="Paid Amount" type="number" min="0" step="0.01" error={errors.paid_amount?.message} {...register("paid_amount")} />

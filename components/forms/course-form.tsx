@@ -51,9 +51,10 @@ interface CourseFormProps {
   initialData?: CourseFormData & { id: string } | null;
   branches?: { id: string; name: string }[];
   batches?: { id: string; name: string }[];
+  teachers?: { id: string; user?: { full_name: string } }[];
 }
 
-export function CourseForm({ open, onClose, onSuccess, initialData, branches = [], batches = [] }: CourseFormProps) {
+export function CourseForm({ open, onClose, onSuccess, initialData, branches = [], batches = [], teachers = [] }: CourseFormProps) {
   const isEditing = !!initialData;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -169,7 +170,7 @@ export function CourseForm({ open, onClose, onSuccess, initialData, branches = [
             )}
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Select label="Teacher" placeholder="Select teacher" error={errors.teacher_id?.message} options={[]} {...register("teacher_id")} />
+            <Select label="Teacher" placeholder="Select teacher" error={errors.teacher_id?.message} options={teachers.map(t => ({ value: t.id, label: t.user?.full_name || t.id }))} {...register("teacher_id")} />
             <Select label="Branch" placeholder="Select branch" error={errors.branch_id?.message} options={branches.map(b => ({ value: b.id, label: b.name }))} {...register("branch_id")} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">

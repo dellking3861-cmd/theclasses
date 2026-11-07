@@ -14,9 +14,14 @@ interface Teacher {
   employee_id: string | null;
   experience_years: number;
   is_active: boolean;
+  branch_id: string | null;
+  qualification: string | null;
+  bio: string | null;
+  hire_date: string | null;
   user?: {
     full_name: string;
     email: string;
+    phone?: string | null;
     avatar_url: string | null;
   };
 }
@@ -113,6 +118,9 @@ export default function AdminTeachersPage() {
                     {teacher.is_active ? "Active" : "Inactive"}
                   </Badge>
                 </div>
+                <Button variant="outline" size="sm" className="mt-4" onClick={() => handleEdit(teacher)}>
+                  Edit
+                </Button>
               </CardContent>
             </Card>
           ))}
@@ -120,8 +128,21 @@ export default function AdminTeachersPage() {
       )}
 
       <TeacherForm
+          key={editingTeacher?.id ?? "new"}
           open={isDialogOpen}
-          onClose={() => setIsDialogOpen(false)}
+          onClose={handleCloseDialog}
+          initialData={editingTeacher && {
+            id: editingTeacher.id,
+            email: editingTeacher.user?.email ?? "",
+            full_name: editingTeacher.user?.full_name ?? "",
+            phone: editingTeacher.user?.phone ?? "",
+            employee_id: editingTeacher.employee_id ?? "",
+            branch_id: editingTeacher.branch_id ?? "",
+            qualification: editingTeacher.qualification ?? "",
+            experience_years: editingTeacher.experience_years ?? 0,
+            bio: editingTeacher.bio ?? "",
+            hire_date: editingTeacher.hire_date ?? "",
+          }}
           onSuccess={() => window.location.reload()}
           branches={branches}
         />

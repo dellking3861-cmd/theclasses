@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { isValidSelection } from "@/lib/curriculum";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/auth";
+import { setLinks } from "@/lib/links";
 
 
 export async function GET(request: Request) {
@@ -24,7 +25,7 @@ export async function GET(request: Request) {
 
   let query = supabase
     .from("students")
-    .select("*, user:users(*), branch:branches(*), batch:batches(*)", { count: "exact" })
+    .select("*, user:users(*), branch:branches(*), batch:batches(*), enrollments(course_id)", { count: "exact" })
     .order("created_at", { ascending: false })
     .range(from, to);
 
@@ -62,7 +63,7 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { email, password, full_name, phone, roll_number, branch_id, batch_id, date_of_birth, gender, address, emergency_contact, grade, board, stage, group_code } = body;
+  const { email, password, full_name, phone, roll_number, branch_id, batch_id, date_of_birth, gender, address, emergency_contact, grade, board, stage, group_code, course_ids } = body;
 
   if (!isValidSelection({ board, stage, group: group_code }) || (board && !stage)) {
     return NextResponse.json({ error: "Choose a valid board, level and group" }, { status: 400 });
@@ -140,6 +141,9 @@ export async function POST(request: Request) {
     console.error("[admin] create student record failed", studentError);
     return NextResponse.json({ error: `Failed to create student record: ${studentError.message}` }, { status: 500 });
   }
+
+  const linkError = await setLinks(adminSupabase, "enrollments", "student_id", student.id, "course_id", course_ids);
+  if (linkError) return NextResponse.json({ error: `Student created, but enrolling in courses failed: ${linkError}` }, { status: 500 });
 
   return NextResponse.json({
     message: "Student created successfully",

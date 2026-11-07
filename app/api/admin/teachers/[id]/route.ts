@@ -40,7 +40,7 @@ export async function PUT(
 
   const { id } = await params;
   const body = await request.json();
-  const { phone, employee_id, branch_id, specialization, qualification, experience_years, bio, hire_date, salary, is_active } = body;
+  const { full_name, phone, employee_id, branch_id, specialization, qualification, experience_years, bio, hire_date, salary, is_active } = body;
 
   const { data, error } = await supabase
     .from("teachers")
@@ -64,9 +64,9 @@ export async function PUT(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // phone lives on users, not on the teachers table
-  if (phone !== undefined) {
-    const { error: phoneError } = await supabase.from("users").update({ phone: phone || null }).eq("id", data.user_id);
+  // name and phone live on users, not on the teachers table
+  if (phone !== undefined || full_name) {
+    const { error: phoneError } = await supabase.from("users").update({ ...(full_name ? { full_name } : {}), ...(phone !== undefined ? { phone: phone || null } : {}) }).eq("id", data.user_id);
     if (phoneError) return NextResponse.json({ error: phoneError.message }, { status: 500 });
   }
 

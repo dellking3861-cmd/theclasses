@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient, createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/auth";
+import { setLinks } from "@/lib/links";
 
 
 export async function GET(
@@ -40,7 +41,7 @@ export async function PUT(
 
   const { id } = await params;
   const body = await request.json();
-  const { phone, occupation, relationship } = body;
+  const { full_name, phone, occupation, relationship, student_ids } = body;
 
   const { data, error } = await supabase
     .from("parents")
@@ -57,11 +58,14 @@ export async function PUT(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // phone lives on users, not on the parents table
-  if (phone !== undefined) {
-    const { error: phoneError } = await supabase.from("users").update({ phone: phone || null }).eq("id", data.user_id);
+  // name and phone live on users, not on the parents table
+  if (phone !== undefined || full_name) {
+    const { error: phoneError } = await supabase.from("users").update({ ...(full_name ? { full_name } : {}), ...(phone !== undefined ? { phone: phone || null } : {}) }).eq("id", data.user_id);
     if (phoneError) return NextResponse.json({ error: phoneError.message }, { status: 500 });
   }
+
+  const linkError = await setLinks(supabase, "parent_students", "parent_id", id, "student_id", student_ids);
+  if (linkError) return NextResponse.json({ error: `Saved, but updating children failed: ${linkError}` }, { status: 500 });
 
   return NextResponse.json({ message: "Parent updated successfully", parent: data });
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/auth";
+import { setLinks } from "@/lib/links";
 
 
 export async function GET(request: Request) {
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
 
   let query = supabase
     .from("parents")
-    .select("*, user:users(*)", { count: "exact" })
+    .select("*, user:users(*), parent_students(student_id)", { count: "exact" })
     .order("created_at", { ascending: false })
     .range(from, to);
 
@@ -51,7 +52,7 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { email, password, full_name, phone, occupation, relationship } = body;
+  const { email, password, full_name, phone, occupation, relationship, student_ids } = body;
 
   if (!email || !password || !full_name) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -111,6 +112,9 @@ export async function POST(request: Request) {
     console.error("[admin] create parent record failed", parentError);
     return NextResponse.json({ error: `Failed to create parent record: ${parentError.message}` }, { status: 500 });
   }
+
+  const linkError = await setLinks(adminSupabase, "parent_students", "parent_id", parent.id, "student_id", student_ids);
+  if (linkError) return NextResponse.json({ error: `Parent created, but linking children failed: ${linkError}` }, { status: 500 });
 
   return NextResponse.json({
     message: "Parent created successfully",

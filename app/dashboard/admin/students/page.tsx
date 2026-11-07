@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { adminApi } from "@/lib/api";
+import { adminApi, ALL } from "@/lib/api";
 import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -15,9 +15,19 @@ interface Student {
   board: string | null;
   grade: string | null;
   is_active: boolean;
+  stage: string | null;
+  group_code: string | null;
+  branch_id: string | null;
+  batch_id: string | null;
+  date_of_birth: string | null;
+  gender: string | null;
+  address: string | null;
+  emergency_contact: string | null;
+  enrollments?: { course_id: string }[];
   user?: {
     full_name: string;
     email: string;
+    phone: string | null;
     avatar_url: string | null;
   };
 }
@@ -32,17 +42,20 @@ interface StudentsResponse {
 export default function AdminStudentsPage() {
   const [students, setStudents] = useState<{ data: Student[]; total: number; page: number; pageSize: number }>({ data: [], total: 0, page: 1, pageSize: 20 });
   const [isLoading, setIsLoading] = useState(true);
+  const [courses, setCourses] = useState<{ id: string; title: string }[]>([]);
   const [branchesLoaded, setBranchesLoaded] = useState(false);
 
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        const [studentsData, branchesData, batchesData] = await Promise.all([
+        const [studentsData, coursesData, branchesData, batchesData] = await Promise.all([
           adminApi.getStudents(),
+          adminApi.getCourses(ALL),
           adminApi.getBranches(),
           adminApi.getBatches(),
         ]);
         setStudents(studentsData);
+        setCourses(coursesData.data || []);
         setBranches(branchesData.data || []);
         setBatches(batchesData.data || []);
         setBranchesLoaded(true);
@@ -156,8 +169,28 @@ export default function AdminStudentsPage() {
       )}
 
       <StudentForm
+          key={editingStudent?.id ?? "new"}
           open={isDialogOpen}
-          onClose={() => setIsDialogOpen(false)}
+          onClose={handleCloseDialog}
+          initialData={editingStudent && {
+            id: editingStudent.id,
+            email: editingStudent.user?.email ?? "",
+            full_name: editingStudent.user?.full_name ?? "",
+            phone: editingStudent.user?.phone ?? "",
+            roll_number: editingStudent.roll_number ?? "",
+            branch_id: editingStudent.branch_id ?? "",
+            batch_id: editingStudent.batch_id ?? "",
+            date_of_birth: editingStudent.date_of_birth ?? "",
+            gender: (editingStudent.gender as "male" | "female" | "other" | null) ?? "",
+            address: editingStudent.address ?? "",
+            emergency_contact: editingStudent.emergency_contact ?? "",
+            grade: editingStudent.grade ?? "",
+            stage: editingStudent.stage ?? "",
+            board: editingStudent.board ?? "",
+            group_code: editingStudent.group_code ?? "",
+            course_ids: editingStudent.enrollments?.map((e) => e.course_id) ?? [],
+          }}
+          courses={courses}
           onSuccess={() => window.location.reload()}
           branches={branches}
           batches={batches}

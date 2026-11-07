@@ -11,10 +11,11 @@ import { Select } from "@/components/ui/select";
 import { Dialog, DialogHeader, DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { isValidSelection } from "@/lib/curriculum";
 import { CurriculumSelect, type CurriculumValue } from "@/components/forms/curriculum-select";
+import { CheckList } from "@/components/forms/check-list";
 
 const studentSchema = z.object({
   email: z.string().email("Invalid email"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  password: z.string().optional(),
   full_name: z.string().min(2, "Name must be at least 2 characters"),
   phone: z.string().optional(),
   roll_number: z.string().optional(),
@@ -41,20 +42,23 @@ interface StudentFormProps {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
-  initialData?: StudentFormData & { id: string } | null;
+  initialData?: StudentFormData & { id: string; course_ids?: string[] } | null;
   branches?: { id: string; name: string }[];
   batches?: { id: string; name: string }[];
+  courses?: { id: string; title: string }[];
 }
 
-export function StudentForm({ open, onClose, onSuccess, initialData, branches = [], batches = [] }: StudentFormProps) {
+export function StudentForm({ open, onClose, onSuccess, initialData, branches = [], batches = [], courses = [] }: StudentFormProps) {
   const isEditing = !!initialData;
   const [isLoading, setIsLoading] = useState(false);
+  const [courseIds, setCourseIds] = useState<string[]>(initialData?.course_ids ?? []);
 
   const {
     register,
     handleSubmit,
     watch,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<StudentFormData>({
     resolver: zodResolver(studentSchema),
@@ -90,6 +94,10 @@ export function StudentForm({ open, onClose, onSuccess, initialData, branches = 
   }
 
   const onSubmit = async (data: StudentFormData) => {
+    if (!isEditing && (data.password?.length ?? 0) < 8) {
+      setError("password", { message: "Password must be at least 8 characters" });
+      return;
+    }
     setIsLoading(true);
     try {
       const url = isEditing ? `/api/admin/students/${initialData?.id}` : "/api/admin/students";
@@ -98,7 +106,7 @@ export function StudentForm({ open, onClose, onSuccess, initialData, branches = 
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, course_ids: courseIds }),
       });
 
       const result = await response.json();
@@ -124,10 +132,10 @@ export function StudentForm({ open, onClose, onSuccess, initialData, branches = 
         <DialogContent className="space-y-4">
           <div className="grid sm:grid-cols-2 gap-4">
             <Input label="Full Name" placeholder="John Doe" error={errors.full_name?.message} {...register("full_name")} />
-            <Input label="Email" type="email" placeholder="john@example.com" error={errors.email?.message} {...register("email")} />
+            <Input label="Email" type="email" placeholder="john@example.com" readOnly={isEditing} error={errors.email?.message} {...register("email")} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Input label="Password" type={isEditing ? "text" : "password"} placeholder={isEditing ? "Leave blank to keep current" : "Min 8 characters"} error={errors.password?.message} {...register("password")} />
+            {!isEditing && <Input label="Password" type="password" placeholder="Min 8 characters" error={errors.password?.message} {...register("password")} />}
             <Input label="Phone" placeholder="+92 3XX XXXXXXX" error={errors.phone?.message} {...register("phone")} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
@@ -147,6 +155,13 @@ export function StudentForm({ open, onClose, onSuccess, initialData, branches = 
             onChange={setCurriculum}
             idPrefix="student"
             errors={{ stage: errors.stage?.message, board: errors.board?.message, group: errors.group_code?.message }}
+          />
+          <CheckList
+            label="Courses"
+            options={courses.map((c) => ({ id: c.id, label: c.title }))}
+            value={courseIds}
+            onChange={setCourseIds}
+            empty="No courses yet. Create one on the Courses page first."
           />
           <div className="grid sm:grid-cols-2 gap-4">
             <Input label="Emergency Contact" placeholder="+92 3XX XXXXXXX" error={errors.emergency_contact?.message} {...register("emergency_contact")} />

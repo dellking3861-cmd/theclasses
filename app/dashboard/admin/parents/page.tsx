@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { adminApi } from "@/lib/api";
+import { adminApi, ALL } from "@/lib/api";
 import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,9 +13,11 @@ interface Parent {
   user_id: string;
   occupation: string | null;
   relationship: string;
+  parent_students?: { student_id: string }[];
   user?: {
     full_name: string;
     email: string;
+    phone?: string | null;
     avatar_url: string | null;
   };
 }
@@ -30,12 +32,14 @@ interface ParentsResponse {
 export default function AdminParentsPage() {
   const [parents, setParents] = useState<Parent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [students, setStudents] = useState<{ id: string; full_name: string }[]>([]);
 
   useEffect(() => {
     const fetchParents = async () => {
       try {
-        const data = await adminApi.getParents();
+        const [data, studentsData] = await Promise.all([adminApi.getParents(), adminApi.getStudents(ALL)]);
         setParents(data.data || []);
+        setStudents(studentsData.data?.map((s) => ({ id: s.id, full_name: s.user?.full_name || s.user?.email || s.id })) || []);
       } catch {
         // Database not connected
       } finally {
@@ -107,8 +111,19 @@ export default function AdminParentsPage() {
       )}
 
       <ParentForm
+          key={editingParent?.id ?? "new"}
           open={isDialogOpen}
-          onClose={() => setIsDialogOpen(false)}
+          onClose={handleCloseDialog}
+          students={students}
+          initialData={editingParent && {
+            id: editingParent.id,
+            email: editingParent.user?.email ?? "",
+            full_name: editingParent.user?.full_name ?? "",
+            phone: editingParent.user?.phone ?? "",
+            occupation: editingParent.occupation ?? "",
+            relationship: editingParent.relationship,
+            student_ids: editingParent.parent_students?.map((l) => l.student_id) ?? [],
+          }}
           onSuccess={() => window.location.reload()}
         />
     </div>

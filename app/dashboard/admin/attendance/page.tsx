@@ -3,6 +3,7 @@ import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatDate } from "@/utils/format";
 import { ClipboardCheck } from "lucide-react";
+import { AttendanceMarker } from "@/components/forms/attendance-marker";
 
 export default async function AdminAttendancePage() {
   let attendance: Awaited<ReturnType<typeof AdminService.getAttendance>> = [];
@@ -12,9 +13,10 @@ export default async function AdminAttendancePage() {
 
   return (
     <div>
-      <PageHeader title="Attendance Monitoring" description="Track student attendance across all courses" />
+      <PageHeader title="Attendance" description="Mark and review student attendance across all courses" />
+      <AttendanceMarker />
       {attendance.length === 0 ? (
-        <Card><CardContent><EmptyState icon={ClipboardCheck} title="No attendance records" description="Attendance will appear here once teachers start marking." /></CardContent></Card>
+        <Card><CardContent><EmptyState icon={ClipboardCheck} title="No attendance records" description="Records appear here after you mark attendance above." /></CardContent></Card>
       ) : (
         <Card>
           <div className="overflow-x-auto">

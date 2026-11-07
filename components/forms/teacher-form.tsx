@@ -12,7 +12,7 @@ import { Dialog, DialogHeader, DialogContent, DialogFooter } from "@/components/
 
 const teacherSchema = z.object({
   email: z.string().email("Invalid email"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  password: z.string().optional(),
   full_name: z.string().min(2, "Name must be at least 2 characters"),
   phone: z.string().optional(),
   employee_id: z.string().optional(),
@@ -42,6 +42,7 @@ export function TeacherForm({ open, onClose, onSuccess, initialData, branches = 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<TeacherFormData>({
     resolver: zodResolver(teacherSchema),
@@ -62,6 +63,10 @@ export function TeacherForm({ open, onClose, onSuccess, initialData, branches = 
   });
 
   const onSubmit = async (data: TeacherFormData) => {
+    if (!isEditing && (data.password?.length ?? 0) < 8) {
+      setError("password", { message: "Password must be at least 8 characters" });
+      return;
+    }
     setIsLoading(true);
     try {
       const url = isEditing ? `/api/admin/teachers/${initialData?.id}` : "/api/admin/teachers";
@@ -96,10 +101,10 @@ export function TeacherForm({ open, onClose, onSuccess, initialData, branches = 
         <DialogContent className="space-y-4">
           <div className="grid sm:grid-cols-2 gap-4">
             <Input label="Full Name" placeholder="John Smith" error={errors.full_name?.message} {...register("full_name")} />
-            <Input label="Email" type="email" placeholder="john@example.com" error={errors.email?.message} {...register("email")} />
+            <Input label="Email" type="email" placeholder="john@example.com" readOnly={isEditing} error={errors.email?.message} {...register("email")} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Input label="Password" type={isEditing ? "text" : "password"} placeholder={isEditing ? "Leave blank to keep current" : "Min 8 characters"} error={errors.password?.message} {...register("password")} />
+            {!isEditing && <Input label="Password" type="password" placeholder="Min 8 characters" error={errors.password?.message} {...register("password")} />}
             <Input label="Phone" placeholder="+92 3XX XXXXXXX" error={errors.phone?.message} {...register("phone")} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { isValidSelection } from "@/lib/curriculum";
 import { createAdminClient, createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/auth";
+import { setLinks } from "@/lib/links";
 
 
 export async function GET(
@@ -41,7 +42,7 @@ export async function PUT(
 
   const { id } = await params;
   const body = await request.json();
-  const { phone, roll_number, branch_id, batch_id, date_of_birth, gender, address, emergency_contact, grade, board, stage, group_code, is_active } = body;
+  const { full_name, phone, roll_number, branch_id, batch_id, date_of_birth, gender, address, emergency_contact, grade, board, stage, group_code, is_active, course_ids } = body;
 
   if (!isValidSelection({ board, stage, group: group_code }) || (board && !stage)) {
     return NextResponse.json({ error: "Choose a valid board, level and group" }, { status: 400 });
@@ -72,11 +73,14 @@ export async function PUT(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // phone lives on users, not on the students table
-  if (phone !== undefined) {
-    const { error: phoneError } = await supabase.from("users").update({ phone: phone || null }).eq("id", data.user_id);
+  // name and phone live on users, not on the students table
+  if (phone !== undefined || full_name) {
+    const { error: phoneError } = await supabase.from("users").update({ ...(full_name ? { full_name } : {}), ...(phone !== undefined ? { phone: phone || null } : {}) }).eq("id", data.user_id);
     if (phoneError) return NextResponse.json({ error: phoneError.message }, { status: 500 });
   }
+
+  const linkError = await setLinks(supabase, "enrollments", "student_id", id, "course_id", course_ids);
+  if (linkError) return NextResponse.json({ error: `Saved, but updating courses failed: ${linkError}` }, { status: 500 });
 
   return NextResponse.json({ message: "Student updated successfully", student: data });
 }

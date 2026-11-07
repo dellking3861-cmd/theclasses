@@ -21,7 +21,7 @@ const paymentSchema = z.object({
   paid_at: z.string().optional(),
   receipt_number: z.string().optional(),
   notes: z.string().optional(),
-});
+}).refine((d) => d.paid_amount <= d.amount, { message: "Paid amount can't be more than the fee", path: ["paid_amount"] });
 
 type PaymentFormData = z.infer<typeof paymentSchema>;
 
@@ -92,8 +92,8 @@ export function PaymentForm({ open, onClose, onSuccess, initialData, students = 
         <DialogContent className="space-y-4">
           <Select label="Student" placeholder="Select student" error={errors.student_id?.message} options={students.map(s => ({ value: s.id, label: s.full_name }))} {...register("student_id")} />
           <div className="grid sm:grid-cols-2 gap-4">
-            <Input label="Amount" type="number" min="0.01" step="0.01" error={errors.amount?.message} {...register("amount")} />
-            <Input label="Paid Amount" type="number" min="0" step="0.01" error={errors.paid_amount?.message} {...register("paid_amount")} />
+            <Input label="Amount" type="number" min="0.01" step="0.01" error={errors.amount?.message} {...register("amount", { valueAsNumber: true })} />
+            <Input label="Paid Amount" type="number" min="0" step="0.01" error={errors.paid_amount?.message} {...register("paid_amount", { valueAsNumber: true })} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <Select label="Status" error={errors.status?.message} options={[

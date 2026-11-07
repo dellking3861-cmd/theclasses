@@ -89,7 +89,7 @@ export function BatchForm({ open, onClose, onSuccess, initialData, branches = []
             <Input label="End Date" type="date" error={errors.end_date?.message} {...register("end_date")} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Input label="Max Students" type="number" min="1" error={errors.max_students?.message} {...register("max_students")} />
+            <Input label="Max Students" type="number" min="1" error={errors.max_students?.message} {...register("max_students", { valueAsNumber: true })} />
           </div>
           <div className="flex items-center gap-2">
             <input type="checkbox" id="is_active" {...register("is_active")} className="h-4 w-4 rounded border-slate-300 text-indigo-600" />

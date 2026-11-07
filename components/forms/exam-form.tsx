@@ -103,11 +103,11 @@ export function ExamForm({ open, onClose, onSuccess, initialData, courses = [], 
               { value: "practice", label: "Practice" },
               { value: "entry_test", label: "Entry Test" },
             ]} {...register("exam_type")} />
-            <Input label="Total Marks" type="number" min={1} error={errors.total_marks?.message} {...register("total_marks")} />
+            <Input label="Total Marks" type="number" min={1} error={errors.total_marks?.message} {...register("total_marks", { valueAsNumber: true })} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Input label="Passing Marks" type="number" min={0} error={errors.passing_marks?.message} {...register("passing_marks")} />
-            <Input label="Duration (minutes)" type="number" min={1} error={errors.duration_minutes?.message} {...register("duration_minutes")} />
+            <Input label="Passing Marks" type="number" min={0} error={errors.passing_marks?.message} {...register("passing_marks", { valueAsNumber: true })} />
+            <Input label="Duration (minutes)" type="number" min={1} error={errors.duration_minutes?.message} {...register("duration_minutes", { valueAsNumber: true })} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <Input label="Scheduled At" type="datetime-local" error={errors.scheduled_at?.message} {...register("scheduled_at")} />

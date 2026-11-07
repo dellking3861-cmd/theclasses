@@ -56,3 +56,16 @@ test("teachers see the roster and mark attendance only for their own course", as
   await assert.rejects(as(db, T2, "INSERT INTO attendance (student_id, course_id, date) VALUES ($1, $2, '2026-11-08')", [sid, cid]));
   await assert.rejects(as(db, TX, "INSERT INTO attendance (student_id, course_id, date) VALUES ($1, $2, '2026-11-08')", [sid, other]));
 });
+
+test("parents get only their own children's names", async () => {
+  const { db, sid, pid } = await setup();
+  const P2 = "00000000-0000-0000-0000-000000000012";
+  await seedUsers(db, [{ id: P2, role: "parent" }]);
+  await db.query("INSERT INTO parents (user_id) VALUES ($1)", [P2]);
+  await as(db, A, "INSERT INTO parent_students (parent_id, student_id) VALUES ($1, $2)", [pid, sid]);
+  assert.equal((await as(db, P, "SELECT * FROM public.my_children()")).length, 1);
+  assert.equal((await as(db, P2, "SELECT * FROM public.my_children()")).length, 0);
+  assert.equal((await as(db, S, "SELECT * FROM public.my_children()")).length, 0);
+  await db.query("UPDATE users SET is_active = false WHERE id = $1", [P]);
+  assert.equal((await as(db, P, "SELECT * FROM public.my_children()")).length, 0); // deactivated parent
+});

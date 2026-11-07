@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/badge";
 import { GraduationCap, Plus } from "lucide-react";
 import { TeacherForm } from "@/components/forms/teacher-form";
+import { AccountActions } from "@/components/forms/account-actions";
 
 interface Teacher {
   id: string;
@@ -118,9 +119,12 @@ export default function AdminTeachersPage() {
                     {teacher.is_active ? "Active" : "Inactive"}
                   </Badge>
                 </div>
-                <Button variant="outline" size="sm" className="mt-4" onClick={() => handleEdit(teacher)}>
-                  Edit
-                </Button>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <Button variant="outline" size="sm" onClick={() => handleEdit(teacher)}>
+                    Edit
+                  </Button>
+                  <AccountActions kind="teachers" id={teacher.id} name={teacher.user?.full_name || "this teacher"} active={teacher.is_active} />
+                </div>
               </CardContent>
             </Card>
           ))}

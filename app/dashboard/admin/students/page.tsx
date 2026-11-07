@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/badge";
 import { Users, Plus } from "lucide-react";
 import { StudentForm } from "@/components/forms/student-form";
+import { AccountActions } from "@/components/forms/account-actions";
 
 interface Student {
   id: string;
@@ -153,12 +154,15 @@ export default function AdminStudentsPage() {
                       </Badge>
                     </td>
                     <td className="px-6 py-4">
-                      <button
-                        onClick={() => handleEdit(student)}
-                        className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
-                      >
-                        Edit
-                      </button>
+                      <span className="flex flex-wrap items-center gap-3">
+                        <button
+                          onClick={() => handleEdit(student)}
+                          className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+                        >
+                          Edit
+                        </button>
+                        <AccountActions kind="students" id={student.id} name={student.user?.full_name || "this student"} active={student.is_active} />
+                      </span>
                     </td>
                   </tr>
                 ))}

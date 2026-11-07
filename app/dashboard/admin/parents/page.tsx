@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { UserCheck, Plus } from "lucide-react";
 import { ParentForm } from "@/components/forms/parent-form";
+import { AccountActions } from "@/components/forms/account-actions";
 
 interface Parent {
   id: string;
@@ -18,6 +19,7 @@ interface Parent {
     full_name: string;
     email: string;
     phone?: string | null;
+    is_active?: boolean;
     avatar_url: string | null;
   };
 }
@@ -96,13 +98,15 @@ export default function AdminParentsPage() {
                 </div>
                 <p className="text-sm text-slate-600">Occupation: {parent.occupation || "—"}</p>
                 <p className="text-sm text-slate-600">Relationship: {parent.relationship}</p>
-                <div className="flex gap-2 mt-4">
+                {parent.user?.is_active === false && <Badge variant="danger" className="mt-2">Inactive</Badge>}
+                <div className="flex flex-wrap items-center gap-3 mt-4">
                   <button
                     onClick={() => handleEdit(parent)}
                     className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
                   >
                     Edit
                   </button>
+                  <AccountActions kind="parents" id={parent.id} name={parent.user?.full_name || "this parent"} active={parent.user?.is_active !== false} />
                 </div>
               </CardContent>
             </Card>

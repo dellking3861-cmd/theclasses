@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { isValidSelection } from "@/lib/curriculum";
 import { createAdminClient, createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/auth";
+import { setAccountActive } from "@/lib/account-status";
 import { setLinks } from "@/lib/links";
 
 
@@ -111,4 +112,8 @@ export async function DELETE(
   }
 
   return NextResponse.json({ message: "Student deleted successfully" });
+}
+/** Activate or deactivate the account; only the status changes. */
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  return setAccountActive(request, "students", (await params).id);
 }

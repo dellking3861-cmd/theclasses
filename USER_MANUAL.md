@@ -1,167 +1,124 @@
-# The Classes — User Manual
+# The Classes: User Manual
 
-**Production URL:** https://theclasses.vercel.app
+For the office (admins), teachers, students and parents. Website: **https://theclasses.vercel.app**
 
----
-
-## Quick Start for All Roles
-
-| Step | Action |
-|------|--------|
-| 1 | Open the URL above |
-| 2 | Click **Login** (top-right) |
-| 3 | Enter your email & password |
-| 4 | You land on your role-specific dashboard |
-
-> **Forgot password?** Use the "Forgot password" link on the login page. A reset email will be sent to your registered address.
+Pages marked *Coming soon* are in the menu but don't do anything yet.
 
 ---
 
-## Role-Based Navigation Overview
+## Signing in
 
-### 🔐 Admin Dashboard
-**URL:** `/dashboard/admin`  
-**Purpose:** Full platform control — manage branches, users, courses, exams, fees, announcements, and analytics.
+1. Open the website and tap **Log in** (top right).
+2. Enter your email and password. You land on your own dashboard.
 
-| Sidebar Section | Pages | Key Actions |
-|-----------------|-------|-------------|
-| **Overview** | Analytics | View enrollment trends, revenue, attendance rates, board distribution |
-| **Academics** | Branches, Courses, Batches, Exams, Assignments | Create/edit branches; publish courses; schedule exams; post assignments |
-| **People** | Students, Teachers, Parents | Add users, assign roles, reset passwords, view profiles |
-| **Finance** | Fees, Payments | Configure fee structures; record payments; generate receipts |
-| **Communication** | Announcements, Blog | Post platform-wide announcements; publish blog articles |
-| **Attendance** | Attendance | Monitor daily attendance across all batches |
+**Accounts:**
+- The office creates accounts for students, teachers and parents.
+- Students and parents can also sign up at **/register**; the office then links them to the right courses or children.
 
-**Common Admin Tasks**
-- **Add a branch:** Branches → "Add New Branch" → fill name, city, address → Save
-- **Publish an exam:** Exams → "Create Exam" → select batch, date, subject, max marks → Publish
-- **Post announcement:** Announcements → "New Announcement" → title, body, target audience → Post
-- **Record payment:** Payments → "Record Payment" → select student, amount, method → Confirm
+**Forgot your password?**
+1. Open **Log in → Forgot password**, enter your email and tap **Send Reset Link**.
+2. Open the email *in the same browser*. On the "Choose a new password" page, enter it twice and save.
+3. If the link says it expired, request a new one.
+
+**"Too many sign-in attempts":** wait 10 minutes and try again. This protects accounts from password guessing.
+
+**"Account deactivated":** contact the office.
 
 ---
 
-### 🎓 Student Dashboard
-**URL:** `/dashboard/student`  
-**Purpose:** Personal learning hub — track courses, submit assignments, view attendance, check grades.
+## Office (admin)
 
-| Tab | What You See | Key Actions |
-|-----|--------------|-------------|
-| **Courses** | Enrolled courses with progress bars; available courses to browse | Click "Continue Learning" on any course; browse & enroll in new ones |
-| **Assignments** | Pending, submitted, overdue with due dates & marks | Click "Submit Now" → upload file/text → Submit |
-| **Attendance** | Overall rate %, per-course breakdown, recent history | Review your attendance chart; spot courses needing improvement |
-| **Exams** | Upcoming & past exams with schedules & results | View timetable; check results when published |
-| **Fees** | Fee summary, due dates, payment history, receipts | Download receipts; see outstanding balance |
-| **Lectures** | Upcoming live sessions, recorded lectures | Join live class; watch recordings |
-| **Notes** | Shared notes from teachers, organized by course | View/download PDFs, images, links |
-| **Progress** | Subject-wise scores, overall grade, assignment completion | Track improvement over time |
+### Setting up a new session, in this order
 
-**Common Student Tasks**
-- **Submit assignment:** Assignments → find "Pending" card → "Submit Now" → attach file → Confirm
-- **Check exam schedule:** Exams → scroll to "Upcoming Exams" → note date/time/venue
-- **View lecture recording:** Lectures → "Recorded" tab → click play on any session
-- **Download fee receipt:** Fees → "History" → click download icon on any paid row
+1. **Branches** and **Batches:** add your campus and batches (e.g. "Matric Morning").
+2. **Teachers → Add Teacher:** name, email, a starting password (8+ characters), phone.
+3. **Courses → Create Course:** title, level/board/group/subject, fee, **Teacher** and **Batch**.
+4. **Students → Add Student:** details, board/level/group, batch, and tick their **Courses**.
+5. **Parents → Add Parent:** details, then tick their **Children**.
 
----
+Tell each person their email and starting password. They can change it with "Forgot password".
 
-### 👨‍🏫 Teacher Dashboard
-**URL:** `/dashboard/teacher`  
-**Purpose:** Teaching workspace — manage classes, grade work, communicate, track attendance.
+### Everyday tasks
 
-| Tab | What You See | Key Actions |
-|-----|--------------|-------------|
-| **Assignments** | Created assignments per course; submission status | "Create Assignment" → set title, description, due date, max marks → Publish |
-| **Attendance** | Daily marking grid per batch; monthly summary | Mark Present/Absent/Late per student → Save; export CSV |
-| **Communication** | Announcements to your batches; direct messages | Post batch announcement; message individual students/parents |
-| **Grading** | Submitted assignments awaiting grading; gradebook | Open submission → enter marks + feedback → "Save & Publish" |
-| **Lectures** | Schedule live sessions; upload recordings | "Schedule Live" → set date/time/meeting link → Notify students |
-| **Notes** | Upload/share study materials per course | "Add Note" → title, course, attach file/link → Publish |
-| **Timetable** | Weekly class schedule | View only (managed by admin) |
-| **Quizzes** | Create & manage quick quizzes | "New Quiz" → add questions, set timer → Assign to batch |
+| Task | Where | How |
+|---|---|---|
+| Answer website enquiries | **Enquiries** | Call or WhatsApp from the card, then set the status (New, Contacted, Enrolled, Closed) |
+| Enrol a student in a course | **Students → Edit** | Tick or untick courses, then **Update** |
+| Link a parent to a child | **Parents → Edit** | Tick the children, then **Update** |
+| Change someone's name or phone | Students, Teachers or Parents **→ Edit** | Email can't be changed here |
+| Deactivate or delete someone | *Not on the website yet* | Ask your developer. Deleting is permanent and removes all their records |
+| Record a fee | **Fee Management → Add Fee Record** | Student, amount, paid amount, status, due date |
+| Mark attendance | **Attendance** | Pick course and date, set each student Present/Absent/Late/Excused, **Save**. Saving the same day again updates it |
+| Add a YouTube lecture | **Study Materials → Add lecture** | Paste the YouTube link (Public or Unlisted; the title fills in), choose level/board/subject |
+| Upload notes or a past paper | **Study Materials → Upload PDF** | PDF up to 25 MB, type, level/board/subject, year |
+| Hide material without deleting | **Study Materials** | Tap the eye icon |
+| See the numbers | **Analytics** | Active students, new this month, fees collected, attendance rate, students by board |
+| Post news | **Announcements** or **Blog Portal** | Create, then publish |
+| Schedule exams and assignments | **Exams**, **Assignments** | Create for a course and teacher |
 
-**Common Teacher Tasks**
-- **Grade submissions:** Grading → click "Ungraded" → enter marks/feedback → Publish
-- **Mark attendance:** Attendance → select date/batch → toggle P/A/L per student → Save
-- **Post batch announcement:** Communication → "New Announcement" → select batch → Post
-- **Upload lecture notes:** Notes → "Add Note" → choose course → upload PDF → Publish
+**Tips**
+- Only students ticked into a course appear on its attendance list.
+- "Students only" materials need a signed-in student. "Public" ones are visible to anyone.
+- Payment *methods* are recorded by you. There is no online payment on the website.
 
 ---
 
-### 👨‍👩‍👧 Parent Dashboard
-**URL:** `/dashboard/parent`  
-**Purpose:** Monitor your child(ren)'s progress — academics, attendance, fees, exams, teacher feedback.
+## Teachers
 
-| Tab | What You See | Key Actions |
-|-----|--------------|-------------|
-| **Academics** | Enrolled courses, progress %, teacher names | View course details; see teacher contact info |
-| **Attendance** | Daily & monthly attendance per child; alerts for low % | Spot trends; receive notifications if attendance < 75% |
-| **Exams** | Upcoming exam schedule, past results, rank | Check timetable; view result cards when published |
-| **Fees** | Outstanding balance, due dates, payment history, receipts | "Pay Now" (redirects to gateway); download receipts |
-| **Feedback** | Teacher comments on assignments, behavior notes | Read feedback; reply to teacher via Communication |
-| **Notifications** | All alerts: fee due, low attendance, exam results, announcements | Mark as read; filter by child/type |
+| Page | What it does |
+|---|---|
+| **Overview** | Your courses |
+| **Mark Attendance** | Pick one of your courses and a date, mark each student, **Save**. You only see your own courses and students' names |
+| **Video Lectures** | Add YouTube lectures for your students. You can edit or delete only your own |
+| **Notes & Past Papers** | Upload PDFs for your students. You can edit or delete only your own |
+| Assignments, Grade Work, Quiz Generator, Timetable, Communication | *Coming soon* |
 
-**Common Parent Tasks**
-- **Pay fees:** Fees → "Pay Now" on due row → complete payment → auto-updates balance
-- **Check child's grade:** Academics → select child → view progress % per course
-- **View teacher feedback:** Feedback → expand any card → read comments
-- **Contact teacher:** Communication → "Message Teacher" → select child's teacher → send
+If a course or student is missing, ask the office: the course must have you as its teacher, and the student must be ticked into it.
 
 ---
 
-## Shared UI Patterns (All Roles)
+## Students
 
-| Element | Behavior |
-|---------|----------|
-| **Top Bar** | Logo (home), role badge, notification bell, profile menu (settings, logout) |
-| **Sidebar** | Collapsible (☰ hamburger on mobile); shows only your role's sections |
-| **Cards** | Clickable rows → navigate to detail; hover = subtle shadow |
-| **Badges** | Color-coded status: Green=active/good, Amber=warning/pending, Red=overdue/danger |
-| **Empty States** | Illustrated + primary action button (e.g., "Browse Courses", "Add Branch") |
-| **Tables** | Sortable headers; pagination; row hover highlight |
-| **Forms** | Inline validation; required fields marked *; toast on success/error |
-| **Responsive** | Mobile: sidebar drawer, stacked cards, horizontal scroll on tables |
+| Page | What you see |
+|---|---|
+| **Overview** | Shortcuts to lectures, notes, assignments and progress; your attendance and any fee due |
+| **My Courses** | Courses you're enrolled in |
+| **Lectures** | Recorded lessons for your class. Tap one to play it here |
+| **Notes & Past Papers** | PDFs for your class. **View** opens them, **Download** saves them |
+| **Assignments** | What's set for your courses and due dates (submit work to your teacher in class; online submission is coming soon) |
+| **Attendance**, **Exams**, **Fees**, **Progress** | Your records and results as the office enters them |
 
----
+Lectures and notes first show **My class** (your board and group). Tap **Everything** to see all subjects.
 
-## Accessibility & UX Notes
-
-- **Keyboard nav:** Tab through all interactive elements; focus rings visible
-- **Color contrast:** WCAG AA compliant (4.5:1 minimum)
-- **Reduced motion:** Respects `prefers-reduced-motion` — no auto-animations
-- **Screen readers:** Semantic HTML, ARIA labels on icon-only buttons
-- **Loading states:** Skeleton screens on data fetch; disabled buttons during submit
+Free lessons are also on Sir Wasi's YouTube channel (link on the home page).
 
 ---
 
-## Troubleshooting
+## Parents
 
-| Symptom | Likely Cause | Fix |
-|---------|--------------|-----|
-| "Access denied" on dashboard | Wrong role or session expired | Log out → log in again; contact admin if role mismatch |
-| Data not loading | Supabase connection issue | Refresh; check internet; retry in 30s |
-| Payment not reflecting | Gateway callback pending | Wait 2–3 min; refresh Fees page; contact admin if >10 min |
-| Can't submit assignment | Past due date or already submitted | Check due date; if submitted, view in "Submitted" tab |
-| Mobile sidebar won't open | JS error | Hard refresh (Ctrl+Shift+R); clear cache |
+| Page | What you see |
+|---|---|
+| **Overview** | Your linked children |
+| Attendance, Academic Reports, Fee Status, Teacher Feedback, Exam Results, Notifications | *Coming soon* |
 
----
-
-## Support Contacts
-
-| Issue | Contact |
-|-------|---------|
-| Login / account | admin@theclasses.edu |
-| Technical bugs | tech@theclasses.edu |
-| Fee / payment | finance@theclasses.edu |
-| Academic queries | Your child's teacher (via Communication tab) |
+If your child is missing, ask the office to link them to your account.
 
 ---
 
-## Version & Updates
+## Problems
 
-- **Current deploy:** `theclasses.vercel.app` (auto-deploys on `main` branch push)
-- **Changelog:** See `/changelog` page or GitHub releases
-- **Feature requests:** Use the "Feedback" button in profile menu
+| What you see | What to do |
+|---|---|
+| Sent back to the login page | Your session ended; sign in again |
+| Sent to a different dashboard | Your account has another role; ask the office |
+| A list is empty | It may simply have no data yet (e.g. no course enrolled, nothing uploaded) |
+| A video won't play | The YouTube video must be Public or Unlisted, with embedding allowed |
+| Reset email didn't arrive | Check spam; or ask the office to reset it from Supabase |
 
----
+## Contact the office
 
-*Last updated: 2026-10-18*  
-*Built with Next.js 16, Supabase, Tailwind CSS, TypeScript*
+- Phone or WhatsApp: **+92 336 3861205**
+- Email: **wasikherro@gmail.com**
+- Campus: R-156 Salman Garden, near Jamia Millia Road, Malir 15, Karachi. Monday to Saturday, 4:00 to 8:30 PM
+
+*Last updated: 7 November 2026*

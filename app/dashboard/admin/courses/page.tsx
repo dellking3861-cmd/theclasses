@@ -75,12 +75,14 @@ export default function AdminCoursesPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<typeof courses.data[0] | null>(null);
   const [branches, setBranches] = useState<{ id: string; name: string }[]>([]);
+  const [batches, setBatches] = useState<{ id: string; name: string }[]>([]);
 
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const data = await adminApi.getBranches();
+        const [data, batchData] = await Promise.all([adminApi.getBranches(), adminApi.getBatches()]);
         setBranches(data.data || []);
+        setBatches(batchData.data || []);
         setBranchesLoaded(true);
       } catch {}
     };
@@ -148,6 +150,7 @@ export default function AdminCoursesPage() {
           onClose={() => setIsDialogOpen(false)}
           onSuccess={() => window.location.reload()}
           branches={branches}
+          batches={batches}
         />
     </div>
   );

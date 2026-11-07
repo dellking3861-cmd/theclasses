@@ -70,7 +70,7 @@ function GroupCard({ group, board, stage, highlight }: { group: CurriculumGroup;
       <CardContent className="flex flex-1 flex-col gap-4">
         {group.core.length > 0 && (
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-stone-400 mb-2">Group subjects</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">Group subjects</p>
             <ul className="flex flex-wrap gap-2">
               {group.core.map((c) => <SubjectPill key={c} code={c} highlight={c === highlight} />)}
             </ul>
@@ -78,7 +78,7 @@ function GroupCard({ group, board, stage, highlight }: { group: CurriculumGroup;
         )}
         {group.electives && group.electives.length > 0 && (
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-stone-400 mb-2">
+            <p className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">
               Electives{group.electivesRequired ? ` · choose ${group.electivesRequired}` : ""}
             </p>
             <ul className="flex flex-wrap gap-2">
@@ -159,7 +159,7 @@ export function CoursesExplorer({ query }: { query: CoursesQuery }) {
               }`}
             >
               <span className="block font-semibold">{t.label}</span>
-              <span className={`block text-xs ${tab === t.value ? "text-brand-100" : "text-stone-400"}`}>{t.sub}</span>
+              <span className={`block text-xs ${tab === t.value ? "text-brand-100" : "text-stone-500"}`}>{t.sub}</span>
             </button>
           ))}
         </div>
@@ -174,7 +174,7 @@ export function CoursesExplorer({ query }: { query: CoursesQuery }) {
                   <CardDescription className="text-stone-500">{p.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="flex items-center gap-1 text-sm text-stone-400 mb-4"><Clock className="h-4 w-4" aria-hidden="true" /> {p.duration} months</p>
+                  <p className="flex items-center gap-1 text-sm text-stone-500 mb-4"><Clock className="h-4 w-4" aria-hidden="true" /> {p.duration} months</p>
                   <Link href="/admissions" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-stone-200 px-4 text-sm font-medium text-stone-700 hover:bg-brand-50 hover:border-brand-300 hover:text-brand-800">
                     Enquire <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
@@ -196,7 +196,7 @@ export function CoursesExplorer({ query }: { query: CoursesQuery }) {
                     board === b.code ? "bg-stone-900 border-stone-900 text-white" : "bg-white border-stone-200 text-stone-600 hover:bg-stone-100"
                   }`}
                 >
-                  {b.shortName} <span className={board === b.code ? "text-stone-300" : "text-stone-400"}>· {getOffering(b.code, stage)?.label}</span>
+                  {b.shortName} <span className={board === b.code ? "text-stone-300" : "text-stone-500"}>· {getOffering(b.code, stage)?.label}</span>
                 </button>
               ))}
             </div>
@@ -210,7 +210,7 @@ export function CoursesExplorer({ query }: { query: CoursesQuery }) {
                   <p className="text-sm text-stone-500 mt-1">{STAGES[stage].grades}</p>
                   {offering.compulsory.length > 0 && (
                     <div className="mt-4">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-stone-400 mb-2">Compulsory for every group</p>
+                      <p className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">Compulsory for every group</p>
                       <ul className="flex flex-wrap gap-2">
                         {offering.compulsory.map((c) => <SubjectPill key={c} code={c} highlight={c === highlight} />)}
                       </ul>

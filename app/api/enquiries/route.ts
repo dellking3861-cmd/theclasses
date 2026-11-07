@@ -2,25 +2,12 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { enquirySchema } from "@/lib/validations";
 import { isValidSelection } from "@/lib/curriculum";
+import { clientIp, rateLimiter } from "@/lib/rate-limit";
 
-// Best-effort per-instance rate limit (serverless instances don't share memory).
-// Enough to stop casual spam; use a shared store (e.g. Upstash) for stronger limits.
-const WINDOW_MS = 10 * 60 * 1000;
-const MAX_PER_WINDOW = 5;
-const hits = new Map<string, number[]>();
-
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  if (hits.size > 5000) hits.clear();
-  return recent.length > MAX_PER_WINDOW;
-}
+const rateLimited = rateLimiter(5, 10 * 60 * 1000);
 
 export async function POST(request: Request) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (rateLimited(ip)) {
+  if (rateLimited(clientIp(request))) {
     return NextResponse.json(
       { error: "Too many submissions. Please try again in a few minutes." },
       { status: 429 }

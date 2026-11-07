@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { adminApi } from "@/lib/api";
+import { adminApi, ALL } from "@/lib/api";
 import { PageHeader, Badge, EmptyState } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ export default function AdminPaymentsPage() {
       try {
         const [paymentsData, studentsData] = await Promise.all([
           adminApi.getPayments(),
-          adminApi.getStudents(),
+          adminApi.getStudents(ALL),
         ]);
         setPayments(paymentsData);
         setStudents(studentsData.data?.map(s => ({ id: s.id, full_name: s.user?.full_name || s.user?.email || s.id })) || []);

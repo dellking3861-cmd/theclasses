@@ -31,7 +31,7 @@ interface ExamFormProps {
   onSuccess: () => void;
   initialData?: ExamFormData & { id: string } | null;
   courses?: { id: string; title: string }[];
-  teachers?: { id: string; full_name: string }[];
+  teachers?: { id: string; user?: { full_name: string } }[];
 }
 
 export function ExamForm({ open, onClose, onSuccess, initialData, courses = [], teachers = [] }: ExamFormProps) {
@@ -92,7 +92,7 @@ export function ExamForm({ open, onClose, onSuccess, initialData, courses = [], 
         <DialogHeader title={isEditing ? "Edit Exam" : "Create Exam"} description={isEditing ? "Update exam information" : "Create a new exam"} />
         <DialogContent className="space-y-4">
           <Select label="Course" placeholder="Select course" error={errors.course_id?.message} options={courses.map(c => ({ value: c.id, label: c.title }))} {...register("course_id")} />
-          <Select label="Teacher" placeholder="Select teacher" error={errors.teacher_id?.message} options={teachers.map(t => ({ value: t.id, label: t.full_name }))} {...register("teacher_id")} />
+          <Select label="Teacher" placeholder="Select teacher" error={errors.teacher_id?.message} options={teachers.map(t => ({ value: t.id, label: t.user?.full_name || t.id }))} {...register("teacher_id")} />
           <Input label="Title" placeholder="Midterm Exam" error={errors.title?.message} {...register("title")} />
           <Input label="Description" placeholder="Exam description" error={errors.description?.message} {...register("description")} />
           <div className="grid sm:grid-cols-2 gap-4">

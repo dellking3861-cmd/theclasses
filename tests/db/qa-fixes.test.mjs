@@ -26,6 +26,9 @@ test("assignments, exam results, announcements and fee checks", async () => {
   assert.equal((await as(db, S, "SELECT id FROM exam_results")).length, 1);
   assert.equal((await as(db, S2, "SELECT id FROM exam_results")).length, 0);
 
+  // even an admin session can't flip users.is_active directly; lib/account-status.ts uses the service client
+  await assert.rejects(as(db, A, "UPDATE users SET is_active = false WHERE id = $1", [S]));
+
   await db.query("INSERT INTO announcements (title, content, author_id) VALUES ('N', 'x', $1)", [T]);
   assert.equal((await as(db, A, "UPDATE announcements SET title = 'N2' RETURNING id")).length, 1);
 
